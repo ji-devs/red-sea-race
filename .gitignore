@@ -4,6 +4,9 @@ target
 pkg
 **/*.rs.bk
 
+# Firebase
+.firebase
+
 # Netlify
 .netlify
 

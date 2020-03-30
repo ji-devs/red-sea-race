@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ji-kids": {
+      "hosting": {
+        "ji-kids-red-sea-race": [
+          "ji-kids-red-sea-race"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "ji-kids": "ji-kids"
+  }
+}
