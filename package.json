@@ -4,6 +4,7 @@
     "repository": "https://github.com/jewish-interactive/race-to-the-red-sea",
     "scripts": {
         "start": "cargo make build --profile development && npm-run-all -p _start:rust _start:browsersync",
+		"build-and-deploy": "cargo make build-and-deploy",
         "_start:rust": "cargo make watch",
         "_start:browsersync": "browser-sync start --server \"_static\" --single --serveStatic \"_static\" --files \"_static/**/*\""
     },

@@ -1,6 +1,21 @@
 [config]
 skip_core_tasks = true
 
+###################
+## Manual Deploy ##
+###################
+
+[tasks.build-and-deploy]
+run_task = [{name = [
+	"clean-dist",
+    "build-production",
+	"copy-static",
+    "deploy-local",
+]}]
+
+[tasks.deploy-local]
+script = ["firebase deploy --project ji-kids --only hosting:ji-kids-red-sea-race"]
+
 ##################
 ## Main Entries ##
 ##################
@@ -21,7 +36,8 @@ ignore_errors = true
 script = [ 
     "rm -rf ./target",
     "rm -rf ./pkg",
-    "rm -rf ./_static/wasm/app"
+    "rm -rf ./_static/wasm/app",
+	"rm -rf ./dist"
 ]
 
 #################
@@ -68,3 +84,15 @@ args = ["./target/wasm32-unknown-unknown/release/app.wasm", "--target","web","--
 command = "wasm-opt"
 # if CI fails, try with BINARYEN_CORES=1 in an env
 args = ["-O3","-o","./_static/wasm/app/pkg/app_bg.wasm", "./_static/wasm/app/pkg/app_bg.wasm"]
+
+##################
+## Copy Static ##
+#################
+
+[tasks.clean-dist]
+script_runner = "@shell"
+script = ["rm -rf ./dist/"]
+
+[tasks.copy-static]
+script_runner = "@shell"
+script = ["cp -R ./_static/* ./dist/"]
