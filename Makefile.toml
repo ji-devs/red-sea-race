@@ -7,9 +7,7 @@ skip_core_tasks = true
 
 [tasks.build-and-deploy]
 run_task = [{name = [
-	"clean-dist",
     "build-production",
-	"copy-static",
     "deploy-local",
 ]}]
 
@@ -66,9 +64,11 @@ args = ["./target/wasm32-unknown-unknown/debug/app.wasm","--debug", "--keep-debu
 
 [tasks.build-production]
 run_task = [{name = [
+	"clean-dist",
     "compile-production", 
     "bindgen-production",
     "wasmopt-production",
+	"copy-static",
 ]}]
 
 [tasks.compile-production]

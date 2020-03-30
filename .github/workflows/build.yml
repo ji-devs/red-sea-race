@@ -44,7 +44,7 @@ jobs:
     - name: Cache cargo build
       uses: actions/cache@v1
       with:
-        path: example/target
+        path: target
         key: ${{ runner.os }}-cargo-build-target-${{ hashFiles('**/Cargo.lock') }}
 
     - name: download binaryen release
@@ -64,7 +64,7 @@ jobs:
       uses: actions/setup-node@v1
 
     - name: install npm deps
-      run: cd example && npm ci
+      run: npm ci
 
     - name: install rust nightly
       run: rustup toolchain install nightly
@@ -81,15 +81,8 @@ jobs:
     - name: install cargo make 
       run: cargo install cargo-make 
 
-    - name: show directory 
-      run: ls -la 
-
     - name: build for release 
       run: cargo make build --profile production 
-      working-directory: ./example
-
-    - name: copy example to dist
-      run: cp -R ./example/_static/* ./dist
 
     - name: deploy to firebase (TODO)
       run: echo TODO!
