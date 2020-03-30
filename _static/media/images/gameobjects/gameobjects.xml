@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:96f3d069be684b4aff862f8ea24f57a8:0268aac08e1b8ab582a690e1bf417feb:25d1e0c047f6c7b2e41063ef1a535f8d$ -->
+<TextureAtlas imagePath="RunnerGameObjects_HD.png">
+    <SubTexture name="enemies/fireball/0045" x="815" y="306" width="198" height="100"/>
+    <SubTexture name="enemies/fireball/0047" x="847" y="0" width="177" height="100"/>
+    <SubTexture name="enemies/fireball/0049" x="272" y="509" width="187" height="100"/>
+    <SubTexture name="enemies/fireball/0051" x="0" y="506" width="188" height="100"/>
+    <SubTexture name="enemies/fireball/0053" x="0" y="404" width="192" height="100"/>
+    <SubTexture name="enemies/fireball/0055" x="275" y="407" width="192" height="100"/>
+    <SubTexture name="enemies/fireball/0057" x="817" y="204" width="204" height="100"/>
+    <SubTexture name="enemies/fireball/0059" x="809" y="408" width="214" height="100"/>
+    <SubTexture name="enemies/fireball/0061" x="276" y="204" width="219" height="100"/>
+    <SubTexture name="enemies/fireball/0063" x="566" y="287" width="219" height="100"/>
+    <SubTexture name="environment/platform-left" x="276" y="306" width="212" height="99" frameX="0" frameY="-1" frameWidth="212" frameHeight="100"/>
+    <SubTexture name="environment/platform-middle" x="566" y="389" width="212" height="99" frameX="0" frameY="-1" frameWidth="212" frameHeight="100"/>
+    <SubTexture name="environment/platform-right" x="0" y="302" width="212" height="100"/>
+    <SubTexture name="environment/score_box" x="933" y="510" width="91" height="100"/>
+    <SubTexture name="keys/down" x="0" y="808" width="122" height="100"/>
+    <SubTexture name="keys/left" x="0" y="910" width="122" height="100"/>
+    <SubTexture name="keys/right" x="809" y="510" width="122" height="100"/>
+    <SubTexture name="keys/shoot" x="0" y="200" width="274" height="100"/>
+    <SubTexture name="keys/up" x="563" y="588" width="122" height="100"/>
+    <SubTexture name="lives" x="985" y="102" width="36" height="100"/>
+    <SubTexture name="powerups/letters/10_makat_bechorot/makat_bechorot_b" x="707" y="847" width="61" height="86" frameX="-2" frameY="-14" frameWidth="74" frameHeight="100"/>
+    <SubTexture name="powerups/letters/10_makat_bechorot/makat_bechorot_chaf" x="801" y="767" width="52" height="72" frameX="-4" frameY="-15" frameWidth="63" frameHeight="100"/>
+    <SubTexture name="powerups/letters/10_makat_bechorot/makat_bechorot_chaf2" x="603" y="791" width="52" height="58" frameX="-6" frameY="-14" frameWidth="62" frameHeight="100"/>
+    <SubTexture name="powerups/letters/10_makat_bechorot/makat_bechorot_m" x="497" y="204" width="67" height="72" frameX="-3" frameY="-15" frameWidth="70" frameHeight="100"/>
+    <SubTexture name="powerups/letters/10_makat_bechorot/makat_bechorot_o" x="780" y="418" width="19" height="72" frameX="-6" frameY="0" frameWidth="31" frameHeight="100"/>
+    <SubTexture name="powerups/letters/10_makat_bechorot/makat_bechorot_r" x="657" y="787" width="52" height="58" frameX="0" frameY="-14" frameWidth="56" frameHeight="100"/>
+    <SubTexture name="powerups/letters/10_makat_bechorot/makat_bechorot_t" x="602" y="953" width="70" height="58" frameX="0" frameY="-14" frameWidth="78" frameHeight="100"/>
+    <SubTexture name="powerups/letters/1_dam/dam_d" x="490" y="348" width="74" height="100" frameX="-4" frameY="0" frameWidth="78" frameHeight="100"/>
+    <SubTexture name="powerups/letters/1_dam/dam_m" x="467" y="953" width="72" height="70" frameX="0" frameY="0" frameWidth="76" frameHeight="100"/>
+    <SubTexture name="powerups/letters/2_tzfardeiah/tzfardeiah_ayin" x="194" y="490" width="76" height="84" frameX="0" frameY="0" frameWidth="78" frameHeight="100"/>
+    <SubTexture name="powerups/letters/2_tzfardeiah/tzfardeiah_d" x="747" y="935" width="72" height="85" frameX="-4" frameY="0" frameWidth="80" frameHeight="100"/>
+    <SubTexture name="powerups/letters/2_tzfardeiah/tzfardeiah_f" x="674" y="940" width="71" height="84" frameX="-7" frameY="0" frameWidth="81" frameHeight="100"/>
+    <SubTexture name="powerups/letters/2_tzfardeiah/tzfardeiah_r" x="214" y="302" width="60" height="100" frameX="-5" frameY="0" frameWidth="70" frameHeight="100"/>
+    <SubTexture name="powerups/letters/2_tzfardeiah/tzfardeiah_tzadik" x="394" y="881" width="71" height="100" frameX="-2" frameY="0" frameWidth="73" frameHeight="100"/>
+    <SubTexture name="powerups/letters/3_kinim/kinim_caf" x="189" y="746" width="72" height="100" frameX="-7" frameY="0" frameWidth="79" frameHeight="100"/>
+    <SubTexture name="powerups/letters/3_kinim/kinim_m" x="821" y="927" width="82" height="79" frameX="0" frameY="0" frameWidth="90" frameHeight="100"/>
+    <SubTexture name="powerups/letters/3_kinim/kinim_n" x="601" y="851" width="51" height="100" frameX="-4" frameY="0" frameWidth="59" frameHeight="100"/>
+    <SubTexture name="powerups/letters/3_kinim/kinim_yud" x="787" y="287" width="26" height="52" frameX="-9" frameY="0" frameWidth="40" frameHeight="100"/>
+    <SubTexture name="powerups/letters/4_arov/arov-o" x="787" y="341" width="20" height="75" frameX="-7" frameY="0" frameWidth="34" frameHeight="100"/>
+    <SubTexture name="powerups/letters/4_arov/arov_ayin" x="740" y="680" width="66" height="85" frameX="-3" frameY="-15" frameWidth="69" frameHeight="100"/>
+    <SubTexture name="powerups/letters/4_arov/arov_r" x="250" y="848" width="52" height="60" frameX="-1" frameY="-15" frameWidth="58" frameHeight="100"/>
+    <SubTexture name="powerups/letters/4_arov/arov_v" x="188" y="848" width="60" height="60" frameX="0" frameY="-15" frameWidth="64" frameHeight="100"/>
+    <SubTexture name="powerups/letters/5_dever/dever_d" x="320" y="891" width="72" height="100" frameX="-2" frameY="0" frameWidth="74" frameHeight="100"/>
+    <SubTexture name="powerups/letters/5_dever/dever_r" x="541" y="953" width="59" height="68" frameX="0" frameY="0" frameWidth="64" frameHeight="100"/>
+    <SubTexture name="powerups/letters/5_dever/dever_v" x="463" y="749" width="70" height="100" frameX="-3" frameY="0" frameWidth="75" frameHeight="100"/>
+    <SubTexture name="powerups/letters/6_shchin/shchin-n" x="469" y="448" width="18" height="82" frameX="0" frameY="-13" frameWidth="20" frameHeight="100"/>
+    <SubTexture name="powerups/letters/6_shchin/shchin_chet" x="740" y="767" width="59" height="75" frameX="-5" frameY="-13" frameWidth="68" frameHeight="100"/>
+    <SubTexture name="powerups/letters/6_shchin/shchin_sh" x="235" y="910" width="83" height="100" frameX="-2" frameY="0" frameWidth="90" frameHeight="100"/>
+    <SubTexture name="powerups/letters/6_shchin/shchin_yud" x="469" y="407" width="19" height="39" frameX="-3" frameY="-13" frameWidth="26" frameHeight="100"/>
+    <SubTexture name="powerups/letters/7_barad/barad_b" x="389" y="779" width="72" height="100" frameX="-4" frameY="0" frameWidth="76" frameHeight="100"/>
+    <SubTexture name="powerups/letters/7_barad/barad_d" x="189" y="674" width="74" height="70" frameX="0" frameY="0" frameWidth="80" frameHeight="100"/>
+    <SubTexture name="powerups/letters/7_barad/barad_r" x="124" y="809" width="62" height="100" frameX="-2" frameY="0" frameWidth="69" frameHeight="100"/>
+    <SubTexture name="powerups/letters/8_arbeh/arbeh_a" x="194" y="404" width="79" height="84" frameX="-6" frameY="0" frameWidth="85" frameHeight="100"/>
+    <SubTexture name="powerups/letters/8_arbeh/arbeh_b" x="467" y="851" width="70" height="100" frameX="-6" frameY="0" frameWidth="79" frameHeight="100"/>
+    <SubTexture name="powerups/letters/8_arbeh/arbeh_h" x="497" y="278" width="67" height="68" frameX="0" frameY="0" frameWidth="71" frameHeight="100"/>
+    <SubTexture name="powerups/letters/8_arbeh/arbeh_r" x="539" y="851" width="60" height="100" frameX="-3" frameY="0" frameWidth="66" frameHeight="100"/>
+    <SubTexture name="powerups/letters/9_choshech/choshech-chet" x="401" y="611" width="58" height="72" frameX="-5" frameY="0" frameWidth="63" frameHeight="100"/>
+    <SubTexture name="powerups/letters/9_choshech/choshech-sh" x="304" y="789" width="83" height="100" frameX="-4" frameY="0" frameWidth="92" frameHeight="100"/>
+    <SubTexture name="powerups/letters/9_choshech/choshech_chaf" x="654" y="851" width="51" height="87" frameX="0" frameY="-13" frameWidth="57" frameHeight="100"/>
+    <SubTexture name="powerups/letters/letter-bg" x="124" y="911" width="109" height="100"/>
+    <SubTexture name="powerups/letters/letter_holder" x="0" y="0" width="845" height="100"/>
+    <SubTexture name="powerups/letters/letter_holder_shorter" x="288" y="102" width="278" height="100"/>
+    <SubTexture name="powerups/plagues/10_makat_bechorot" x="267" y="611" width="132" height="79" frameX="0" frameY="-21" frameWidth="136" frameHeight="100"/>
+    <SubTexture name="powerups/plagues/1_dam" x="535" y="749" width="66" height="100"/>
+    <SubTexture name="powerups/plagues/2_tzfardeiah" x="489" y="450" width="75" height="96" frameX="-1" frameY="-4" frameWidth="77" frameHeight="100"/>
+    <SubTexture name="powerups/plagues/3_kinim" x="568" y="190" width="247" height="95" frameX="0" frameY="-1" frameWidth="251" frameHeight="100"/>
+    <SubTexture name="powerups/plagues/4_arov" x="401" y="685" width="56" height="92" frameX="-6" frameY="-6" frameWidth="65" frameHeight="100"/>
+    <SubTexture name="powerups/plagues/5_dever" x="770" y="844" width="109" height="81" frameX="-10" frameY="-12" frameWidth="122" frameHeight="100"/>
+    <SubTexture name="powerups/plagues/6_shchin" x="568" y="102" width="272" height="86" frameX="-6" frameY="-11" frameWidth="280" frameHeight="100"/>
+    <SubTexture name="powerups/plagues/7_barad" x="190" y="576" width="75" height="96" frameX="-1" frameY="-4" frameWidth="77" frameHeight="100"/>
+    <SubTexture name="powerups/plagues/8_arbeh" x="138" y="608" width="49" height="100" frameX="-1" frameY="0" frameWidth="51" frameHeight="100"/>
+    <SubTexture name="powerups/plagues/9_choshech" x="603" y="690" width="41" height="99" frameX="0" frameY="-1" frameWidth="41" frameHeight="100"/>
+    <SubTexture name="powerups/points-only/cold-coin" x="461" y="649" width="97" height="98" frameX="-1" frameY="-1" frameWidth="99" frameHeight="100"/>
+    <SubTexture name="powerups/points-only/matzah" x="701" y="581" width="104" height="97" frameX="-1" frameY="-1" frameWidth="108" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/10_makat_bechorot" x="461" y="548" width="100" height="99" frameX="0" frameY="-1" frameWidth="100" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/1_dam" x="135" y="710" width="52" height="97" frameX="-1" frameY="-2" frameWidth="59" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/2_tzfardeiah" x="0" y="608" width="136" height="99" frameX="-1" frameY="-1" frameWidth="140" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/3_kinim" x="701" y="492" width="106" height="87" frameX="-3" frameY="-12" frameWidth="112" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/4_arov" x="265" y="692" width="116" height="95" frameX="0" frameY="-3" frameWidth="117" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/5_dever" x="0" y="709" width="133" height="97" frameX="0" frameY="-1" frameWidth="133" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/6_shchin" x="842" y="102" width="141" height="93" frameX="-1" frameY="-4" frameWidth="148" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/7_barad" x="646" y="690" width="92" height="95" frameX="-2" frameY="-2" frameWidth="96" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/8_arbeh" x="566" y="490" width="133" height="96" frameX="-5" frameY="-1" frameWidth="139" frameHeight="100"/>
+    <SubTexture name="weapons/plagues/9_choshech" x="0" y="102" width="286" height="96" frameX="-1" frameY="-1" frameWidth="288" frameHeight="100"/>
+</TextureAtlas>

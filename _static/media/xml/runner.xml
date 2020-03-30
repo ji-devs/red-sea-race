@@ -1,0 +1,412 @@
+<xml>
+
+	<all_interface_assets>
+		<atlas name="buttons_and_headers">
+			<sd>
+				<sheet>media/buttons_and_headers/buttons_and_headers_SD.png</sheet> 
+				<xml>media/buttons_and_headers/buttons_and_headers_SD.xml</xml>
+			</sd>
+			<hd>
+				<sheet>media/buttons_and_headers/buttons_and_headers_HD.png</sheet> 
+				<xml>media/buttons_and_headers/buttons_and_headers_HD.xml</xml>
+			</hd>
+		</atlas>
+		
+		<audio name="intromusic" loop="true">sounds/music/intro_music_until_start.mp3</audio>
+	</all_interface_assets>
+	<intro>
+		<img name="intro_bg">
+			<sd>media/bgs/BG_SD.png</sd>
+			<hd>media/bgs/BG_HD.png</hd>
+		</img>
+
+
+
+		<instructions atlas="buttons_and_headers" x="14" y="579">intro/instructions</instructions>		
+		<credits atlas="buttons_and_headers" x="352" y="579">intro/credits</credits>
+		<start atlas="buttons_and_headers" x="711" y="579">intro/start</start>
+		<logo atlas="buttons_and_headers" x="243" y="14">intro/race_to_red_sea_logo</logo>
+
+		<copyright atlas="buttons_and_headers">intro/copyright</copyright>
+		
+		<settings>
+			<header_easy atlas="buttons_and_headers">intro/level_easy</header_easy>
+			<header_hard atlas="buttons_and_headers">intro/level_hard</header_hard>
+			
+			<btn_easy atlas="buttons_and_headers">intro/easy</btn_easy>
+			<btn_hard atlas="buttons_and_headers">intro/hard</btn_hard>
+		</settings>
+	</intro>
+
+	<instructions>
+		<img name="instructions_ipad_bg">
+			<sd>media/bgs/BG_INSTRUCTIONS_IPAD_SD.png</sd>
+			<hd>media/bgs/BG_INSTRUCTIONS_IPAD_HD.png</hd>
+		</img>
+
+		<img name="instructions_pc_bg">
+			<sd>media/bgs/BG_INSTRUCTIONS_PC_SD.png</sd>
+			<hd>media/bgs/BG_INSTRUCTIONS_PC_HD.png</hd>
+		</img>
+	</instructions>
+
+	<highscores>
+		<img name="highscores_bg">
+			<sd>media/bgs/BG_SD.png</sd>
+			<hd>media/bgs/BG_HD.png</hd>
+		</img>
+		<header y="15" atlas="buttons_and_headers">highscores/race_to_red_sea_logo</header>
+		<playagain y="15" atlas="buttons_and_headers">highscores/play_again</playagain>
+		<viewscores y="15" atlas="buttons_and_headers">highscores/see_high_scores</viewscores>
+		<sendscore y="15" atlas="buttons_and_headers">highscores/send_score</sendscore>
+		<mainmenu y="15" atlas="buttons_and_headers">highscores/main_menu</mainmenu>
+		<img name="highscores_stone">
+			<sd>media/highscores/large_stone_SD.png</sd>
+			<hd>media/highscores/large_stone_HD.png</hd>
+		</img>
+	</highscores>
+	<runnergame>
+		<fg>
+			<items>
+				<item atlas="bg">cactus_1</item>
+				<item atlas="bg">cactus_2</item>
+				<item atlas="bg">plam_tree</item>
+				<item atlas="bg">plam_tree_2</item>
+			</items>
+		</fg>
+		<introbutton x="10" y="10" atlas="buttons_and_headers">back_to_menu</introbutton>
+		<controller>
+			<up atlas="gameobjects">keys/up</up>
+			<down atlas="gameobjects">keys/down</down>
+			<left atlas="gameobjects">keys/left</left>
+			<right atlas="gameobjects">keys/right</right>
+			<f atlas="gameobjects">keys/shoot</f>
+			
+		</controller>
+		<stats>
+			<lives>lives</lives>
+			<attacks>
+				<weapon>weapons/plagues/1_dam</weapon>
+				<weapon>weapons/plagues/2_tzfardeiah</weapon>
+				<weapon>weapons/plagues/3_kinim</weapon>
+				<weapon>weapons/plagues/4_arov</weapon>
+				<weapon>weapons/plagues/5_dever</weapon>
+				<weapon>weapons/plagues/6_shchin</weapon>
+				<weapon>weapons/plagues/7_barad</weapon>
+				<weapon>weapons/plagues/8_arbeh</weapon>
+				<weapon>weapons/plagues/9_choshech</weapon>
+				<weapon>weapons/plagues/10_makat_bechorot</weapon>
+			</attacks>
+		</stats>
+
+		<bg>
+			<atlas name="bg">
+				<sd>
+					<sheet>media/runnergame/bg/bg_SD.png</sheet> 
+					<xml>media/runnergame/bg/bg_SD.xml</xml>
+				</sd>
+				<hd>
+					<sheet>media/runnergame/bg/bg_HD.png</sheet> 
+					<xml>media/runnergame/bg/bg_HD.xml</xml>
+				</hd>
+			</atlas>
+
+			<img name="bg_1_1">
+				<sd>media/runnergame/bg/sd/1/bg_1.png</sd>
+				<hd>media/runnergame/bg/hd/1/bg_1.png</hd>
+			</img>
+			<img name="bg_1_2">
+				<sd>media/runnergame/bg/sd/1/bg_2.png</sd>
+				<hd>media/runnergame/bg/hd/1/bg_2.png</hd>
+			</img>
+			<img name="bg_1_3">
+				<sd>media/runnergame/bg/sd/1/bg_3.png</sd>
+				<hd>media/runnergame/bg/hd/1/bg_3.png</hd>
+			</img>
+			<img name="bg_1_4">
+				<sd>media/runnergame/bg/sd/1/bg_4.png</sd>
+				<hd>media/runnergame/bg/hd/1/bg_4.png</hd>
+			</img>
+			<img name="bg_2_1">
+				<sd>media/runnergame/bg/sd/2/bg_1.png</sd>
+				<hd>media/runnergame/bg/hd/2/bg_1.png</hd>
+			</img>
+			<img name="bg_2_2">
+				<sd>media/runnergame/bg/sd/2/bg_2.png</sd>
+				<hd>media/runnergame/bg/hd/2/bg_2.png</hd>
+			</img>
+			<img name="bg_2_3">
+				<sd>media/runnergame/bg/sd/2/bg_3.png</sd>
+				<hd>media/runnergame/bg/hd/2/bg_3.png</hd>
+			</img>
+			<img name="bg_2_4">
+				<sd>media/runnergame/bg/sd/2/bg_4.png</sd>
+				<hd>media/runnergame/bg/hd/2/bg_4.png</hd>
+			</img>
+
+			<img name="bg_3_1">
+				<sd>media/runnergame/bg/sd/3/bg_1.png</sd>
+				<hd>media/runnergame/bg/hd/3/bg_1.png</hd>
+			</img>
+			<img name="bg_3_2">
+				<sd>media/runnergame/bg/sd/3/bg_2.png</sd>
+				<hd>media/runnergame/bg/hd/3/bg_2.png</hd>
+			</img>
+			<img name="bg_3_3">
+				<sd>media/runnergame/bg/sd/3/bg_3.png</sd>
+				<hd>media/runnergame/bg/hd/3/bg_3.png</hd>
+			</img>
+			<img name="bg_3_4">
+				<sd>media/runnergame/bg/sd/3/bg_4.png</sd>
+				<hd>media/runnergame/bg/hd/3/bg_4.png</hd>
+			</img>
+
+		</bg>
+
+		<gameobjects>
+
+			<atlas name="gameobjects">
+				<sd>
+					<sheet>media/runnergame/gameobjects/RunnerGameObjects_SD.png</sheet> 
+					<xml>media/runnergame/gameobjects/RunnerGameObjects_SD.xml</xml>
+				</sd>
+				<hd>
+					<sheet>media/runnergame/gameobjects/RunnerGameObjects_HD.png</sheet>
+					<xml>media/runnergame/gameobjects/RunnerGameObjects_HD.xml</xml>
+				</hd>
+			</atlas>
+			<enemies>
+				<enemy name="fireball" graphics="mc">enemies/fireball</enemy>
+				<enemy name="egyptian" graphics="dbones" />
+			</enemies>
+			<platform name="platform">
+				<left>environment/platform-left</left>
+				<middle>environment/platform-middle</middle>
+				<right>environment/platform-right</right>
+			</platform>
+			<attacks>
+				<weapon>weapons/plagues/1_dam</weapon>
+				<weapon>weapons/plagues/2_tzfardeiah</weapon>
+				<weapon>weapons/plagues/3_kinim</weapon>
+				<weapon>weapons/plagues/4_arov</weapon>
+				<weapon>weapons/plagues/5_dever</weapon>
+				<weapon>weapons/plagues/6_shchin</weapon>
+				<weapon>weapons/plagues/7_barad</weapon>
+				<weapon>weapons/plagues/8_arbeh</weapon>
+				<weapon>weapons/plagues/9_choshech</weapon>
+				<weapon>weapons/plagues/10_makat_bechorot</weapon>
+			</attacks>
+			<powerups>
+				<plagues>
+					<plague>powerups/plagues/1_dam</plague>
+					<plague>powerups/plagues/2_tzfardeiah</plague>
+					<plague>powerups/plagues/3_kinim</plague>
+					<plague>powerups/plagues/4_arov</plague>
+					<plague>powerups/plagues/5_dever</plague>
+					<plague>powerups/plagues/6_shchin</plague>
+					<plague>powerups/plagues/7_barad</plague>
+					<plague>powerups/plagues/8_arbeh</plague>
+					<plague>powerups/plagues/9_choshech</plague>
+					<plague>powerups/plagues/10_makat_bechorot</plague>
+				</plagues>
+				<pointsonly>
+					<matzah>powerups/points-only/matzah</matzah>
+					<coin>powerups/points-only/cold-coin</coin>
+				</pointsonly>
+				<words>
+					<word>
+						<letter audio="daled">powerups/letters/1_dam/dam_d</letter>
+						<letter audio="mem">powerups/letters/1_dam/dam_m</letter>
+					</word>
+					<word>
+						<letter audio="tzadik">powerups/letters/2_tzfardeiah/tzfardeiah_tzadik</letter>
+						<letter audio="peh">powerups/letters/2_tzfardeiah/tzfardeiah_f</letter>
+						<letter audio="resh">powerups/letters/2_tzfardeiah/tzfardeiah_r</letter>
+						<letter audio="daled">powerups/letters/2_tzfardeiah/tzfardeiah_d</letter>
+						<letter audio="ayin">powerups/letters/2_tzfardeiah/tzfardeiah_ayin</letter>
+					</word>
+					<word>
+						<letter audio="chaf">powerups/letters/3_kinim/kinim_caf</letter>
+						<letter audio="nun">powerups/letters/3_kinim/kinim_n</letter>
+						<letter audio="yud">powerups/letters/3_kinim/kinim_yud</letter>
+						<letter audio="mem">powerups/letters/3_kinim/kinim_m</letter>
+					</word>
+					<word>
+						<letter audio="ayin">powerups/letters/4_arov/arov_ayin</letter>
+						<letter audio="resh">powerups/letters/4_arov/arov_r</letter>
+						<letter audio="vav">powerups/letters/4_arov/arov-o</letter>
+						<letter audio="bet">powerups/letters/4_arov/arov_v</letter>	
+
+					</word>
+					<word>
+						<letter audio="daled">powerups/letters/5_dever/dever_d</letter>
+						<letter audio="bet">powerups/letters/5_dever/dever_v</letter>
+						<letter audio="resh">powerups/letters/5_dever/dever_r</letter>
+					</word>
+					<word>
+						<letter audio="shin">powerups/letters/6_shchin/shchin_sh</letter>
+						<letter audio="chet">powerups/letters/6_shchin/shchin_chet</letter>
+						<letter audio="yud">powerups/letters/6_shchin/shchin_yud</letter>
+						<letter audio="nun">powerups/letters/6_shchin/shchin-n</letter>
+					</word>
+					<word>
+						<letter audio="bet">powerups/letters/7_barad/barad_b</letter>
+						<letter audio="resh">powerups/letters/7_barad/barad_r</letter>
+						<letter audio="daled">powerups/letters/7_barad/barad_d</letter>
+
+					</word>
+					<word>
+						<letter audio="aleph">powerups/letters/8_arbeh/arbeh_a</letter>
+						<letter audio="resh">powerups/letters/8_arbeh/arbeh_r</letter>						
+						<letter audio="bet">powerups/letters/8_arbeh/arbeh_b</letter>
+						<letter audio="heh">powerups/letters/8_arbeh/arbeh_h</letter>
+
+					</word>
+					<word>
+						<letter audio="chet">powerups/letters/9_choshech/choshech-chet</letter>
+						<letter audio="shin">powerups/letters/9_choshech/choshech-sh</letter>
+						<letter audio="chaf">powerups/letters/9_choshech/choshech_chaf</letter>
+					</word>
+					<word>
+						<letter audio="mem">powerups/letters/10_makat_bechorot/makat_bechorot_m</letter>
+						<letter audio="chaf">powerups/letters/10_makat_bechorot/makat_bechorot_chaf</letter>
+						<letter audio="tav">powerups/letters/10_makat_bechorot/makat_bechorot_t</letter>
+						<letter audio="bet">powerups/letters/10_makat_bechorot/makat_bechorot_b</letter>
+
+						<letter audio="chaf">powerups/letters/10_makat_bechorot/makat_bechorot_chaf2</letter>
+						<letter audio="vav">powerups/letters/10_makat_bechorot/makat_bechorot_o</letter>
+						<letter audio="resh">powerups/letters/10_makat_bechorot/makat_bechorot_r</letter>
+						<letter audio="vav">powerups/letters/10_makat_bechorot/makat_bechorot_o</letter>
+						<letter audio="tav">powerups/letters/10_makat_bechorot/makat_bechorot_t</letter>
+					</word>
+				</words>
+			</powerups>
+		</gameobjects>
+
+		<sounds>
+			<audio name="gamemusic" loop="true">sounds/music/mjgds_bgmusic.mp3</audio>
+			<audio name="coin">sounds/fx/coin.mp3</audio>
+			<audio name="hit">sounds/fx/hit.mp3</audio>
+			<audio name="powerup">sounds/fx/powerup.mp3</audio>
+
+			<plagues>
+				<audio name="1_dam">sounds/start-level/1_dam.mp3</audio>
+				<audio name="2_tzfardeiah">sounds/start-level/2_tzfardeiah.mp3</audio>
+				<audio name="3_kinim">sounds/start-level/3_kinim.mp3</audio>
+				<audio name="4_arov">sounds/start-level/4_arov.mp3</audio>
+				<audio name="5_dever">sounds/start-level/5_dever.mp3</audio>
+				<audio name="6_shchin">sounds/start-level/6_shchin.mp3</audio>
+				<audio name="7_barad">sounds/start-level/7_barad.mp3</audio>
+				<audio name="8_arbeh">sounds/start-level/8_arbeh.mp3</audio>
+				<audio name="9_choshech">sounds/start-level/9_choshech.mp3</audio>
+				<audio name="10_makat_bechorot">sounds/start-level/10_makat_bechorot.mp3</audio>
+			</plagues>
+
+			<letters>
+				<audio name="aleph">sounds/plague-letters/aleph.mp3</audio>
+				<audio name="bet">sounds/plague-letters/bet.mp3</audio>
+				<audio name="gimmel">sounds/plague-letters/gimmel.mp3</audio>
+				<audio name="daled">sounds/plague-letters/daled.mp3</audio>
+				<audio name="heh">sounds/plague-letters/heh.mp3</audio>
+				<audio name="vav">sounds/plague-letters/vav.mp3</audio>
+				<audio name="zayin">sounds/plague-letters/zayin.mp3</audio>
+				<audio name="chet">sounds/plague-letters/chet.mp3</audio>
+				<audio name="tet">sounds/plague-letters/tet.mp3</audio>
+				<audio name="yud">sounds/plague-letters/yud.mp3</audio>
+				<audio name="chaf">sounds/plague-letters/chaf.mp3</audio>
+				<audio name="lamed">sounds/plague-letters/lamed.mp3</audio>
+				<audio name="mem">sounds/plague-letters/mem.mp3</audio>
+				<audio name="nun">sounds/plague-letters/nun.mp3</audio>
+				<audio name="samech">sounds/plague-letters/samech.mp3</audio>
+				<audio name="ayin">sounds/plague-letters/ayin.mp3</audio>				
+				<audio name="peh">sounds/plague-letters/peh.mp3</audio>				
+				<audio name="tzadik">sounds/plague-letters/tzadik.mp3</audio>
+				<audio name="kuf">sounds/plague-letters/kuf.mp3</audio>
+				<audio name="resh">sounds/plague-letters/resh.mp3</audio>				
+				<audio name="shin">sounds/plague-letters/shin.mp3</audio>
+				<audio name="tav">sounds/plague-letters/tav.mp3</audio>
+			</letters>
+
+			<words>
+				<audio name="word-1_dam">sounds/plague-words/1_dam.mp3</audio>
+				<audio name="word-2_tzfardeiah">sounds/plague-words/2_tzfardeiah.mp3</audio>
+				<audio name="word-3_kinim">sounds/plague-words/3_kinim.mp3</audio>
+				<audio name="word-4_arov">sounds/plague-words/4_arov.mp3</audio>
+				<audio name="word-5_dever">sounds/plague-words/5_dever.mp3</audio>
+				<audio name="word-6_shchin">sounds/plague-words/6_shchin.mp3</audio>
+				<audio name="word-7_barad">sounds/plague-words/7_barad.mp3</audio>
+				<audio name="word-8_arbeh">sounds/plague-words/8_arbeh.mp3</audio>
+				<audio name="word-9_choshech">sounds/plague-words/9_choshech.mp3</audio>
+				<audio name="word-10_makat_bechorot">sounds/plague-words/10_makat_bechorot.mp3</audio>
+			</words>
+		</sounds>
+
+		<dragonbones>
+			<dbones name="egyptian">
+				<hd>media/runnergame/dragonbones/egyptian_sd.png</hd>
+				<sd>media/runnergame/dragonbones/egyptian_sd.png</sd>
+			</dbones>
+
+			<dbones name="israelite">
+				<hd>media/runnergame/dragonbones/israelite_sd.png</hd>
+				<sd>media/runnergame/dragonbones/israelite_sd.png</sd>
+			</dbones>
+		</dragonbones>
+	</runnergame>
+
+	<interlude>
+		<img name="interlude_bg">
+			<sd>media/bgs/INTERLUDE_SD.png</sd>
+			<hd>media/bgs/INTERLUDE_HD.png</hd>
+		</img>
+		<audio name="interlude">sounds/endings/all-plagues-ending.mp3</audio>
+	</interlude>
+	<credits>
+		<header atlas="buttons_and_headers">credits/credits_mainsvreen</header>
+		<close atlas="buttons_and_headers">generic/left</close>
+		<img name="credits_bg">
+			<sd>media/bgs/BG_SD.png</sd>
+			<hd>media/bgs/BG_HD.png</hd>
+		</img>
+		<creditslist speed="50">
+			<![CDATA[<p align="center">
+
+<font face="Comic Sans MS" size="24" color="#99261e">					
+<b>Race to the Red Sea</b> is an international collaborative project between Jewish Interactive (based in South Africa, UK and Israel) and Martin J Gottlieb Jewish Day School (Jacksonville, Florida).
+
+The students designed the game and its assets under the guidance of Jewish Interactive and their teacher. Jewish Interactive produced the game. 
+</font>
+
+<font face="Comic Sans MS" size="24" color="#99261e">
+<b>MJGDS Team</b>
+MJGDS teacher/director: Mrs Gutterman
+Jamie: Product Manager
+Itamar: Product Manager
+Zoe: Art director
+Jolie: Graphic Designer
+Gil: Graphic Designer
+Zach: Photographer
+Benjamin: Audio Engineer
+Elior: Audio Engineer
+Rebecca: Marketing
+Channah: Marketer
+</font>
+
+<font face="Comic Sans MS" size="24" color="#99261e">
+<b>JI Team</b>
+With thanks to the JI team for mentoring and believing in the talent of young adults and for their individual roles:
+
+Instructional designer and production management: Corinne Ossendryver
+Programmer and game mechanics: David Komer
+Graphics:  Rachel Silke
+JI Director: Nicole Newfield
+</font>
+
+<font face="Comic Sans MS" size="24" color="#99261e">
+Thank you to all the students who submitted game ideas and we look forward to collaborating and producing them in the future.
+ 
+This is the second year of this project with MJGDS. The first product created together was "Whack-a-Haman".  Thank you to Jon Mitzmacher and Andrea Hernandez, Corinne Ossendryver, Chana Kanzen and Nicole Newfield for initiating this project and to Shana Gutterman for making it happen. 
+</font>
+</p>]]></creditslist>
+	</credits>
+</xml>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:d2fe27a9339158b66fbb40a03758e774:a9146ad79e47c440d9cb5769065c4b69:348bc3bbfc500b207ddd53f07f41b741$ -->
+<TextureAtlas imagePath="buttons_and_headers_HD.png">
+    <SubTexture name="back_to_menu" x="1912" y="158" width="125" height="140"/>
+    <SubTexture name="copyright" x="0" y="861" width="1154" height="94" frameX="-30" frameY="-24" frameWidth="1208" frameHeight="144"/>
+    <SubTexture name="credits/credits_mainsvreen" x="1316" y="760" width="524" height="210"/>
+    <SubTexture name="generic/left" x="1912" y="300" width="122" height="100"/>
+    <SubTexture name="highscores/credits_end_screen" x="0" y="1266" width="494" height="210"/>
+    <SubTexture name="highscores/main_menu" x="1316" y="550" width="536" height="208"/>
+    <SubTexture name="highscores/play_again" x="476" y="957" width="494" height="258" frameX="-35" frameY="0" frameWidth="529" frameHeight="258"/>
+    <SubTexture name="highscores/race_to_red_sea_logo" x="1316" y="158" width="594" height="390" frameX="-41" frameY="-11" frameWidth="648" frameHeight="405"/>
+    <SubTexture name="highscores/see_high_scores" x="0" y="1478" width="494" height="210"/>
+    <SubTexture name="highscores/send_score" x="0" y="1690" width="494" height="210"/>
+    <SubTexture name="highscores/send_score_faded" x="972" y="972" width="493" height="210" frameX="0" frameY="0" frameWidth="494" frameHeight="210"/>
+    <SubTexture name="intro/copyright" x="0" y="861" width="1154" height="94" frameX="-30" frameY="-24" frameWidth="1208" frameHeight="144"/>
+    <SubTexture name="intro/credits" x="0" y="1902" width="368" height="142"/>
+    <SubTexture name="intro/easy" x="1467" y="972" width="440" height="158"/>
+    <SubTexture name="intro/hard" x="1467" y="1132" width="440" height="158"/>
+    <SubTexture name="intro/instructions" x="1316" y="0" width="634" height="156"/>
+    <SubTexture name="intro/level_easy" x="972" y="1184" width="440" height="158"/>
+    <SubTexture name="intro/level_hard" x="496" y="1217" width="440" height="158"/>
+    <SubTexture name="intro/level_medium" x="1414" y="1292" width="440" height="158"/>
+    <SubTexture name="intro/medium" x="938" y="1344" width="440" height="158"/>
+    <SubTexture name="intro/race_to_red_sea_logo" x="0" y="0" width="1314" height="859" frameX="-91" frameY="-26" frameWidth="1432" frameHeight="896"/>
+    <SubTexture name="intro/start" x="0" y="972" width="474" height="292"/>
+</TextureAtlas>

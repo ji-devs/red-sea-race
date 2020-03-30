@@ -1,0 +1,1 @@
+[![Build Status](https://github.com/jewish-interactive/race-to-the-red-sea/workflows/Test%2C%20Build%2C%20and%20Deploy/badge.svg)](https://github.com/jewish-interactive/race-to-the-red-sea/actions)

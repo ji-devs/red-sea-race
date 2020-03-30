@@ -1,0 +1,65 @@
+[
+    {
+        "name": "bird_1",
+        "x": 1858,
+        "y": 921,
+        "width": 109,
+        "height": 116
+    },
+    {
+        "name": "bird_2",
+        "x": 1122,
+        "y": 1482,
+        "width": 235,
+        "height": 123
+    },
+    {
+        "name": "camels",
+        "x": 1290,
+        "y": 921,
+        "width": 566,
+        "height": 152
+    },
+    {
+        "name": "cloud_1",
+        "x": 0,
+        "y": 1807,
+        "width": 1120,
+        "height": 235
+    },
+    {
+        "name": "cloud_2",
+        "x": 1290,
+        "y": 783,
+        "width": 648,
+        "height": 136
+    },
+    {
+        "name": "cloud_3",
+        "x": 0,
+        "y": 1561,
+        "width": 1120,
+        "height": 244
+    },
+    {
+        "name": "palm_tree",
+        "x": 0,
+        "y": 783,
+        "width": 597,
+        "height": 776
+    },
+    {
+        "name": "palm_tree_2",
+        "x": 599,
+        "y": 783,
+        "width": 689,
+        "height": 697
+    },
+    {
+        "name": "pyramid",
+        "x": 0,
+        "y": 0,
+        "width": 2023,
+        "height": 781
+    }
+]
