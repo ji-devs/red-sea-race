@@ -12,9 +12,9 @@ mod world;
 mod tick;
 mod camera;
 mod geometry;
+mod texture;
 
 use wasm_bindgen::prelude::*;
-use shipyard::prelude::*;
 use std::rc::Rc;
 use renderer::Renderer;
 

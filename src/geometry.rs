@@ -1,16 +1,25 @@
 use awsm_web::webgl::{
     WebGl2Renderer, 
     Id, 
-    VertexArray, 
-    AttributeOptions, 
-    DataType,
     BufferData,
     BufferTarget,
     BufferUsage
 };
 use wasm_bindgen::prelude::*;
 
-pub async fn load_geometry(webgl:&mut WebGl2Renderer) -> Result<Id, JsValue> {
+#[derive(Debug)]
+pub struct Bounds {
+    pub x: f64,
+    pub y: f64,
+    pub width: f64,
+    pub height: f64
+}
+
+pub trait BoundsExt {
+    fn get_bounds(&self) -> Bounds;
+}
+
+pub async fn load_geometry (webgl:&mut WebGl2Renderer) -> Result<Id, JsValue> {
     let buffer_id = webgl.create_buffer()?;
 
     webgl.upload_buffer(
@@ -22,19 +31,7 @@ pub async fn load_geometry(webgl:&mut WebGl2Renderer) -> Result<Id, JsValue> {
         ),
     )?;
 
-    let vao_id = webgl.create_vertex_array()?;
-
-    webgl.assign_vertex_array(
-        vao_id,
-        None,
-        &[VertexArray {
-            attribute_name: "a_vertex",
-            buffer_id,
-            opts: &AttributeOptions::new(2, DataType::Float),
-        }],
-    )?;
-
-    Ok(vao_id)
+    Ok(buffer_id)
  }
 
  static QUAD_GEOM_UNIT: [f32; 8] = [

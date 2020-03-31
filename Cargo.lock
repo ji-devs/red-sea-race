@@ -64,9 +64,9 @@ checksum = "f8aac770f1885fd7e387acedd76065302551364496e46b3dd00860b2f8359b9d"
 
 [[package]]
 name = "awsm_web"
-version = "0.1.7"
+version = "0.1.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "89b8600dc5da683288b65e6ba98693cfb867fba85d24b4756f448ac5a743ba64"
+checksum = "6bcadc37a9ee6d3fa2fa0430ad67cd4a859853a3812b360c567f8ba1b08c98da"
 dependencies = [
  "beach_map",
  "futures",
@@ -462,9 +462,9 @@ checksum = "8e946095f9d3ed29ec38de908c22f95d9ac008e424c7bcae54c75a79c527c694"
 
 [[package]]
 name = "proc-macro2"
-version = "1.0.9"
+version = "1.0.10"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6c09721c6781493a2a492a96b5a5bf19b65917fe6728884e7c44dd0c60ca3435"
+checksum = "df246d292ff63439fea9bc8c0a270bed0e390d5ebd4db4ba15aba81111b5abe3"
 dependencies = [
  "unicode-xid",
 ]
@@ -680,18 +680,18 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.13"
+version = "1.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e3711fd1c4e75b3eff12ba5c40dba762b6b65c5476e8174c1a664772060c49bf"
+checksum = "f0570dc61221295909abdb95c739f2e74325e14293b2026b0a7e195091ec54ae"
 dependencies = [
  "thiserror-impl",
 ]
 
 [[package]]
 name = "thiserror-impl"
-version = "1.0.13"
+version = "1.0.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ae2b85ba4c9aa32dd3343bd80eb8d22e9b54b7688c17ea3907f236885353b233"
+checksum = "227362df41d566be41a28f64401e07a043157c21c14b9785a0d8e256f940a8fd"
 dependencies = [
  "proc-macro2",
  "quote",

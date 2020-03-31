@@ -1,13 +1,9 @@
 use wasm_bindgen::prelude::*;
-use web_sys::HtmlImageElement;
 use awsm_web::loaders::fetch;
 use awsm_web::webgl::{WebGl2Renderer, Id, TextureTarget, SimpleTextureOptions, PixelFormat, WebGlTextureSource};
 use serde::Deserialize;
-use std::rc::Rc;
-use shipyard::prelude::*;
 use crate::path;
 use crate::media::*;
-use crate::renderer::Renderer;
 
 pub async fn load_shaders() -> Result<(String, String), JsValue> {
     let vertex = fetch::text(&path::media_url(&"shaders/vertex.glsl")).await?;
@@ -27,10 +23,12 @@ struct RawFrame {
 
 pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
     //Load BG Media
-    let (texture_id, frames) = load_texture_atlas(webgl, "bg/bg_items").await?;
+    let (texture_id, frames, atlas_size) = load_texture_atlas(webgl, "bg/bg_items").await?;
     let get_frame = |name:&str| get_tex_frame(name, texture_id, &frames);
 
     let bg = Bg {
+        atlas_size,
+
         birds: vec![
         get_frame("bird_1"),
         get_frame("bird_2")
@@ -56,7 +54,7 @@ pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
 
 }
 
-async fn load_audio() -> Result<(), JsValue> {
+async fn _load_audio() -> Result<(), JsValue> {
     let err:Result<(), JsValue> = Err(JsValue::from_str("TODO - load audio!"));
     
     err.unwrap_throw();
@@ -64,9 +62,10 @@ async fn load_audio() -> Result<(), JsValue> {
     Ok(())
 }
 
-async fn load_texture_atlas(webgl:&mut WebGl2Renderer, src:&str) -> Result<(Id, Vec<RawFrame>), JsValue> {
+async fn load_texture_atlas(webgl:&mut WebGl2Renderer, src:&str) -> Result<(Id, Vec<RawFrame>, (usize, usize)), JsValue> {
     let img = fetch::image(&path::media_url(&format!("images/{}.png", src))).await?;
     let frames:Vec<RawFrame> = fetch::json(&path::media_url(&format!("images/{}.json", src))).await?;
+    let atlas_size = (img.width() as usize, img.height() as usize);
 
     let texture_id = webgl.create_texture()?;
     webgl.assign_simple_texture(
@@ -79,7 +78,7 @@ async fn load_texture_atlas(webgl:&mut WebGl2Renderer, src:&str) -> Result<(Id, 
         &WebGlTextureSource::ImageElement(&img),
     )?;
 
-    Ok((texture_id, frames))
+    Ok((texture_id, frames, atlas_size))
     
 }
 

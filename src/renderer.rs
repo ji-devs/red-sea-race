@@ -1,14 +1,18 @@
 use awsm_web::webgl::{
     Id,
-    WebGlRenderer, 
     WebGl2Renderer, 
-    WebGlCommon, 
     WebGlContextOptions,
     get_webgl_context_2,
     GlToggle,
     BlendFactor,
     BufferMask,
-    BeginMode
+    BeginMode,
+    AttributeOptions, 
+    DataType,
+    BufferData,
+    BufferTarget,
+    BufferUsage,
+    VertexArray
 };
 use web_sys::{HtmlCanvasElement};
 use wasm_bindgen::JsCast;
@@ -19,12 +23,15 @@ use crate::media::*;
 use crate::camera::Camera;
 use crate::loader::load_shaders;
 use crate::geometry::load_geometry;
+use crate::texture::{get_uvs, Uvs};
 
 pub struct Renderer {
     pub canvas: HtmlCanvasElement,
     pub webgl: WebGl2Renderer,
     pub simple_program_id: Id,
-    pub quad_vao_id: Id
+    pub vao_id: Id,
+    pub geom_buffer_id: Id,
+    pub tex_buffer_id: Id,
 }
 
 impl Renderer {
@@ -48,11 +55,22 @@ impl Renderer {
         webgl.gl.clear_color(1.0, 1.0, 1.0, 1.0);
 
         let (vertex, fragment) = load_shaders().await.expect("could not load shaders");
-        let simple_program_id = webgl.compile_program(&vertex, &fragment).unwrap_throw();
+        
+        cfg_if::cfg_if! {
+            if #[cfg(feature = "dev")] {
+                let simple_program_id = webgl.compile_program(&vertex, &fragment).unwrap();
+            } else {
+                let simple_program_id = webgl.compile_program(&vertex, &fragment).unwrap_throw();
+            }
+        }
 
-        let quad_vao_id = load_geometry(&mut webgl).await?;
+        let vao_id = webgl.create_vertex_array()?;
 
-        Ok(Self { canvas, webgl, simple_program_id, quad_vao_id})
+        let geom_buffer_id = load_geometry(&mut webgl).await?;
+
+        let tex_buffer_id = webgl.create_buffer()?;
+
+        Ok(Self { canvas, webgl, simple_program_id, vao_id, geom_buffer_id, tex_buffer_id})
     }
 
     pub fn pre_render(&mut self) {
@@ -67,16 +85,18 @@ impl Renderer {
     //Also TODO - render just the given frame ;)
     //Also TODO - instancing :P
     pub fn render_bg(&mut self, bg:&Bg, camera_mat: &Matrix4<f32>) {
-        let webgl = &mut self.webgl;
        
-        webgl.activate_program(self.simple_program_id).unwrap_throw(); 
+        self.webgl.activate_program(self.simple_program_id).unwrap_throw(); 
 
+        self.update_vao_data(get_uvs(&bg.pyramid, bg.atlas_size)).unwrap_throw();
         //will eventually be reset per sprite
         let texture_id = bg.pyramid.texture_id;
-        let width = bg.pyramid.width;
-        let height= bg.pyramid.height;
-        let pos_x = 0.0;
-        let pos_y = 0.0;
+
+        let webgl = &mut self.webgl;
+        let width = bg.pyramid.width / 3;
+        let height= bg.pyramid.height / 3;
+        let pos_x = 100.0;
+        let pos_y = 100.0;
         
         let scaling_mat = Matrix4::new_nonuniform_scaling(&Vector3::new(
                     width as f32,
@@ -88,8 +108,42 @@ impl Renderer {
         webgl.upload_uniform_mat_4("u_camera", &camera_mat.as_slice()).unwrap_throw();
         webgl.upload_uniform_mat_4("u_size", &scaling_mat.as_slice()).unwrap_throw();
         webgl.activate_texture_for_sampler(texture_id, "u_sampler").unwrap_throw();
-        webgl.activate_vertex_array(self.quad_vao_id).unwrap_throw();
+        webgl.activate_vertex_array(self.vao_id).unwrap_throw();
         webgl.draw_arrays(BeginMode::TriangleStrip, 0, 4);
+
+    }
+
+    fn update_vao_data(&mut self, uvs:Uvs) -> Result<(), JsValue> {
+        let webgl = &self.webgl;
+
+        webgl.upload_buffer(
+            self.tex_buffer_id,
+            BufferData::new(
+                uvs,
+                BufferTarget::ArrayBuffer,
+                BufferUsage::DynamicDraw,
+            ),
+        )?;
+
+
+        webgl.assign_vertex_array(
+            self.vao_id,
+            None,
+            &[
+                VertexArray {
+                    attribute_name: "a_geom_vertex",
+                    buffer_id: self.geom_buffer_id,
+                    opts: AttributeOptions::new(2, DataType::Float),
+                },
+                VertexArray {
+                    attribute_name: "a_tex_vertex",
+                    buffer_id: self.tex_buffer_id,
+                    opts: AttributeOptions::new(2, DataType::Float),
+                }
+            ],
+        )?;
+
+        Ok(())
     }
 }
 

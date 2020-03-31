@@ -1,5 +1,4 @@
 use awsm_web::tick::{MainLoop, MainLoopOptions, RafLoop};
-use std::cell::RefCell;
 use std::rc::Rc;
 use shipyard::prelude::*;
 use wasm_bindgen::prelude::*;
@@ -18,22 +17,22 @@ impl GameLoop {
     fn new(world:Rc<World>) -> Result<Self, JsValue> {
         // loop was ported from https://github.com/IceCreamYou/MainLoop.js#usage
         let begin = {
-            let world = Rc::clone(&world);
-            move |time, delta| {
+            let _world = Rc::clone(&world);
+            move |_time, _delta| {
                 //update input
             }
         };
 
         let update = {
-            let world = Rc::clone(&world);
-            move |delta| {
+            let _world = Rc::clone(&world);
+            move |_delta| {
                 //update motion
             }
         };
 
         let draw = {
             let world = Rc::clone(&world);
-            move |interpolation| {
+            move |_interpolation| {
                 render(&world);
                 //render
             }
