@@ -18,13 +18,14 @@ use web_sys::{HtmlCanvasElement};
 use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
 use shipyard::prelude::*;
+use shipyard_scenegraph::*;
 use nalgebra::{Matrix4, Vector3};
 use crate::media::*;
 use crate::camera::Camera;
 use crate::loader::load_shaders;
 use crate::geometry::load_geometry;
-use crate::texture::{get_uvs, Uvs};
-
+use crate::texture::{self, *};
+use crate::components::Renderable;
 pub struct Renderer {
     pub canvas: HtmlCanvasElement,
     pub webgl: WebGl2Renderer,
@@ -70,6 +71,23 @@ impl Renderer {
 
         let tex_buffer_id = webgl.create_buffer()?;
 
+        webgl.assign_vertex_array(
+            vao_id,
+            None,
+            &[
+                VertexArray {
+                    attribute_name: "a_geom_vertex",
+                    buffer_id: geom_buffer_id,
+                    opts: AttributeOptions::new(2, DataType::Float),
+                },
+                VertexArray {
+                    attribute_name: "a_tex_vertex",
+                    buffer_id: tex_buffer_id,
+                    opts: AttributeOptions::new(2, DataType::Float),
+                }
+            ],
+        )?;
+
         Ok(Self { canvas, webgl, simple_program_id, vao_id, geom_buffer_id, tex_buffer_id})
     }
 
@@ -81,12 +99,45 @@ impl Renderer {
         webgl.clear(&[ BufferMask::ColorBufferBit, BufferMask::DepthBufferBit, ]);
     }
 
-    //TODO - see note in render() below
-    //Also TODO - render just the given frame ;)
-    //Also TODO - instancing :P
+    pub fn render<'a> (&mut self, renderables: impl Shiperator<Item = (&'a Renderable, &'a WorldTransform)>, camera_mat:&Matrix4<f32>) {
+        self.pre_render();
+        
+        let webgl = &mut self.webgl;
+
+        webgl.activate_program(self.simple_program_id).unwrap_throw(); 
+        webgl.upload_uniform_mat_4("u_camera", &camera_mat.as_slice()).unwrap_throw();
+
+        let mut scratch:[f32;16] = [0.0;16];
+        renderables.for_each(|(renderable, world_transform)| {
+            let webgl = &mut self.webgl;
+            let Texture {texture_id, uvs, tex_width, tex_height} = renderable.texture;
+
+            log::info!("{:?}", world_transform);
+            
+            //quad scaler
+            webgl.upload_uniform_fvals_2("u_quad_scaler", (tex_width as f32, tex_height as f32)).unwrap_throw();
+
+            //model matrix
+            world_transform.0.write_to_vf32(&mut scratch);
+            
+            webgl.upload_buffer(
+                self.tex_buffer_id,
+                BufferData::new(
+                    uvs,
+                    BufferTarget::ArrayBuffer,
+                    BufferUsage::DynamicDraw,
+                ),
+            ).unwrap_throw();
+            
+            webgl.upload_uniform_mat_4("u_model", &scratch).unwrap_throw();
+            webgl.activate_texture_for_sampler(texture_id, "u_sampler").unwrap_throw();
+            webgl.activate_vertex_array(self.vao_id).unwrap_throw();
+            webgl.draw_arrays(BeginMode::TriangleStrip, 0, 4);
+        })
+    }
+    /*
     pub fn render_bg(&mut self, bg:&Bg, camera_mat: &Matrix4<f32>) {
        
-        self.webgl.activate_program(self.simple_program_id).unwrap_throw(); 
 
         self.update_vao_data(get_uvs(&bg.pyramid, bg.atlas_size)).unwrap_throw();
         //will eventually be reset per sprite
@@ -112,51 +163,5 @@ impl Renderer {
         webgl.draw_arrays(BeginMode::TriangleStrip, 0, 4);
 
     }
-
-    fn update_vao_data(&mut self, uvs:Uvs) -> Result<(), JsValue> {
-        let webgl = &self.webgl;
-
-        webgl.upload_buffer(
-            self.tex_buffer_id,
-            BufferData::new(
-                uvs,
-                BufferTarget::ArrayBuffer,
-                BufferUsage::DynamicDraw,
-            ),
-        )?;
-
-
-        webgl.assign_vertex_array(
-            self.vao_id,
-            None,
-            &[
-                VertexArray {
-                    attribute_name: "a_geom_vertex",
-                    buffer_id: self.geom_buffer_id,
-                    opts: AttributeOptions::new(2, DataType::Float),
-                },
-                VertexArray {
-                    attribute_name: "a_tex_vertex",
-                    buffer_id: self.tex_buffer_id,
-                    opts: AttributeOptions::new(2, DataType::Float),
-                }
-            ],
-        )?;
-
-        Ok(())
-    }
+    */
 }
-
-pub fn render(world:&World) {
-    let mut renderer = world.borrow::<Unique<NonSendSync<&mut Renderer>>>();
-    let media = world.borrow::<Unique<&Media>>();
-    let camera= world.borrow::<Unique<&Camera>>();
-
-    renderer.pre_render();
-
-    //TODO - just make Renderables which own their own TextureAtlas frame (or are just regular ids)
-    //In other words this should be system/component-driven
-    //Though layering matters so systems need to be executed left->right in order of z-depth
-    renderer.render_bg(&media.bg, &camera.proj_mat);
-}
-

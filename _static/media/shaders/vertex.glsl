@@ -15,20 +15,19 @@ in vec2 a_tex_vertex;
 
 out vec2 v_uv;
 
-uniform vec2 u_position;
-uniform mat4 u_size;
+uniform vec2 u_quad_scaler;
+uniform mat4 u_model;
 uniform mat4 u_camera;
 
 void main() {
 
-    mat4 transform = mat4(1.0);
+    mat4 mvp = u_camera * u_model; 
 
-    //https://www.geeks3d.com/20141114/glsl-4x4-matrix-mat4-fields/
-    transform[3] = vec4(u_position, 0.0, 1.0);
+    //mat4 quad_scaler = mat4(mat2(u_quad_scaler[0],0,0,u_quad_scaler[1]));
+    mat4 quad_scaler = mat4(1.0);
+    quad_scaler[0][0] = u_quad_scaler[0];
+    quad_scaler[1][1] = u_quad_scaler[1];
 
-    mat4 modelViewProjection = u_camera * transform; 
-
-    gl_Position = modelViewProjection * (u_size * vec4(a_geom_vertex,0,1));
+    gl_Position = mvp * (quad_scaler * vec4(a_geom_vertex,0,1));
     v_uv = a_tex_vertex;
-    //v_uv = a_geom_vertex;
 }

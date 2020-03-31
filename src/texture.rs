@@ -1,13 +1,28 @@
 use crate::geometry::{Bounds, BoundsExt};
+use awsm_web::webgl::Id;
 
+#[derive(Clone)]
+pub struct Texture {
+    pub texture_id: Id,
+    pub tex_width: usize,
+    pub tex_height: usize,
+    pub uvs: Uvs,
+}
+
+pub static UNIT_UVS: Uvs = [
+    0.0, 1.0, // top-left
+    0.0, 0.0, //bottom-left
+    1.0, 1.0, // top-right
+    1.0, 0.0, // bottom-right
+];
 pub type Uvs = [f32;8];
 
-pub fn get_uvs<T: BoundsExt>(cell: T, atlas_size:(usize, usize)) -> Uvs {
+pub fn get_uvs(atlas_width: usize, atlas_height: usize, bounds: &Bounds) -> Uvs {
 
-    let atlas_width = atlas_size.0 as f64;
-    let atlas_height = atlas_size.1 as f64;
+    let atlas_width = atlas_width as f64;
+    let atlas_height = atlas_height as f64;
 
-    let Bounds {x, y, width, height} = cell.get_bounds();
+    let Bounds {x, y, width, height} = *bounds; 
 
     //Bounds are assuming 0,0 is bottom-left
     //Texture atlas assumes 0,0 is top-right

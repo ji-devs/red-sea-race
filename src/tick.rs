@@ -2,7 +2,30 @@ use awsm_web::tick::{MainLoop, MainLoopOptions, RafLoop};
 use std::rc::Rc;
 use shipyard::prelude::*;
 use wasm_bindgen::prelude::*;
-use crate::renderer::render;
+use crate::systems;
+
+#[derive(Default)]
+pub struct TickBegin {
+    pub time: f64,
+    pub delta: f64
+}
+
+
+#[derive(Default)]
+pub struct TickUpdate{
+    pub delta: f64
+}
+
+#[derive(Default)]
+pub struct TickDraw{
+    pub interpolation: f64
+}
+
+#[derive(Default)]
+pub struct TickEnd{
+    pub fps: f64,
+    pub abort: bool
+}
 
 pub fn start(world:Rc<World>) {
     let game_loop = Box::new(GameLoop::new(world).unwrap_throw());
@@ -17,29 +40,53 @@ impl GameLoop {
     fn new(world:Rc<World>) -> Result<Self, JsValue> {
         // loop was ported from https://github.com/IceCreamYou/MainLoop.js#usage
         let begin = {
-            let _world = Rc::clone(&world);
-            move |_time, _delta| {
-                //update input
+            let world = Rc::clone(&world);
+            move |time, delta| {
+                {
+                    let mut tick = world.borrow::<Unique<&mut TickBegin>>();
+                    tick.time = time;
+                    tick.delta = delta;
+                }
+
+                world.run_workload(systems::TICK_BEGIN);
             }
         };
 
         let update = {
-            let _world = Rc::clone(&world);
-            move |_delta| {
-                //update motion
+            let world = Rc::clone(&world);
+            move |delta| {
+                {
+                    let mut tick = world.borrow::<Unique<&mut TickUpdate>>();
+                    tick.delta = delta;
+                }
+
+                world.run_workload(systems::TICK_UPDATE);
             }
         };
 
         let draw = {
             let world = Rc::clone(&world);
-            move |_interpolation| {
-                render(&world);
-                //render
+            move |interpolation| {
+                {
+                    let mut tick = world.borrow::<Unique<&mut TickDraw>>();
+                    tick.interpolation = interpolation;
+                }
+
+                world.run_workload(systems::TRANSFORMS);
+                world.run_workload(systems::TICK_DRAW);
             }
         };
 
         let end = {
-            move |_fps, _abort| {
+            let world = Rc::clone(&world);
+            move |fps, abort| {
+                {
+                    let mut tick = world.borrow::<Unique<&mut TickEnd>>();
+                    tick.fps = fps;
+                    tick.abort = abort;
+                }
+
+                world.run_workload(systems::TICK_END);
             }
         };
 

@@ -27,6 +27,7 @@ dependencies = [
  "awsm_web",
  "cfg-if",
  "console_error_panic_hook",
+ "futures",
  "gloo-events",
  "js-sys",
  "lazy_static",
@@ -650,6 +651,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d7ed8ff3b29b9435c570f8b27d5e1a71a2eee7699df00199e13e039a71c37e18"
 dependencies = [
  "cfg-if",
+ "nalgebra",
  "shipyard",
  "shipyard_hierarchy",
  "thiserror",

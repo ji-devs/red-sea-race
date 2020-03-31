@@ -1,17 +1,33 @@
 use awsm_web::webgl::Id;
+use serde::{Deserialize};
 use crate::geometry::{Bounds, BoundsExt};
+use crate::texture::*;
 
-pub struct TextureAtlasFrame {
-    pub texture_id: Id,
-    pub x: u32,
-    pub y: u32,
-    pub width: u32,
-    pub height: u32,
+pub struct Media {
+    pub bg:Bg
 }
 
-impl BoundsExt for &TextureAtlasFrame {
+pub struct Bg {
+    pub layers: Vec<Vec<Texture>>,
+    pub birds: Vec<Texture>,
+    pub camel: Texture,
+    pub clouds: Vec<Texture>,
+    pub trees: Vec<Texture>,
+    pub pyramid: Texture 
+}
+
+#[derive(Deserialize)]
+pub struct RawFrame {
+    pub x: usize,
+    pub y: usize,
+    pub width: usize,
+    pub height: usize,
+    pub name: String
+}
+
+impl BoundsExt for &RawFrame {
     fn get_bounds(&self) -> Bounds {
-        let TextureAtlasFrame {x, y, width, height, ..} = self;
+        let RawFrame {x, y, width, height, ..} = self;
 
         Bounds {
             x: *x as f64,
@@ -20,17 +36,4 @@ impl BoundsExt for &TextureAtlasFrame {
             height: *height as f64,
         }
     }
-}
-
-pub struct Media {
-    pub bg:Bg
-}
-
-pub struct Bg {
-    pub atlas_size: (usize, usize),
-    pub birds: Vec<TextureAtlasFrame>,
-    pub camels: TextureAtlasFrame,
-    pub clouds: Vec<TextureAtlasFrame>,
-    pub trees: Vec<TextureAtlasFrame>,
-    pub pyramid: TextureAtlasFrame
 }

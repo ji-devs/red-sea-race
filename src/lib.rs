@@ -4,15 +4,17 @@
 mod loader;
 mod config;
 mod path;
-mod media;
 mod renderer;
 mod dom_events;
 mod components;
 mod world;
+mod media;
+mod entities;
 mod tick;
 mod camera;
 mod geometry;
 mod texture;
+mod systems;
 
 use wasm_bindgen::prelude::*;
 use std::rc::Rc;
@@ -55,6 +57,8 @@ pub async fn main_js() -> Result<(), JsValue> {
     info_element.set_inner_html("starting world...");
     let world = Rc::new(world::init_world(renderer, media));
 
+    entities::init(&world);
+    
     dom_events::start_dom_handlers(Rc::clone(&world));
     
 
