@@ -13,7 +13,7 @@ pub const TICK_BEGIN: &str = "TICK_BEGIN";
 pub const TICK_UPDATE: &str = "TICK_UPDATE";
 pub const TICK_DRAW: &str = "TICK_DRAW";
 pub const TICK_END: &str = "TICK_END";
-pub const TRANSFORMS: &str = "TICK_END";
+pub const TRANSFORMS: &str = "TRANSFORMS";
 
 pub fn register_workloads(world: &World) {
     world.add_workload::<(TickBeginSys), _>(TICK_BEGIN);
@@ -35,7 +35,9 @@ pub fn run(
 ) {
     let delta = tick.delta;
     (&mut translations).iter().for_each(|t| {
-        (*t).0.x -= delta * 1.0;
+        //just accessing the storage is making something go weird...
+        //(*t).x -= 0.001;
+        //log::info!("{:?}", t);
     });
 }
 
