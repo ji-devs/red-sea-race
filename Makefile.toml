@@ -26,7 +26,7 @@ run_task = [
 
 [tasks.watch]
 command = "watchexec"
-args = ["-w", "./src", "makers", "build-development"]
+args = ["-w", "./src", "-w", "../../dakom/shipyard-scenegraph/crate/src", "makers", "build-development"]
 
 [tasks.clean]
 script_runner = "@shell"

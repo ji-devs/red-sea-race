@@ -112,7 +112,7 @@ impl Renderer {
             let webgl = &mut self.webgl;
             let Texture {texture_id, uvs, tex_width, tex_height} = renderable.texture;
 
-            log::info!("{:?}", world_transform);
+            //log::info!("{:?}", world_transform);
             
             //quad scaler
             webgl.upload_uniform_fvals_2("u_quad_scaler", (tex_width as f32, tex_height as f32)).unwrap_throw();

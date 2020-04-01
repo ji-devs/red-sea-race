@@ -34,11 +34,14 @@ pub fn run(
     mut translations: &mut Translation,
 ) {
     let delta = tick.delta;
+    (&mut translations).iter().for_each(|t| {});
+    /*
     (&mut translations).iter().for_each(|t| {
         //just accessing the storage is making something go weird...
-        //(*t).x -= 0.001;
+        //(*t).x -= 1.0;
         //log::info!("{:?}", t);
     });
+    */
 }
 
 #[system(TickDrawSys)]

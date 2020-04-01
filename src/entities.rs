@@ -15,9 +15,16 @@ pub fn init(world:&World) {
             None
     );
 
+
     world.run::<(EntitiesMut, Unique<&Media>, &mut Renderable, &mut BgLayer, &mut NonInteractive), _, _>(|storages| {
         let (entities, media, renderables, bg_layers, non_interactives) = storages;
         create_bg_layer(entity, media.bg.layers[0][0].clone(), bg_layers, renderables, non_interactives, entities);
+    });
+
+    world.run::<(Unique<&sg::TransformRoot>, &sg::Scale), _, _>(|(root, scales)| {
+        let root_id = root.0;
+        let scale = scales.get(root_id).unwrap();
+        log::info!("{:?} {:?}", root_id, scale);
     });
 
     let entity = sg::spawn_child(
@@ -28,6 +35,16 @@ pub fn init(world:&World) {
             Some(Vector3::new(0.3, 0.3, 0.0)),
             //None,
     );
+
+    world.run::<(Unique<&sg::TransformRoot>, &sg::Scale), _, _>(|(root, scales)| {
+        let root_id = root.0;
+        let scale = scales.get(root_id).unwrap();
+        log::info!("{:?} {:?}", root_id, scale);
+
+        let scale = scales.get(entity).unwrap();
+        log::info!("{:?} {:?}", entity, scale);
+    });
+    
     world.run::<(EntitiesMut, Unique<&Media>, &mut Renderable, &mut NonInteractive), _, _>(|storages| {
         let (entities, media, renderables, non_interactives) = storages;
         create_bg_sprite(entity, media.bg.pyramid.clone(), renderables, non_interactives, entities);

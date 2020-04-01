@@ -675,9 +675,9 @@ dependencies = [
 
 [[package]]
 name = "shipyard_scenegraph"
-version = "0.1.4"
+version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1211303d34817d31541f4d0a15f76eb1d3baa0bfa5df9bb43d53da8fada08cc"
+checksum = "06c573a01b560f06dc859e8e5d4154d62ba5cd5b80612a2623a9470583939159"
 dependencies = [
  "cfg-if",
  "derive_deref",
