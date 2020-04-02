@@ -17,7 +17,7 @@ pub const TRANSFORMS: &str = "TRANSFORMS";
 
 pub fn register_workloads(world: &World) {
     world.add_workload::<(TickBeginSys), _>(TICK_BEGIN);
-    world.add_workload::<(TickUpdateSys), _>(TICK_UPDATE);
+    world.add_workload::<(MotionSys, BgCycleSys), _>(TICK_UPDATE);
     world.add_workload::<(sg::systems::TrsToLocal, sg::systems::LocalToWorld), _>(TRANSFORMS);
     world.add_workload::<(TickDrawSys), _>(TICK_DRAW);
     world.add_workload::<(TickEndSys), _>(TICK_END);
@@ -27,21 +27,44 @@ pub fn register_workloads(world: &World) {
 pub fn run(tick: Unique<&TickBegin>) {
 }
 
-#[system(TickUpdateSys)]
+#[system(MotionSys)]
 pub fn run(
     tick: Unique<&TickUpdate>, 
-    mut entities:EntitiesMut,
     mut translations: &mut Translation,
+    velocities: &mut Velocity,
 ) {
     let delta = tick.delta;
-    (&mut translations).iter().for_each(|t| {});
-    /*
-    (&mut translations).iter().for_each(|t| {
-        //just accessing the storage is making something go weird...
-        //(*t).x -= 1.0;
-        //log::info!("{:?}", t);
+    (&mut translations, &velocities).iter().for_each(|(pos, vel)| {
+       pos.0 += vel.0 * delta;
     });
-    */
+}
+
+#[system(BgCycleSys)]
+pub fn run(
+    mut translations: &mut Translation,
+    bg_layers: &BgLayer,
+    renderables: &Renderable,
+) {
+    let off_screen:Vec<EntityId> = (&translations, &renderables)
+        .iter()
+        .with_id()
+        .filter(|(_, (pos, renderable))| {
+            let right_bound = pos.x + (renderable.texture.tex_width as f64); 
+
+            //less than 0.0 is probably fine, but let's give it a bit of padding to be safe
+            if right_bound < 2.0 { true } else { false }
+        })
+        .map(|(entity, _)| entity)
+        .collect();
+
+    for entity in off_screen {
+        let left = bg_layers[entity].left;
+        let left_pos_x = translations[left].x;
+        let left_width = renderables[left].texture.tex_width as f64;
+
+        translations[entity].x = left_pos_x + left_width;
+    }
+    
 }
 
 #[system(TickDrawSys)]

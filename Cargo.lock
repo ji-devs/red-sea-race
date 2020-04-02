@@ -27,6 +27,7 @@ dependencies = [
  "awsm_web",
  "cfg-if",
  "console_error_panic_hook",
+ "derive_deref",
  "futures",
  "gloo-events",
  "js-sys",
@@ -38,7 +39,7 @@ dependencies = [
  "serde-wasm-bindgen",
  "serde_json",
  "serde_repr",
- "shipyard",
+ "shipyard 0.3.2 (git+https://github.com/leudz/shipyard)",
  "shipyard_scenegraph",
  "thiserror",
  "wasm-bindgen",
@@ -462,9 +463,9 @@ checksum = "74490b50b9fbe561ac330df47c08f3f33073d2d00c150f719147d7c54522fa1b"
 
 [[package]]
 name = "proc-macro-hack"
-version = "0.5.14"
+version = "0.5.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fcfdefadc3d57ca21cf17990a28ef4c0f7c61383a28cb7604cf4a18e6ede1420"
+checksum = "0d659fe7c6d27f25e9d80a1a094c223f5246f6a6596453e09d7229bf42750b63"
 
 [[package]]
 name = "proc-macro-nested"
@@ -645,12 +646,22 @@ dependencies = [
 [[package]]
 name = "shipyard"
 version = "0.3.2"
+source = "git+https://github.com/leudz/shipyard#d5939c851f0c6667a22215ed582b4f941882d5da"
+dependencies = [
+ "hashbrown",
+ "parking_lot",
+ "shipyard_proc 0.2.1 (git+https://github.com/leudz/shipyard)",
+]
+
+[[package]]
+name = "shipyard"
+version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "23847cb81c917a6e6e6697b240a0c94e48492eb622c7333f3e210e13df77867e"
 dependencies = [
  "hashbrown",
  "parking_lot",
- "shipyard_proc",
+ "shipyard_proc 0.2.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -659,7 +670,17 @@ version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "89d1bd1e256cbfa2a4d0fc6206cb0c8b934b422fba9a3b78af8be12e3e9b4cc2"
 dependencies = [
- "shipyard",
+ "shipyard 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "shipyard_proc"
+version = "0.2.1"
+source = "git+https://github.com/leudz/shipyard#d5939c851f0c6667a22215ed582b4f941882d5da"
+dependencies = [
+ "proc-macro2 1.0.10",
+ "quote 1.0.3",
+ "syn 1.0.17",
 ]
 
 [[package]]
@@ -682,7 +703,7 @@ dependencies = [
  "cfg-if",
  "derive_deref",
  "nalgebra",
- "shipyard",
+ "shipyard 0.3.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "shipyard_hierarchy",
  "thiserror",
 ]
