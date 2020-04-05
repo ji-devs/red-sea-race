@@ -43,9 +43,6 @@ impl Camera {
 
         viewport
     }
-
-
-
 }
 
 fn scale_to_fit(viewport_width: f64, viewport_height: f64) -> Viewport {

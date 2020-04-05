@@ -53,9 +53,16 @@ pub fn start_dom_handlers(world:Rc<World>) {
 }
 
 fn get_point(camera:&Camera, event:&MouseEvent) -> (f64, f64) {
-    
-    let (canvas_x, canvas_y) = (event.client_x() as f64, ((camera.window_height as i32) - event.client_y()) as f64);
+ 
+    let viewport = &camera.viewport;
 
-    //TODO - use viewport to scale?
-    (canvas_x, canvas_y)
+    let (client_x, client_y) = (event.client_x() as f64, event.client_y() as f64);
+   
+    let (canvas_x, canvas_y) = (client_x, ((camera.window_height as f64) - client_y));
+
+    let (viewport_x, viewport_y) = (canvas_x - viewport.x, canvas_y - viewport.y);
+   
+    let (world_x, world_y) = (viewport_x / viewport.scale, viewport_y / viewport.scale);
+
+    (world_x, world_y)
 }
