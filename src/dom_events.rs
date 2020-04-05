@@ -18,13 +18,11 @@ pub fn start_dom_handlers(world:Rc<World>) {
         let world = Rc::clone(&world);
         move |_: &web_sys::Event| {
             let (width, height) = get_window_size(&window).unwrap_throw();
-
-            world.borrow::<Unique<NonSendSync<&mut Renderer>>>()
-                .webgl
-                .resize(width, height);
-
+            
+            let mut renderer = world.borrow::<Unique<NonSendSync<&mut Renderer>>>();
+            
             world.borrow::<Unique<&mut Camera>>()
-                .resize(width, height);
+                .resize(&mut renderer, width, height);
         }
     };
 
@@ -55,5 +53,9 @@ pub fn start_dom_handlers(world:Rc<World>) {
 }
 
 fn get_point(camera:&Camera, event:&MouseEvent) -> (f64, f64) {
-    (event.client_x() as f64, ((camera.stage_height as i32) - event.client_y()) as f64)
+    
+    let (canvas_x, canvas_y) = (event.client_x() as f64, ((camera.window_height as i32) - event.client_y()) as f64);
+
+    //TODO - use viewport to scale?
+    (canvas_x, canvas_y)
 }

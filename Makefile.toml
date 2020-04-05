@@ -28,6 +28,10 @@ run_task = [
 command = "watchexec"
 args = ["-w", "./src", "-w", "../../dakom/shipyard-scenegraph/crate/src", "makers", "build-development"]
 
+[tasks.watch-quiet]
+command = "watchexec"
+args = ["-w", "./src", "-w", "../../dakom/shipyard-scenegraph/crate/src", "makers", "build-development-quiet"]
+
 [tasks.clean]
 script_runner = "@shell"
 ignore_errors = true
@@ -48,9 +52,20 @@ run_task = [{name = [
     "bindgen-development"
 ]}]
 
+[tasks.build-development-quiet]
+run_task = [{name = [
+    "compile-development-quiet", 
+    "bindgen-development"
+]}]
+
 [tasks.compile-development]
 command = "cargo"
 args = ["build","--features","dev","--target","wasm32-unknown-unknown"]
+toolchain = "nightly"
+
+[tasks.compile-development-quiet]
+command = "cargo"
+args = ["build","--features","dev quiet","--target","wasm32-unknown-unknown"]
 toolchain = "nightly"
 
 [tasks.bindgen-development]

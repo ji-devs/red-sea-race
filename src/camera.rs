@@ -1,47 +1,71 @@
 use nalgebra::Matrix4;
-
+use awsm_web::webgl::{ResizeStrategy, PartialWebGlViewport};
+use crate::renderer::Renderer;
+use crate::config::{STAGE_WIDTH, STAGE_HEIGHT, STAGE_RATIO};
 pub struct Camera {
     pub proj_mat: Matrix4<f32>,
-    pub stage_width: u32,
-    pub stage_height: u32,
+    pub window_width: u32,
+    pub window_height: u32,
+    pub viewport: Viewport
+}
+
+#[derive(Debug)]
+pub struct Viewport {
+    pub x: f64,
+    pub y: f64,
+    pub width: f64,
+    pub height: f64,
+    pub scale: f64
 }
 
 impl Camera {
-    pub fn new(stage_width: u32, stage_height: u32) -> Self {
-        Self {
-            stage_width, 
-            stage_height, 
-            proj_mat: create_matrix(stage_width as f32, stage_height as f32)
+    pub fn new(renderer: &mut Renderer, window_width: u32, window_height: u32) -> Self {
+        let viewport = Self::set_viewport(renderer, window_width, window_height);
+
+        let proj_mat = Matrix4::new_orthographic( 0.0, STAGE_WIDTH as f32, 0.0, STAGE_HEIGHT as f32, 0.0, 1.0);
+        
+        Self { window_width, window_height, viewport, proj_mat }
+    }
+
+    pub fn resize(&mut self, renderer: &mut Renderer, window_width: u32, window_height: u32) {
+        if window_width != self.window_width || window_height != self.window_height {
+            let viewport = Self::set_viewport(renderer, window_width, window_height);
+            self.viewport = viewport;
+            self.window_width = window_width;
+            self.window_height = window_height;
         }
     }
 
-    pub fn resize(&mut self, stage_width: u32, stage_height: u32) {
-        if stage_width != self.stage_width || stage_height != self.stage_height {
-            self.proj_mat = create_matrix(stage_width as f32, stage_height as f32);
-        }
+    fn set_viewport(renderer: &mut Renderer, window_width: u32, window_height: u32) -> Viewport {
+        let viewport = scale_to_fit(window_width as f64, window_height as f64);
+        renderer.webgl.resize(ResizeStrategy::Canvas(window_width, window_height));
+        renderer.webgl.gl.awsm_viewport(viewport.x as u32, viewport.y as u32, viewport.width as u32, viewport.height as u32);
 
-        self.stage_width = stage_width;
-        self.stage_height = stage_height;
+        viewport
     }
+
+
 
 }
 
-fn create_matrix(stage_width: f32, stage_height: f32) -> Matrix4<f32> {
-    Matrix4::new_orthographic(
-        0.0,
-        stage_width,
-        0.0,
-        stage_height,
-        0.0,
-        1.0,
-    )
-}
+fn scale_to_fit(viewport_width: f64, viewport_height: f64) -> Viewport {
+    let mut width = viewport_width;
+    let mut height = viewport_height;
 
-
-    /*
-        if self.last_window_width != window_width || self.last_window_height != window_height {
-            self.last_window_width = window_width;
-            self.last_window_height = window_height;
-        }
+    let viewport_ratio = viewport_width / viewport_height;
+    //compare viewport ratio to art resolution
+    if viewport_ratio > STAGE_RATIO {
+        width = height * STAGE_RATIO;
+    } else {
+        height = width / STAGE_RATIO;
     }
-    */
+
+    //offset in order to center it in the area
+    let x = (viewport_width - width) / 2.0;
+    let y = (viewport_height - height) / 2.0;
+
+    //how much it shrank
+    let scale = width / STAGE_WIDTH;
+
+    Viewport { x, y, width, height, scale} 
+}
