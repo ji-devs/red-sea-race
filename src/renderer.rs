@@ -93,9 +93,11 @@ impl Renderer {
 
     pub fn pre_render(&mut self) {
         let webgl = &mut self.webgl;
-        webgl.set_depth_mask(false);
+
+        webgl.set_depth_mask(true);
         webgl.toggle(GlToggle::Blend, true);
         webgl.set_blend_func(BlendFactor::SrcAlpha, BlendFactor::OneMinusSrcAlpha);
+        webgl.toggle(GlToggle::DepthTest, true);
         webgl.clear(&[ BufferMask::ColorBufferBit, BufferMask::DepthBufferBit, ]);
     }
 
@@ -107,7 +109,7 @@ impl Renderer {
         webgl.activate_program(self.simple_program_id).unwrap_throw(); 
         webgl.upload_uniform_mat_4("u_camera", &camera_mat.as_slice()).unwrap_throw();
 
-        let mut scratch:[f32;16] = [0.0;16];
+        let mut model_mat:[f32;16] = [0.0;16];
         renderables.for_each(|(renderable, world_transform)| {
             let webgl = &mut self.webgl;
             let Texture {texture_id, uvs, tex_width, tex_height} = renderable.texture;
@@ -118,7 +120,7 @@ impl Renderer {
             webgl.upload_uniform_fvals_2("u_quad_scaler", (tex_width as f32, tex_height as f32)).unwrap_throw();
 
             //model matrix
-            world_transform.0.write_to_vf32(&mut scratch);
+            world_transform.0.write_to_vf32(&mut model_mat);
             
             webgl.upload_buffer(
                 self.tex_buffer_id,
@@ -129,7 +131,7 @@ impl Renderer {
                 ),
             ).unwrap_throw();
             
-            webgl.upload_uniform_mat_4("u_model", &scratch).unwrap_throw();
+            webgl.upload_uniform_mat_4("u_model", &model_mat).unwrap_throw();
             webgl.activate_texture_for_sampler(texture_id, "u_sampler").unwrap_throw();
             webgl.activate_vertex_array(self.vao_id).unwrap_throw();
             webgl.draw_arrays(BeginMode::TriangleStrip, 0, 4);

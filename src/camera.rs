@@ -1,7 +1,7 @@
 use nalgebra::Matrix4;
 use awsm_web::webgl::{ResizeStrategy, PartialWebGlViewport};
 use crate::renderer::Renderer;
-use crate::config::{STAGE_WIDTH, STAGE_HEIGHT, STAGE_RATIO};
+use crate::config::{STAGE_WIDTH, STAGE_HEIGHT, STAGE_RATIO, CAMERA_DEPTH};
 pub struct Camera {
     pub proj_mat: Matrix4<f32>,
     pub window_width: u32,
@@ -22,7 +22,7 @@ impl Camera {
     pub fn new(renderer: &mut Renderer, window_width: u32, window_height: u32) -> Self {
         let viewport = Self::set_viewport(renderer, window_width, window_height);
 
-        let proj_mat = Matrix4::new_orthographic( 0.0, STAGE_WIDTH as f32, 0.0, STAGE_HEIGHT as f32, 0.0, 1.0);
+        let proj_mat = Matrix4::new_orthographic( 0.0, STAGE_WIDTH as f32, 0.0, STAGE_HEIGHT as f32, 0.01, CAMERA_DEPTH as f32);
         
         Self { window_width, window_height, viewport, proj_mat }
     }

@@ -28,6 +28,6 @@ void main() {
     quad_scaler[0][0] = u_quad_scaler[0];
     quad_scaler[1][1] = u_quad_scaler[1];
 
-    gl_Position = mvp * (quad_scaler * vec4(a_geom_vertex,0,1));
+    gl_Position = mvp * (quad_scaler * vec4(a_geom_vertex,1, 1));
     v_uv = a_tex_vertex;
 }

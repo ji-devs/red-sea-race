@@ -11,7 +11,10 @@ pub struct BgLayer {
     pub left: EntityId
 }
 
-pub struct NonInteractive {}
+pub struct BgSprite {}
+
+pub struct Sprite {}
 
 #[derive(Deref, DerefMut)]
 pub struct Velocity(pub nalgebra::Vector3<f64>);
+

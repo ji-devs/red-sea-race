@@ -57,7 +57,7 @@ pub async fn main_js() -> Result<(), JsValue> {
     info_element.set_inner_html("starting world...");
     let world = Rc::new(world::init_world(renderer, media));
 
-    entities::init(&world);
+    entities::init::init(&world);
     
     dom_events::start_dom_handlers(Rc::clone(&world));
     
