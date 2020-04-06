@@ -121,7 +121,12 @@ impl Renderer {
 
             //model matrix
             world_transform.0.write_to_vf32(&mut model_mat);
-            
+
+            let uvs = match renderable.flip {
+                true => uvs.flip(),
+                false => uvs
+            };
+
             webgl.upload_buffer(
                 self.tex_buffer_id,
                 BufferData::new(

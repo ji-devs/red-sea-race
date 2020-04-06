@@ -4,8 +4,7 @@ use nalgebra::Vector3;
 use wasm_bindgen::UnwrapThrowExt;
 use crate::components::*;
 use crate::media::*;
-use crate::texture::Texture;
-use crate::config::BG_LAYER_DEPTH_START;
+use crate::config::*;
 
 /*
     The background layers are like this:
@@ -57,11 +56,11 @@ pub fn init_bg_layers(world:&World) {
             entities.add_component(
                 (&mut renderables, &mut translations, &mut bg_layers, &mut velocities), 
                 (
-                    Renderable { texture },
+                    Renderable { texture, flip: false},
                     //each background 
                     sg::Translation(Vector3::new(layer_width, 0.0, layer_depth)),
                     BgLayer {layer, left},
-                    Velocity (Vector3::new(-1.0, 0.0, 0.0))
+                    Velocity (Vector3::new(BG_LAYER_VELOCITY[layer] * -1.0, 0.0, 0.0))
                 ),
                 *entity
             );

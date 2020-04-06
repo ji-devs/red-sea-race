@@ -3,7 +3,8 @@ use derive_deref::{Deref, DerefMut};
 use shipyard::prelude::*;
 
 pub struct Renderable {
-    pub texture: Texture 
+    pub texture: Texture,
+    pub flip: bool
 }
 
 pub struct BgLayer {
@@ -11,7 +12,9 @@ pub struct BgLayer {
     pub left: EntityId
 }
 
-pub struct BgSprite {}
+pub struct BgSprite {
+    pub layer: usize
+}
 
 pub struct Sprite {}
 
