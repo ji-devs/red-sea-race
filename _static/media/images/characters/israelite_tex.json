@@ -1,0 +1,51 @@
+[
+	{
+		"width": 71,
+		"y": 414,
+		"height": 95,
+		"name": "MovieClipElements/leg2MC",
+		"x": 90
+	},
+	{
+		"width": 87,
+		"y": 414,
+		"height": 97,
+		"name": "MovieClipElements/leg1MC",
+		"x": 1
+	},
+	{
+		"width": 65,
+		"y": 414,
+		"height": 60,
+		"name": "MovieClipElements/backarmMC",
+		"x": 235
+	},
+	{
+		"width": 124,
+		"y": 1,
+		"height": 411,
+		"name": "MovieClipElements/bodyMC",
+		"x": 1
+	},
+	{
+		"width": 46,
+		"y": 414,
+		"height": 57,
+		"name": "MovieClipElements/neckMC",
+		"x": 302
+	},
+	{
+		"width": 70,
+		"y": 414,
+		"height": 90,
+		"name": "MovieClipElements/headMC",
+		"x": 163
+	},
+	{
+		"width": 138,
+		"y": 1,
+		"height": 99,
+		"name": "MovieClipElements/frontarmMC",
+		"x": 127
+	}
+]

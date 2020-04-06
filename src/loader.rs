@@ -14,6 +14,7 @@ use crate::geometry::BoundsExt;
 use crate::path;
 use crate::media::*;
 use crate::texture::{self, Texture};
+use std::collections::HashMap;
 
 pub async fn load_shaders() -> Result<(String, String), JsValue> {
     let vertex = fetch::text(&path::media_url(&"shaders/vertex.glsl")).await?;
@@ -24,6 +25,45 @@ pub async fn load_shaders() -> Result<(String, String), JsValue> {
 
 
 pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
+
+    let bg = _load_bg(webgl).await?;
+
+    let hero = _load_character(webgl, "characters/israelite").await?;
+    let enemy = _load_character(webgl, "characters/egyptian").await?;
+
+    Ok(Media {
+        bg,
+        hero,
+        enemy
+    })
+
+}
+
+async fn _load_character(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<Character, JsValue> {
+    let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, &format!("{}_tex", base_path), true).await?;
+
+    let skeleton:Skeleton = fetch::json(&path::media_url(&format!("images/{}_ske.json", base_path))).await?;
+
+    let get_tex_cell = |name:&str| {
+        get_texture_cell(name, frames.as_ref().unwrap(), atlas_texture_id, atlas_size.0, atlas_size.1)
+    };
+
+
+    let mut textures:HashMap<String, Texture> = HashMap::new();
+
+    frames.as_ref().unwrap().iter().for_each(|frame| {
+        let name = &frame.name;
+        let texture = get_tex_cell(name);
+        textures.insert(name.to_string(), texture);
+    });
+    
+    Ok(Character {
+        textures,
+        skeleton
+    })
+}
+
+async fn _load_bg(webgl:&mut WebGl2Renderer) -> Result<Bg, JsValue> {
     //Load BG Media
     let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, "bg/bg_items", true).await?;
     let layers = vec![
@@ -37,7 +77,7 @@ pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
     };
 
 
-    let bg = Bg {
+    Ok(Bg {
         layers,
 
         birds: vec![
@@ -59,10 +99,7 @@ pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
         ],
 
         pyramid: get_tex_cell("pyramid")
-    };
-
-    Ok(Media {bg})
-
+    })
 }
 
 async fn _load_audio() -> Result<(), JsValue> {

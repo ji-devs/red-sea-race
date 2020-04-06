@@ -19,6 +19,7 @@ pub const TRANSFORMS: &str = "TRANSFORMS";
 pub fn register_workloads(world: &World) {
     world.add_workload::<TickBeginSys, _>(TICK_BEGIN);
     world.add_workload::<(MotionSys, BgCycleSys, BgSpawnSys, TrashSys), _>(TICK_UPDATE);
+    //world.add_workload::<(TrashSys), _>(TICK_UPDATE);
     world.add_workload::<(sg::systems::TrsToLocal, sg::systems::LocalToWorld), _>(TRANSFORMS);
     world.add_workload::<TickDrawSys, _>(TICK_DRAW);
     world.add_workload::<TickEndSys, _>(TICK_END);

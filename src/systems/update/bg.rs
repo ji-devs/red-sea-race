@@ -35,7 +35,15 @@ pub fn run(
     
 }
 
-//Background sprites
+/*
+    Background sprites
+    The basic idea is that we have a few different layers
+    And each laywer spawns some sprite with a velocity
+    In order to avoid overcrowding there's a configurable threshhold
+    Overall the look and feel is done by tweaking the values in config
+
+    Could definitely be improved! e.g. use scale, fog, semi-transparent, etc.
+*/
 #[system(BgSpawnSys)]
 pub fn run(
     mut entities: &mut Entities,
@@ -91,7 +99,7 @@ pub fn run(
             let pos_y = rng.gen_range(pos_y_minmax.0, pos_y_minmax.1);
             //let scale = rng.gen_range(scale_minmax.0, scale_minmax.1);
 
-            let additional_distance = rng.gen_range(1.0, BG_SPRITE_SPAWN_THRESHHOLD[layer]);
+            let additional_distance = rng.gen_range(1.0, STAGE_WIDTH);
             let mut pos = Vector3::new((STAGE_WIDTH + additional_distance), pos_y, BG_SPRITE_DEPTH - (layer as f64));
 
             let mut flip = false;

@@ -1,0 +1,51 @@
+[
+	{
+		"width": 35,
+		"y": 100,
+		"height": 127,
+		"name": "EgyptianLeftLeg",
+		"x": 358
+	},
+	{
+		"width": 47,
+		"y": 1,
+		"height": 122,
+		"name": "EgyptianRightLeg",
+		"x": 457
+	},
+	{
+		"width": 31,
+		"y": 100,
+		"height": 18,
+		"name": "EgyptianHand",
+		"x": 395
+	},
+	{
+		"width": 234,
+		"y": 1,
+		"height": 426,
+		"name": "EgyptianBody",
+		"x": 1
+	},
+	{
+		"width": 97,
+		"y": 1,
+		"height": 97,
+		"name": "EgyptianHead",
+		"x": 358
+	},
+	{
+		"width": 81,
+		"y": 429,
+		"height": 82,
+		"name": "ChariotWheel",
+		"x": 1
+	},
+	{
+		"width": 119,
+		"y": 1,
+		"height": 156,
+		"name": "Chariot",
+		"x": 237
+	}
+]

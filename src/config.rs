@@ -12,6 +12,12 @@ pub const BG_LAYER_DEPTH_START: f64 = -50.0;
 pub const BG_LAYER_VELOCITY:[f64;3] = [0.1, 0.2, 0.3];
 pub const BG_SPRITE_DEPTH: f64 = -40.0;
 
-pub const BG_SPRITE_SPAWN_THRESHHOLD:[f64;3] = [1200.0, 1600.0, 700.0];
-pub const BG_SPRITE_SPAWN_VELOCITY_MINMAX:[(f64, f64);3] = [(0.4, 0.6), (0.2, 0.4), (0.2, 1.5)];
+//these are front to back
+
+//threshhold must be less than STAGE_WIDTH to be effective- spawning will add a random pad up to STAGE_WIDTH
+pub const BG_SPRITE_SPAWN_THRESHHOLD:[f64;3] = [STAGE_WIDTH - 1.0, STAGE_WIDTH -1.0, 700.0];
+pub const BG_SPRITE_SPAWN_VELOCITY_MINMAX:[(f64, f64);3] = [(0.1, 0.4), (0.1, 0.2), (0.1, 1.5)];
 pub const BG_SPRITE_SPAWN_Y_MINMAX:[(f64, f64);3] = [(0.0, 1.0), (0.0, 10.0), (1000.0, 1500.0)];
+
+
+pub const CHARACTER_SPRITE_DEPTH: f64 = -30.0;
