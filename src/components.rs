@@ -1,4 +1,4 @@
-use crate::textures::Texture;
+use crate::textures::data::Texture;
 use derive_deref::{Deref, DerefMut};
 use shipyard::prelude::*;
 

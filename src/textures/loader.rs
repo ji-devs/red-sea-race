@@ -2,9 +2,10 @@ use wasm_bindgen::prelude::*;
 use awsm_web::loaders::fetch;
 use awsm_web::webgl::{WebGl2Renderer, Id, TextureTarget, SimpleTextureOptions, PixelFormat, WebGlTextureSource};
 use crate::path;
-use crate::media::*;
 use crate::geometry::BoundsExt;
-use super::{Texture, uvs::*};
+use crate::textures::data::RawFrame;
+use crate::dragonbones::data::DragonBonesAtlas;
+use super::{data::Texture, uvs::*};
 
 pub enum AtlasStyle {
     Plain,

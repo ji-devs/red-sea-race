@@ -5,7 +5,7 @@ use nalgebra::Vector3;
 use crate::components::*;
 use crate::media::*;
 use crate::config::*;
-use crate::textures::{Texture, RandomTexture};
+use crate::textures::data::{Texture, RandomTexture};
 //Flat background layers 
 #[system(BgCycleSys)]
 pub fn run(

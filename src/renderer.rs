@@ -22,7 +22,7 @@ use shipyard_scenegraph::*;
 use nalgebra::Matrix4;
 use crate::loader::load_shaders;
 use crate::geometry::load_geometry;
-use crate::textures::{Texture, uvs::UvFlip};
+use crate::textures::{data::Texture, uvs::UvFlip};
 use crate::components::Renderable;
 pub struct Renderer {
     pub canvas: HtmlCanvasElement,

@@ -1,10 +1,10 @@
 use wasm_bindgen::prelude::*;
 use awsm_web::loaders::fetch;
 use awsm_web::webgl::WebGl2Renderer;
-use crate::path;
-use crate::media::*;
-use crate::textures::{Texture, loader::{AtlasStyle, load_texture, get_texture_cell}};
 use std::collections::HashMap;
+use crate::path;
+use crate::textures::{data::Texture, loader::{AtlasStyle, load_texture, get_texture_cell}};
+use super::data::*;
 
 pub async fn load(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<DragonBones, JsValue> {
     let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, &format!("{}_tex", base_path), Some(AtlasStyle::DragonBones)).await?;

@@ -5,9 +5,9 @@ use wasm_bindgen::UnwrapThrowExt;
 use std::collections::HashMap;
 use std::collections::VecDeque;
 use crate::components::*;
-use crate::media::*;
 use crate::config::*;
-use crate::textures::Texture;
+use crate::textures::data::Texture;
+use super::data::*;
 
 pub fn create_entity(world:&World, dragonbones:&DragonBones) -> EntityId {
     
