@@ -1,4 +1,4 @@
-use crate::geometry::Bounds;
+use crate::geometry::bounds::Bounds;
 
 pub static UNIT_UVS: Uvs = [
     0.0, 1.0, // top-left

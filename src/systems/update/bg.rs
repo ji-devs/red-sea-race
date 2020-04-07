@@ -59,7 +59,7 @@ pub fn run(
     media: Unique<&Media>, 
     mut velocities: &mut Velocity,
     mut bg_sprites: &mut BgSprite,
-    mut sprites: &mut Sprite,
+    mut scrolling_sprites: &mut ScrollingSprite,
     mut renderables: &mut Renderable,
 ) {
     let mut rng = rand::thread_rng();
@@ -133,10 +133,10 @@ pub fn run(
             let mut sg_storages:TransformHierarchyStoragesMut = (&mut entities, &mut root, &mut parents, &mut children, &mut translations, &mut rotations, &mut scales, &mut local_transforms, &mut world_transforms, &mut dirty_transforms);
             let entity = sg_storages.spawn_child(None, Some(pos), None, None);
             entities.add_component(
-                (&mut renderables,&mut sprites, &mut bg_sprites, &mut velocities), 
+                (&mut renderables,&mut scrolling_sprites, &mut bg_sprites, &mut velocities), 
                 (
                     Renderable { texture: texture.clone(), flip},
-                    Sprite{},
+                    ScrollingSprite{},
                     BgSprite {layer},
                     Velocity (Vector3::new(vel_x, 0.0, 0.0))
                 ),

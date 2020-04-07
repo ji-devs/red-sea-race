@@ -37,7 +37,7 @@ pub struct Armature {
     #[serde(rename="skin")]
     pub skins: Vec<Skin>,
     #[serde(rename="animation")]
-    pub animations: Vec<Animation>,
+    pub animations: Vec<DragonBonesAnimation>,
 }
 
 #[derive(Deserialize)]
@@ -102,5 +102,81 @@ pub struct Pivot {
 }
 
 #[derive(Deserialize)]
-pub struct Animation {
+pub struct DragonBonesAnimation {
+    pub name: String,
+    #[serde(rename="playTimes")]
+    pub play_times: Option<usize>,
+
+    pub duration: Option<f64>,
+
+    #[serde(rename="fadeInTime")]
+    pub fade_in_time: Option<f64>,
+
+    #[serde(rename="bone")]
+    pub bones: Option<Vec<AnimationBone>>,
+
+    #[serde(rename="slot")]
+    pub slots: Option<Vec<AnimationSlot>>,
+}
+
+#[derive(Deserialize)]
+pub struct AnimationBone {
+    pub name: String,
+    #[serde(rename="translateFrame")]
+    pub translation_frames: Option<Vec<AnimationTranslationFrame>>,
+    #[serde(rename="rotateFrame")]
+    pub rotation_frames: Option<Vec<AnimationRotationFrame>>,
+}
+
+
+#[derive(Deserialize)]
+pub struct AnimationTranslationFrame {
+    pub duration: Option<f64>,
+    #[serde(rename="tweenEasing")]
+    pub easing: Option<f64>,
+    pub x: Option<f64>,
+    pub y: Option<f64>
+} 
+
+#[derive(Deserialize)]
+pub struct AnimationRotationFrame {
+    pub duration: Option<f64>,
+    #[serde(rename="tweenEasing")]
+    pub easing: Option<f64>,
+    #[serde(rename="rotate")]
+    pub rotation: Option<f64>,
+} 
+
+#[derive(Deserialize)]
+pub struct AnimationSlot {
+    #[serde(rename="name")]
+    pub slot_name: String,
+    #[serde(rename="colorFrame")]
+    pub color_frames: Option<Vec<AnimationColorFrame>>,
+}
+#[derive(Deserialize)]
+pub struct AnimationColorFrame {
+    pub duration: Option<f64>,
+    #[serde(rename="tweenEasing")]
+    pub easing: Option<f64>,
+    pub value: AnimationColorValue,
+} 
+#[derive(Deserialize)]
+pub struct AnimationColorValue {
+    #[serde(rename="aM")]
+    pub alpha_overlay: Option<f32>,
+    #[serde(rename="rM")]
+    pub red_overlay: Option<f32>,
+    #[serde(rename="gM")]
+    pub green_overlay: Option<f32>,
+    #[serde(rename="bM")]
+    pub blue_overlay: Option<f32>,
+    #[serde(rename="aO")]
+    pub alpha_offset: Option<f32>,
+    #[serde(rename="rO")]
+    pub red_offset: Option<f32>,
+    #[serde(rename="gO")]
+    pub green_offset: Option<f32>,
+    #[serde(rename="bO")]
+    pub blue_offset: Option<f32>
 }

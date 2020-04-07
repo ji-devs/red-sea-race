@@ -8,10 +8,10 @@ pub fn run(
 ) {
     
     let entities_to_delete:Vec<EntityId> = {
-        let (translations, sprites, renderables) = all_storages.borrow::<(&Translation, &Sprite, &Renderable)>();
+        let (translations, scrolling_sprites, renderables) = all_storages.borrow::<(&Translation, &ScrollingSprite, &Renderable)>();
 
         let entities_to_delete:Vec<EntityId> = 
-            (&translations, &sprites, &renderables)
+            (&translations, &scrolling_sprites, &renderables)
                 .iter()
                 .with_id()
                 .filter(|(_, (pos, _layer, renderable))| {

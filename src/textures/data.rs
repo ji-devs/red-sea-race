@@ -1,7 +1,7 @@
 use serde::{Deserialize};
 use awsm_web::webgl::Id;
 use rand::prelude::*;
-use crate::geometry::{Bounds, BoundsExt};
+use crate::geometry::bounds::{Bounds, BoundsExt};
 
 #[derive(Clone)]
 pub struct Texture {

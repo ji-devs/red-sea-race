@@ -21,7 +21,7 @@ use shipyard::prelude::*;
 use shipyard_scenegraph::*;
 use nalgebra::Matrix4;
 use crate::media::loader::load_shaders;
-use crate::geometry::load_geometry;
+use crate::geometry::upload::upload_quad;
 use crate::textures::{data::Texture, uvs::UvFlip};
 use crate::components::Renderable;
 pub struct Renderer {
@@ -65,7 +65,7 @@ impl Renderer {
 
         let vao_id = webgl.create_vertex_array()?;
 
-        let geom_buffer_id = load_geometry(&mut webgl).await?;
+        let geom_buffer_id = upload_quad(&mut webgl).await?;
 
         let tex_buffer_id = webgl.create_buffer()?;
 

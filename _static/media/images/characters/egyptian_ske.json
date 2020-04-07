@@ -1,1 +1,301 @@
-{"frameRate":24,"name":"egyptian","version":"5.5","compatibleVersion":"5.5","armature":[{"type":"Armature","frameRate":24,"name":"egyptian","aabb":{"y":15,"width":234,"height":484.6},"bone":[{"name":"root"},{"inheritScale":false,"name":"egyptian-body","parent":"root","transform":{"x":117,"y":233}},{"inheritScale":false,"name":"egyptian-right-leg","parent":"root","transform":{"x":187.5,"y":373}},{"inheritScale":false,"name":"egyptian-hand","parent":"root","transform":{"x":16.5,"y":128}},{"inheritScale":false,"name":"egyptian-left-leg","parent":"root","transform":{"x":129.5,"y":382.5}},{"inheritScale":false,"name":"egyptian-head","parent":"root","transform":{"x":154.5,"y":63.5,"scX":1.19,"scY":1.19}},{"inheritScale":false,"name":"chariot-wheel","parent":"root","transform":{"x":165,"y":457.6}},{"inheritScale":false,"name":"chariot","parent":"root","transform":{"x":159,"y":421.6}}],"slot":[{"name":"egyptian-left-leg","parent":"egyptian-left-leg"},{"name":"egyptian-right-leg","parent":"egyptian-right-leg"},{"name":"egyptian-hand","parent":"egyptian-hand"},{"name":"egyptian-body","parent":"egyptian-body"},{"name":"egyptian-head","parent":"egyptian-head"},{"name":"chariot-wheel","parent":"chariot-wheel"},{"name":"chariot","parent":"chariot"}],"skin":[{"slot":[{"name":"egyptian-body","display":[{"name":"EgyptianBody"}]},{"name":"egyptian-hand","display":[{"name":"EgyptianHand"}]},{"name":"egyptian-right-leg","display":[{"name":"EgyptianRightLeg"}]},{"name":"egyptian-head","display":[{"name":"EgyptianHead"}]},{"name":"egyptian-left-leg","display":[{"name":"EgyptianLeftLeg"}]},{"name":"chariot","display":[{"name":"Chariot"}]},{"name":"chariot-wheel","display":[{"name":"ChariotWheel"}]}]}],"animation":[{"duration":13,"playTimes":0,"fadeInTime":0.3,"name":"start","bone":[{"name":"egyptian-hand","translateFrame":[{"duration":5,"tweenEasing":0},{"duration":4,"tweenEasing":0,"x":3.4,"y":-8.5},{"duration":4,"tweenEasing":0,"x":1.4,"y":7},{"duration":0,"x":8.9,"y":8.5}],"rotateFrame":[{"duration":5,"tweenEasing":0},{"duration":4,"tweenEasing":0,"rotate":30},{"duration":4,"tweenEasing":0,"rotate":-30},{"duration":0,"rotate":-60}]},{"name":"egyptian-head","translateFrame":[{"duration":4,"tweenEasing":0},{"duration":5,"tweenEasing":0,"x":-6.45},{"duration":4,"tweenEasing":0,"x":9.05},{"duration":0,"x":-4.95}],"rotateFrame":[{"duration":4,"tweenEasing":0},{"duration":5,"tweenEasing":0,"rotate":-15},{"duration":4,"tweenEasing":0,"rotate":15},{"duration":0,"rotate":-15}]},{"name":"chariot-wheel","rotateFrame":[{"duration":6,"tweenEasing":0},{"duration":6,"tweenEasing":0,"rotate":-90},{"rotate":165}]}]}],"defaultActions":[{"gotoAndPlay":"start"}]}]}
+{
+	"frameRate": 24,
+	"name": "egyptian",
+	"version": "5.5",
+	"compatibleVersion": "5.5",
+	"armature": [
+		{
+			"type": "Armature",
+			"frameRate": 24,
+			"name": "egyptian",
+			"aabb": {
+				"y": 15,
+				"width": 234,
+				"height": 484.6
+			},
+			"bone": [
+				{
+					"name": "root"
+				},
+				{
+					"inheritScale": false,
+					"name": "egyptian-body",
+					"parent": "root",
+					"transform": {
+						"x": 117,
+						"y": 233
+					}
+				},
+				{
+					"inheritScale": false,
+					"name": "egyptian-right-leg",
+					"parent": "root",
+					"transform": {
+						"x": 187.5,
+						"y": 373
+					}
+				},
+				{
+					"inheritScale": false,
+					"name": "egyptian-hand",
+					"parent": "root",
+					"transform": {
+						"x": 16.5,
+						"y": 128
+					}
+				},
+				{
+					"inheritScale": false,
+					"name": "egyptian-left-leg",
+					"parent": "root",
+					"transform": {
+						"x": 129.5,
+						"y": 382.5
+					}
+				},
+				{
+					"inheritScale": false,
+					"name": "egyptian-head",
+					"parent": "root",
+					"transform": {
+						"x": 154.5,
+						"y": 63.5,
+						"scX": 1.19,
+						"scY": 1.19
+					}
+				},
+				{
+					"inheritScale": false,
+					"name": "chariot-wheel",
+					"parent": "root",
+					"transform": {
+						"x": 165,
+						"y": 457.6
+					}
+				},
+				{
+					"inheritScale": false,
+					"name": "chariot",
+					"parent": "root",
+					"transform": {
+						"x": 159,
+						"y": 421.6
+					}
+				}
+			],
+			"slot": [
+				{
+					"name": "egyptian-left-leg",
+					"parent": "egyptian-left-leg"
+				},
+				{
+					"name": "egyptian-right-leg",
+					"parent": "egyptian-right-leg"
+				},
+				{
+					"name": "egyptian-hand",
+					"parent": "egyptian-hand"
+				},
+				{
+					"name": "egyptian-body",
+					"parent": "egyptian-body"
+				},
+				{
+					"name": "egyptian-head",
+					"parent": "egyptian-head"
+				},
+				{
+					"name": "chariot-wheel",
+					"parent": "chariot-wheel"
+				},
+				{
+					"name": "chariot",
+					"parent": "chariot"
+				}
+			],
+			"skin": [
+				{
+					"slot": [
+						{
+							"name": "egyptian-body",
+							"display": [
+								{
+									"name": "EgyptianBody"
+								}
+							]
+						},
+						{
+							"name": "egyptian-hand",
+							"display": [
+								{
+									"name": "EgyptianHand"
+								}
+							]
+						},
+						{
+							"name": "egyptian-right-leg",
+							"display": [
+								{
+									"name": "EgyptianRightLeg"
+								}
+							]
+						},
+						{
+							"name": "egyptian-head",
+							"display": [
+								{
+									"name": "EgyptianHead"
+								}
+							]
+						},
+						{
+							"name": "egyptian-left-leg",
+							"display": [
+								{
+									"name": "EgyptianLeftLeg"
+								}
+							]
+						},
+						{
+							"name": "chariot",
+							"display": [
+								{
+									"name": "Chariot"
+								}
+							]
+						},
+						{
+							"name": "chariot-wheel",
+							"display": [
+								{
+									"name": "ChariotWheel"
+								}
+							]
+						}
+					]
+				}
+			],
+			"animation": [
+				{
+					"duration": 13,
+					"playTimes": 0,
+					"fadeInTime": 0.3,
+					"name": "start",
+					"bone": [
+						{
+							"name": "egyptian-hand",
+							"translateFrame": [
+								{
+									"duration": 5,
+									"tweenEasing": 0
+								},
+								{
+									"duration": 4,
+									"tweenEasing": 0,
+									"x": 3.4,
+									"y": -8.5
+								},
+								{
+									"duration": 4,
+									"tweenEasing": 0,
+									"x": 1.4,
+									"y": 7
+								},
+								{
+									"duration": 0,
+									"x": 8.9,
+									"y": 8.5
+								}
+							],
+							"rotateFrame": [
+								{
+									"duration": 5,
+									"tweenEasing": 0
+								},
+								{
+									"duration": 4,
+									"tweenEasing": 0,
+									"rotate": 30
+								},
+								{
+									"duration": 4,
+									"tweenEasing": 0,
+									"rotate": -30
+								},
+								{
+									"duration": 0,
+									"rotate": -60
+								}
+							]
+						},
+						{
+							"name": "egyptian-head",
+							"translateFrame": [
+								{
+									"duration": 4,
+									"tweenEasing": 0
+								},
+								{
+									"duration": 5,
+									"tweenEasing": 0,
+									"x": -6.45
+								},
+								{
+									"duration": 4,
+									"tweenEasing": 0,
+									"x": 9.05
+								},
+								{
+									"duration": 0,
+									"x": -4.95
+								}
+							],
+							"rotateFrame": [
+								{
+									"duration": 4,
+									"tweenEasing": 0
+								},
+								{
+									"duration": 5,
+									"tweenEasing": 0,
+									"rotate": -15
+								},
+								{
+									"duration": 4,
+									"tweenEasing": 0,
+									"rotate": 15
+								},
+								{
+									"duration": 0,
+									"rotate": -15
+								}
+							]
+						},
+						{
+							"name": "chariot-wheel",
+							"rotateFrame": [
+								{
+									"duration": 6,
+									"tweenEasing": 0
+								},
+								{
+									"duration": 6,
+									"tweenEasing": 0,
+									"rotate": -90
+								},
+								{
+									"rotate": 165
+								}
+							]
+						}
+					]
+				}
+			],
+			"defaultActions": [
+				{
+					"gotoAndPlay": "start"
+				}
+			]
+		}
+	]
+}
