@@ -3,7 +3,7 @@ use shipyard_scenegraph as sg;
 use nalgebra::Vector3;
 use wasm_bindgen::UnwrapThrowExt;
 use crate::components::*;
-use crate::media::*;
+use crate::media::data::*;
 use crate::config::*;
 
 /*

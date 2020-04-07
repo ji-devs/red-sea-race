@@ -3,11 +3,9 @@
 
 #![feature(drain_filter)]
 
-mod loader;
 mod config;
-mod path;
 mod renderer;
-mod dom_events;
+mod dom;
 mod components;
 mod world;
 mod media;
@@ -55,14 +53,14 @@ pub async fn main_js() -> Result<(), JsValue> {
     let canvas_element = renderer.canvas.clone();
 
     info_element.set_inner_html("loading graphics...");
-    let media = loader::load_media(&mut renderer.webgl).await?;
+    let media = media::loader::load_media(&mut renderer.webgl).await?;
     
     info_element.set_inner_html("starting world...");
     let world = Rc::new(world::init_world(renderer, media));
 
     entities::init::init(&world);
     
-    dom_events::start_dom_handlers(Rc::clone(&world));
+    dom::events::start_dom_handlers(Rc::clone(&world));
     
 
     info_element.remove();

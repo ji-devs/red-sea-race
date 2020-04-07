@@ -20,7 +20,7 @@ use wasm_bindgen::prelude::*;
 use shipyard::prelude::*;
 use shipyard_scenegraph::*;
 use nalgebra::Matrix4;
-use crate::loader::load_shaders;
+use crate::media::loader::load_shaders;
 use crate::geometry::load_geometry;
 use crate::textures::{data::Texture, uvs::UvFlip};
 use crate::components::Renderable;

@@ -1,5 +1,5 @@
 use shipyard::prelude::*;
-use crate::media::*;
+use crate::media::data::*;
 use crate::dragonbones::entities::create_entity;
 use crate::components::*;
 

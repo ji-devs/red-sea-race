@@ -3,7 +3,7 @@ use shipyard::prelude::*;
 use shipyard_scenegraph::*;
 use nalgebra::Vector3;
 use crate::components::*;
-use crate::media::*;
+use crate::media::data::*;
 use crate::config::*;
 use crate::textures::data::{Texture, RandomTexture};
 //Flat background layers 

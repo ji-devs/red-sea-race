@@ -1,14 +1,18 @@
 use wasm_bindgen::prelude::*;
 use awsm_web::loaders::fetch;
 use awsm_web::webgl::WebGl2Renderer;
-use crate::path;
-use crate::media::*;
+use crate::config::MEDIA_URL;
 use crate::dragonbones;
 use crate::textures::loader::{load_texture, load_full_textures, get_texture_cell, AtlasStyle};
+use super::data::*;
+
+pub fn media_url(path:&str) -> String {
+    format!("{}/{}", MEDIA_URL, path)
+}
 
 pub async fn load_shaders() -> Result<(String, String), JsValue> {
-    let vertex = fetch::text(&path::media_url(&"shaders/vertex.glsl")).await?;
-    let fragment = fetch::text(&path::media_url(&"shaders/fragment.glsl")).await?;
+    let vertex = fetch::text(&media_url(&"shaders/vertex.glsl")).await?;
+    let fragment = fetch::text(&media_url(&"shaders/fragment.glsl")).await?;
 
     Ok((vertex, fragment))
 }

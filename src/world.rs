@@ -4,7 +4,7 @@ use wasm_bindgen::UnwrapThrowExt;
 use shipyard_scenegraph as sg;
 use crate::renderer::Renderer;
 use crate::camera::Camera;
-use crate::media::Media;
+use crate::media::data::Media;
 use crate::tick::{TickBegin, TickUpdate, TickDraw, TickEnd};
 use crate::systems;
 pub fn init_world(mut renderer:Renderer, media:Media) -> World {

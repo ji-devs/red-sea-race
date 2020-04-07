@@ -1,7 +1,7 @@
 use wasm_bindgen::prelude::*;
 use awsm_web::loaders::fetch;
 use awsm_web::webgl::{WebGl2Renderer, Id, TextureTarget, SimpleTextureOptions, PixelFormat, WebGlTextureSource};
-use crate::path;
+use crate::media::loader::media_url;
 use crate::geometry::BoundsExt;
 use crate::textures::data::RawFrame;
 use crate::dragonbones::data::DragonBonesAtlas;
@@ -13,16 +13,16 @@ pub enum AtlasStyle {
 }
 
 pub async fn load_texture(webgl:&mut WebGl2Renderer, src:&str, atlas_style:Option<AtlasStyle>) -> Result<(Id, Option<Vec<RawFrame>>, (usize, usize)), JsValue> {
-    let img = fetch::image(&path::media_url(&format!("images/{}.png", src))).await?;
+    let img = fetch::image(&media_url(&format!("images/{}.png", src))).await?;
     let tex_size = (img.width() as usize, img.height() as usize);
     let frames:Option<Vec<RawFrame>> =  match atlas_style {
         Some(AtlasStyle::Plain) => {
-            let frames:Vec<RawFrame> = fetch::json(&path::media_url(&format!("images/{}.json", src))).await?;
+            let frames:Vec<RawFrame> = fetch::json(&media_url(&format!("images/{}.json", src))).await?;
             Some(frames)
         },
         Some(AtlasStyle::DragonBones) => {
             log::info!("{}", src);
-            let atlas:DragonBonesAtlas = fetch::json(&path::media_url(&format!("images/{}.json", src))).await?;
+            let atlas:DragonBonesAtlas = fetch::json(&media_url(&format!("images/{}.json", src))).await?;
             Some(atlas.sub_textures)
         },
         None => None
