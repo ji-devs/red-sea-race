@@ -6,8 +6,8 @@ use crate::texture::*;
 
 pub struct Media {
     pub bg:Bg,
-    pub hero: Character,
-    pub enemy: Character,
+    pub hero: DragonBones,
+    pub enemy: DragonBones,
 }
 
 pub struct Bg {
@@ -42,9 +42,16 @@ impl BoundsExt for &RawFrame {
 }
 
 
-pub struct Character {
+pub struct DragonBones {
     pub textures:HashMap<String, Texture>,
     pub skeleton:Skeleton
+}
+
+
+#[derive(Deserialize)]
+pub struct DragonBonesAtlas {
+    #[serde(rename="SubTexture")]
+    pub sub_textures: Vec<RawFrame>,
 }
 
 //https://docs.egret.com/dragonbones/docs/dbLibs/5foramt

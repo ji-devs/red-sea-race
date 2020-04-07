@@ -21,3 +21,5 @@ pub struct Sprite {}
 #[derive(Deref, DerefMut)]
 pub struct Velocity(pub nalgebra::Vector3<f64>);
 
+#[derive(Deref)]
+pub struct Hero(pub EntityId);

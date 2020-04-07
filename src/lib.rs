@@ -17,6 +17,7 @@ mod camera;
 mod geometry;
 mod texture;
 mod systems;
+mod dragonbones;
 
 use wasm_bindgen::prelude::*;
 use std::rc::Rc;

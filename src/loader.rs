@@ -28,8 +28,8 @@ pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
 
     let bg = _load_bg(webgl).await?;
 
-    let hero = _load_character(webgl, "characters/israelite").await?;
-    let enemy = _load_character(webgl, "characters/egyptian").await?;
+    let hero = _load_dragonbones(webgl, "characters/israelite").await?;
+    let enemy = _load_dragonbones(webgl, "characters/egyptian").await?;
 
     Ok(Media {
         bg,
@@ -39,8 +39,8 @@ pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
 
 }
 
-async fn _load_character(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<Character, JsValue> {
-    let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, &format!("{}_tex", base_path), true).await?;
+async fn _load_dragonbones(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<DragonBones, JsValue> {
+    let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, &format!("{}_tex", base_path), Some(AtlasStyle::DragonBones)).await?;
 
     let skeleton:Skeleton = fetch::json(&path::media_url(&format!("images/{}_ske.json", base_path))).await?;
 
@@ -57,7 +57,7 @@ async fn _load_character(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<Ch
         textures.insert(name.to_string(), texture);
     });
     
-    Ok(Character {
+    Ok(DragonBones {
         textures,
         skeleton
     })
@@ -65,7 +65,7 @@ async fn _load_character(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<Ch
 
 async fn _load_bg(webgl:&mut WebGl2Renderer) -> Result<Bg, JsValue> {
     //Load BG Media
-    let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, "bg/bg_items", true).await?;
+    let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, "bg/bg_items", Some(AtlasStyle::Plain)).await?;
     let layers = vec![
         load_full_textures(webgl, vec!["bg/layer_1/bg_1", "bg/layer_1/bg_2", "bg/layer_1/bg_3", "bg/layer_1/bg_4"]).await?,
         load_full_textures(webgl, vec!["bg/layer_2/bg_1", "bg/layer_2/bg_2", "bg/layer_2/bg_3", "bg/layer_2/bg_4"]).await?,
@@ -110,13 +110,24 @@ async fn _load_audio() -> Result<(), JsValue> {
     Ok(())
 }
 
-async fn load_texture(webgl:&mut WebGl2Renderer, src:&str, as_atlas:bool) -> Result<(Id, Option<Vec<RawFrame>>, (usize, usize)), JsValue> {
+enum AtlasStyle {
+    Plain,
+    DragonBones
+}
+async fn load_texture(webgl:&mut WebGl2Renderer, src:&str, atlas_style:Option<AtlasStyle>) -> Result<(Id, Option<Vec<RawFrame>>, (usize, usize)), JsValue> {
     let img = fetch::image(&path::media_url(&format!("images/{}.png", src))).await?;
     let tex_size = (img.width() as usize, img.height() as usize);
-    let frames:Option<Vec<RawFrame>> = if as_atlas {
-        fetch::json(&path::media_url(&format!("images/{}.json", src))).await?
-    } else {
-        None
+    let frames:Option<Vec<RawFrame>> =  match atlas_style {
+        Some(AtlasStyle::Plain) => {
+            let frames:Vec<RawFrame> = fetch::json(&path::media_url(&format!("images/{}.json", src))).await?;
+            Some(frames)
+        },
+        Some(AtlasStyle::DragonBones) => {
+            log::info!("{}", src);
+            let atlas:DragonBonesAtlas = fetch::json(&path::media_url(&format!("images/{}.json", src))).await?;
+            Some(atlas.sub_textures)
+        },
+        None => None
     };
 
     let texture_id = webgl.create_texture()?;
@@ -139,7 +150,7 @@ async fn load_full_textures(webgl:&mut WebGl2Renderer, srcs:Vec<&'static str>) -
     let mut textures:Vec<Texture> = Vec::new();
 
     for src in srcs {
-        let (texture_id, _, tex_size) = load_texture(webgl, src, false).await?;
+        let (texture_id, _, tex_size) = load_texture(webgl, src, None).await?;
         let uvs = texture::UNIT_UVS;
         textures.push(Texture {
             texture_id,
