@@ -19,12 +19,10 @@ use wasm_bindgen::JsCast;
 use wasm_bindgen::prelude::*;
 use shipyard::prelude::*;
 use shipyard_scenegraph::*;
-use nalgebra::{Matrix4, Vector3};
-use crate::media::*;
-use crate::camera::Camera;
+use nalgebra::Matrix4;
 use crate::loader::load_shaders;
 use crate::geometry::load_geometry;
-use crate::texture::{self, *};
+use crate::textures::{Texture, uvs::UvFlip};
 use crate::components::Renderable;
 pub struct Renderer {
     pub canvas: HtmlCanvasElement,

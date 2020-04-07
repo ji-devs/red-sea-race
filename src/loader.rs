@@ -1,20 +1,10 @@
 use wasm_bindgen::prelude::*;
 use awsm_web::loaders::fetch;
-use awsm_web::webgl::{WebGl2Renderer, Id, TextureTarget, SimpleTextureOptions, PixelFormat, WebGlTextureSource};
-use futures::{
-    future::TryFutureExt,
-    try_join,
-    future::try_join_all,
-    future::join_all,
-    FutureExt
-
-};
-use serde::Deserialize;
-use crate::geometry::BoundsExt;
+use awsm_web::webgl::WebGl2Renderer;
 use crate::path;
 use crate::media::*;
-use crate::texture::{self, Texture};
-use std::collections::HashMap;
+use crate::dragonbones;
+use crate::textures::loader::{load_texture, load_full_textures, get_texture_cell, AtlasStyle};
 
 pub async fn load_shaders() -> Result<(String, String), JsValue> {
     let vertex = fetch::text(&path::media_url(&"shaders/vertex.glsl")).await?;
@@ -28,8 +18,8 @@ pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
 
     let bg = _load_bg(webgl).await?;
 
-    let hero = _load_dragonbones(webgl, "characters/israelite").await?;
-    let enemy = _load_dragonbones(webgl, "characters/egyptian").await?;
+    let hero = dragonbones::loader::load(webgl, "characters/israelite").await?;
+    let enemy = dragonbones::loader::load(webgl, "characters/egyptian").await?;
 
     Ok(Media {
         bg,
@@ -39,29 +29,6 @@ pub async fn load_media(webgl:&mut WebGl2Renderer) -> Result<Media, JsValue> {
 
 }
 
-async fn _load_dragonbones(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<DragonBones, JsValue> {
-    let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, &format!("{}_tex", base_path), Some(AtlasStyle::DragonBones)).await?;
-
-    let skeleton:Skeleton = fetch::json(&path::media_url(&format!("images/{}_ske.json", base_path))).await?;
-
-    let get_tex_cell = |name:&str| {
-        get_texture_cell(name, frames.as_ref().unwrap(), atlas_texture_id, atlas_size.0, atlas_size.1)
-    };
-
-
-    let mut textures:HashMap<String, Texture> = HashMap::new();
-
-    frames.as_ref().unwrap().iter().for_each(|frame| {
-        let name = &frame.name;
-        let texture = get_tex_cell(name);
-        textures.insert(name.to_string(), texture);
-    });
-    
-    Ok(DragonBones {
-        textures,
-        skeleton
-    })
-}
 
 async fn _load_bg(webgl:&mut WebGl2Renderer) -> Result<Bg, JsValue> {
     //Load BG Media
@@ -108,90 +75,4 @@ async fn _load_audio() -> Result<(), JsValue> {
     err.unwrap_throw();
 
     Ok(())
-}
-
-enum AtlasStyle {
-    Plain,
-    DragonBones
-}
-async fn load_texture(webgl:&mut WebGl2Renderer, src:&str, atlas_style:Option<AtlasStyle>) -> Result<(Id, Option<Vec<RawFrame>>, (usize, usize)), JsValue> {
-    let img = fetch::image(&path::media_url(&format!("images/{}.png", src))).await?;
-    let tex_size = (img.width() as usize, img.height() as usize);
-    let frames:Option<Vec<RawFrame>> =  match atlas_style {
-        Some(AtlasStyle::Plain) => {
-            let frames:Vec<RawFrame> = fetch::json(&path::media_url(&format!("images/{}.json", src))).await?;
-            Some(frames)
-        },
-        Some(AtlasStyle::DragonBones) => {
-            log::info!("{}", src);
-            let atlas:DragonBonesAtlas = fetch::json(&path::media_url(&format!("images/{}.json", src))).await?;
-            Some(atlas.sub_textures)
-        },
-        None => None
-    };
-
-    let texture_id = webgl.create_texture()?;
-    webgl.assign_simple_texture(
-        texture_id,
-        TextureTarget::Texture2d,
-        &SimpleTextureOptions {
-            pixel_format: PixelFormat::Rgba,
-            ..SimpleTextureOptions::default()
-        },
-        &WebGlTextureSource::ImageElement(&img),
-    )?;
-
-    Ok((texture_id, frames, tex_size))
-    
-}
-
-//TODO - make work concurrently 
-async fn load_full_textures(webgl:&mut WebGl2Renderer, srcs:Vec<&'static str>) -> Result<Vec<Texture>, JsValue> {
-    let mut textures:Vec<Texture> = Vec::new();
-
-    for src in srcs {
-        let (texture_id, _, tex_size) = load_texture(webgl, src, None).await?;
-        let uvs = texture::UNIT_UVS;
-        textures.push(Texture {
-            texture_id,
-            uvs,
-            tex_width: tex_size.0,
-            tex_height: tex_size.1 
-        });
-    }
-
-    Ok(textures)
-    /*
-    try_join_all(
-        srcs.into_iter().map(move |src| {
-            load_texture(webgl, src, false)
-            .map(|res| {
-                res.map(|(texture_id, _, tex_size)| {
-                    let uvs = texture::UNIT_UVS;
-                    Texture {
-                        texture_id,
-                        uvs,
-                        tex_width: tex_size.0,
-                        tex_height: tex_size.1 
-                    }
-                })
-            })
-        })
-        
-    ).await
-    */
-
-}
-
-fn get_texture_cell(name:&str, frames:&Vec<RawFrame>, texture_id: Id, atlas_width: usize, atlas_height: usize) -> Texture {
-    let raw_frame = frames.iter().find(|frame| frame.name == name).expect(&format!("{} doesn't exist!", name));
-
-    let uvs = texture::get_uvs(atlas_width, atlas_height, &raw_frame.get_bounds());
-
-    Texture {
-        texture_id,
-        uvs,
-        tex_width: raw_frame.width,
-        tex_height: raw_frame.height,
-    }
 }

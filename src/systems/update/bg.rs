@@ -5,7 +5,7 @@ use nalgebra::Vector3;
 use crate::components::*;
 use crate::media::*;
 use crate::config::*;
-use crate::texture::*;
+use crate::textures::{Texture, RandomTexture};
 //Flat background layers 
 #[system(BgCycleSys)]
 pub fn run(
@@ -69,7 +69,7 @@ pub fn run(
 
     (&translations, &scales, &bg_sprites, &renderables)
         .iter()
-        .for_each(|(pos, scale, bg_sprite, renderable)| {
+        .for_each(|(pos, _scale, bg_sprite, renderable)| {
             let layer = bg_sprite.layer;
             let right_bound = pos.x + (renderable.texture.tex_width as f64); 
 
@@ -92,7 +92,7 @@ pub fn run(
                 false
             }
         })
-        .for_each(|(layer, layer_distance)| {
+        .for_each(|(layer, _right_bound)| {
             let vel_minmax = BG_SPRITE_SPAWN_VELOCITY_MINMAX[layer];
             let pos_y_minmax = BG_SPRITE_SPAWN_Y_MINMAX[layer];
             let vel_x = rng.gen_range(vel_minmax.0, vel_minmax.1) * -1.0;
@@ -100,7 +100,7 @@ pub fn run(
             //let scale = rng.gen_range(scale_minmax.0, scale_minmax.1);
 
             let additional_distance = rng.gen_range(1.0, STAGE_WIDTH);
-            let mut pos = Vector3::new((STAGE_WIDTH + additional_distance), pos_y, BG_SPRITE_DEPTH - (layer as f64));
+            let pos = Vector3::new(STAGE_WIDTH + additional_distance, pos_y, BG_SPRITE_DEPTH - (layer as f64));
 
             let mut flip = false;
 

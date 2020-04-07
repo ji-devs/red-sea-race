@@ -6,7 +6,7 @@ use crate::camera::Camera;
 use crate::components::Renderable;
 #[system(TickDrawSys)]
 pub fn run(
-    tick: Unique<&TickDraw>, 
+    _tick: Unique<&TickDraw>, 
     mut renderer: Unique<NonSendSync<&mut Renderer>>, 
     world_transforms: &WorldTransform, 
     camera:Unique<&Camera>, 

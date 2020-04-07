@@ -14,7 +14,7 @@ pub fn run(
             (&translations, &sprites, &renderables)
                 .iter()
                 .with_id()
-                .filter(|(_, (pos, layer, renderable))| {
+                .filter(|(_, (pos, _layer, renderable))| {
                     let right_bound = pos.x + (renderable.texture.tex_width as f64); 
 
                     //less than 0.0 is probably fine, but let's give it a bit of padding to be safe

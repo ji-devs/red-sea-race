@@ -1,3 +1,2 @@
-mod dragonbones_entities;
-
-pub use dragonbones_entities::*;
+pub mod entities;
+pub mod loader;

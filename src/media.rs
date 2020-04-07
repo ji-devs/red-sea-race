@@ -1,8 +1,7 @@
-use awsm_web::webgl::Id;
 use serde::{Deserialize};
 use std::collections::HashMap;
 use crate::geometry::{Bounds, BoundsExt};
-use crate::texture::*;
+use crate::textures::Texture;
 
 pub struct Media {
     pub bg:Bg,
@@ -112,7 +111,7 @@ pub struct BoneTransform {
 pub struct Slot {
     pub name: String,
     #[serde(rename="parent")]
-    pub parent_name: Option<String>,
+    pub bone: String,
 }
 
 #[derive(Deserialize)]
@@ -131,8 +130,14 @@ pub struct SkinSlot {
 pub struct SkinSlotDisplay {
     #[serde(rename="name")]
     pub texture_name: String,
-    pub transform: Option<BoneTransform>
+    pub transform: Option<BoneTransform>,
+    pub pivot: Option<Pivot>
+}
 
+#[derive(Deserialize)]
+pub struct Pivot {
+    pub x: Option<f64>,
+    pub y: Option<f64>,
 }
 
 #[derive(Deserialize)]

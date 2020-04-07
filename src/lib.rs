@@ -15,7 +15,7 @@ mod entities;
 mod tick;
 mod camera;
 mod geometry;
-mod texture;
+mod textures;
 mod systems;
 mod dragonbones;
 

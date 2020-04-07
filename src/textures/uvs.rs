@@ -1,14 +1,4 @@
-use crate::geometry::{Bounds, BoundsExt};
-use awsm_web::webgl::Id;
-use rand::prelude::*;
-
-#[derive(Clone)]
-pub struct Texture {
-    pub texture_id: Id,
-    pub tex_width: usize,
-    pub tex_height: usize,
-    pub uvs: Uvs,
-}
+use crate::geometry::Bounds;
 
 pub static UNIT_UVS: Uvs = [
     0.0, 1.0, // top-left
@@ -68,17 +58,4 @@ pub fn get_uvs(atlas_width: usize, atlas_height: usize, bounds: &Bounds) -> Uvs 
 
     //return it as a straight array
     [tl.0, tl.1, bl.0, bl.1, tr.0, tr.1, br.0, br.1]
-}
-
-pub trait RandomTexture {
-    fn get_random(&self) -> &Texture;
-}
-
-impl <T: AsRef<[Texture]>> RandomTexture for T {
-    fn get_random(&self) -> &Texture {
-        let mut rng = rand::thread_rng();
-        let textures = self.as_ref();
-        let index = rng.gen_range(0, textures.len());
-        &textures[index]
-    }
 }
