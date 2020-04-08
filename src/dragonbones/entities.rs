@@ -9,19 +9,27 @@ use crate::config::*;
 use crate::textures::data::Texture;
 use super::data::*;
 
-//combined lookup for the bone entity and its children texture entities
+//Given a bone name, get its entity and a Vec of its children texture-entities
 type BoneMap = HashMap<String, (EntityId, Vec<EntityId>)>;
+//Given a slot name, get the bone name
+type SlotToBone = HashMap<String, String>;
 
+//create the root dragonbones entity as well as its children
+//all will have the required components added too:
+//* scenegraph (parent, child, transforms, etc.)
+//* renderable
+//* animator
 pub fn create_entity(world:&World, dragonbones:&DragonBones) -> EntityId {
   
     //Need to do all this in a block
     //Since we'll borrow EntitiesMut to add the components later
-    let (root_entity, renderables, animations) = {
+    let (root_entity, renderables, animation_sequences) = {
 
         //Need to create all the bones and textures
         //As well as preserve a lookup table for animations
 
-        //First get the root entity and bone lookup (will have empty children here)
+        //First get the root entity and bone lookups (will have empty children here)
+        let slot_to_bone = create_slot_lookup(&dragonbones);
         let (root_entity, mut bonemap) = create_bone_entities(world, &dragonbones);
 
         //Then get the renderables that are associated with the bone's texture children
@@ -46,58 +54,127 @@ pub fn create_entity(world:&World, dragonbones:&DragonBones) -> EntityId {
                 })
                 .collect();
 
-        let animations = create_animations(dragonbones, &bonemap);
+        let animator = create_animator(dragonbones, &bonemap, &slot_to_bone);
 
-        (root_entity, renderables, animations)
+        (root_entity, renderables, animator)
     };
 
      
     //Can't borrow EntitiesMut while doing the above
-    let (entities, mut renderable_storage, mut animations_storage) = world.borrow::<(EntitiesMut, &mut Renderable, &mut AnimationState)>();
+    let (entities, mut renderable_storage, mut animation_sequences_storage) = world.borrow::<(EntitiesMut, &mut Renderable, &mut AnimationSequences)>();
     for (entity, renderable) in renderables {
         entities.add_component(&mut renderable_storage, renderable, entity);
     }
-    entities.add_component(&mut animations_storage, animations, root_entity);
+    entities.add_component(&mut animation_sequences_storage, animation_sequences, root_entity);
     root_entity
 
 }
 
-fn create_animations(dragonbones:&DragonBones, bonemap:&BoneMap) -> AnimationState {
-    let mut sequences:Vec<AnimationSequence> = vec![];
+fn create_animator(dragonbones:&DragonBones, bonemap:&BoneMap, slot_to_bone:&SlotToBone) -> AnimationSequences {
+    let mut sequences:HashMap<String, AnimationSequence> = HashMap::new();
 
     let skeleton = &dragonbones.skeleton;
     let armature = &skeleton.armatures[0];
 
     for anim in armature.animations.iter() {
+        //TODO - accumulate real total duration!
+        let mut total_duration = 2.0 * 1000.0;
         let mut animations:Vec<Animation> = Vec::new();
+
         if let Some(anim_bones) = anim.bones.as_ref() {
             for anim_bone in anim_bones.iter() {
-                let (bone_entity, _) = bonemap.get(&anim_bone.name).unwrap_throw();
+                let (entity, _) = bonemap.get(&anim_bone.name).unwrap_throw();
 
-                // TODO - think of how it'll be most useful
-                // maybe convert to a Tween and have that be cloneable?
-                // also - think about whether color and transform should be sequenced in parallel 
-                log::info!("TODO: stash the translate/rotation animations");
-                animations.push(Animation::Transform(
-                    TransformAnimation{
-                        entity: *bone_entity 
+                if let Some(anim_translations) = &anim_bone.translation_frames {
+                    for anim_translation in anim_translations {
+                        let duration = anim_translation.duration.unwrap_or(1.0) * 1000.0;
+                        let easing = anim_translation.easing.and_then(|easing| if easing == 0.0 { None } else { Some(easing) });
+                        animations.push(Animation {
+                            entity: *entity,
+                            easing,
+                            duration,
+                            target: AnimationTarget::Translation(TranslationAnimationTarget{
+                                x: anim_translation.x,
+                                y: anim_translation.y,
+                            })
+                        });
                     }
-                ));
+                }
+                
+                if let Some(anim_rotations) = &anim_bone.rotation_frames {
+                    for anim_rotation in anim_rotations {
+                        let duration = anim_rotation.duration.unwrap_or(1.0) * 1000.0;
+                        let easing = anim_rotation.easing.and_then(|easing| if easing == 0.0 { None } else { Some(easing) });
+                        animations.push(Animation {
+                            entity: *entity,
+                            easing,
+                            duration,
+                            target: AnimationTarget::Rotation(RotationAnimationTarget {
+                                rotation: anim_rotation.rotation,
+                            })
+                        });
+                    }
+                }
             }
         }
-        sequences.push(AnimationSequence { animations });
+        if let Some(anim_slots) = anim.slots.as_ref() {
+            for anim_slot in anim_slots.iter() {
+                if let Some(anim_colors) = &anim_slot.color_frames {
+                    let bone_name = slot_to_bone.get(&anim_slot.slot_name).unwrap_throw();
+                    let (_, textures) = bonemap.get(bone_name).unwrap_throw();
+
+                    for anim_color in anim_colors {
+                        let duration = anim_color.duration.unwrap_or(1.0) * 1000.0;
+                        let easing = anim_color.easing.and_then(|easing| if easing == 0.0 { None } else { Some(easing) });
+                        let value = &anim_color.value;
+                        for entity in textures {
+                            animations.push(Animation {
+                                entity: *entity,
+                                easing,
+                                duration,
+                                target: AnimationTarget::Color(ColorAnimationTarget {
+                                    alpha_overlay: value.alpha_overlay,
+                                    red_overlay: value.red_overlay,
+                                    green_overlay: value.green_overlay,
+                                    blue_overlay: value.blue_overlay,
+                                    alpha_offset: value.alpha_offset,
+                                    red_offset: value.red_offset,
+                                    green_offset: value.green_offset,
+                                    blue_offset: value.blue_offset,
+                                })
+                            });
+                        }
+                    }
+                }
+            }
+        }
+        sequences.insert(anim.name.to_string(), AnimationSequence { 
+            animations,
+            total_duration
+        });
     }
-    
-    AnimationState {
-        sequences
-    }
+   
+    AnimationSequences( sequences)
 }
 
+
+fn create_slot_lookup(dragonbones:&DragonBones) -> SlotToBone {
+    let mut slot_to_bone:SlotToBone = HashMap::new();
+
+    let skeleton = &dragonbones.skeleton;
+    let armature = &skeleton.armatures[0];
+
+    for slot in armature.slots.iter() {
+        slot_to_bone.insert(slot.name.to_string(), slot.bone.to_string());
+    }
+
+    slot_to_bone
+}
 
 fn create_bone_entities(world:&World, dragonbones:&DragonBones) -> (EntityId, BoneMap) {
 
     let mut bonemap:BoneMap = HashMap::new();
-    
+
     let root_entity = spawn_child(world, None, None, None, None);
 
     let skeleton = &dragonbones.skeleton;

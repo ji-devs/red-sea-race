@@ -14,10 +14,12 @@ pub const TICK_BEGIN: &str = "TICK_BEGIN";
 pub const TICK_UPDATE: &str = "TICK_UPDATE";
 pub const TICK_DRAW: &str = "TICK_DRAW";
 pub const TICK_END: &str = "TICK_END";
+pub const ANIMATIONS: &str = "ANIMATIONS";
 pub const TRANSFORMS: &str = "TRANSFORMS";
 
 pub fn register_workloads(world: &World) {
     world.add_workload::<TickBeginSys, _>(TICK_BEGIN);
+    world.add_workload::<(AnimatorEventSys, AnimatorUpdateSys, AnimatorFinishSys), _>(ANIMATIONS);
     world.add_workload::<(MotionSys, BgCycleSys, BgSpawnSys, TrashSys), _>(TICK_UPDATE);
     //world.add_workload::<(TrashSys), _>(TICK_UPDATE);
     world.add_workload::<(sg::systems::TrsToLocal, sg::systems::LocalToWorld), _>(TRANSFORMS);

@@ -100,7 +100,7 @@ pub fn run(
             //let scale = rng.gen_range(scale_minmax.0, scale_minmax.1);
 
             let additional_distance = rng.gen_range(1.0, STAGE_WIDTH);
-            let pos = Vector3::new(STAGE_WIDTH + additional_distance, pos_y, BG_SPRITE_DEPTH - (layer as f64));
+            let mut pos = Vector3::new(STAGE_WIDTH + additional_distance, pos_y, BG_SPRITE_DEPTH - (layer as f64));
 
             let mut flip = false;
 
@@ -109,6 +109,7 @@ pub fn run(
                     match rng.gen::<bool>() {
                         true => {
                             flip = rng.gen::<bool>();
+                            pos.z = FG_SPRITE_DEPTH;
                             media.bg.trees.get_random()
                         },
                         false => &media.bg.camel

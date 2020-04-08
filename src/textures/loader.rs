@@ -21,7 +21,6 @@ pub async fn load_texture(webgl:&mut WebGl2Renderer, src:&str, atlas_style:Optio
             Some(frames)
         },
         Some(AtlasStyle::DragonBones) => {
-            log::info!("{}", src);
             let atlas:DragonBonesAtlas = fetch::json(&media_url(&format!("images/{}.json", src))).await?;
             Some(atlas.sub_textures)
         },

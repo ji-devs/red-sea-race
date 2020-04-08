@@ -21,5 +21,5 @@ pub const BG_SPRITE_SPAWN_THRESHHOLD:[f64;3] = [STAGE_WIDTH - 1.0, STAGE_WIDTH -
 pub const BG_SPRITE_SPAWN_VELOCITY_MINMAX:[(f64, f64);3] = [(0.1, 0.4), (0.1, 0.2), (0.1, 1.5)];
 pub const BG_SPRITE_SPAWN_Y_MINMAX:[(f64, f64);3] = [(0.0, 1.0), (0.0, 10.0), (1000.0, 1500.0)];
 
-
 pub const CHARACTER_SPRITE_DEPTH: f64 = -30.0;
+pub const FG_SPRITE_DEPTH: f64 = -20.0;
