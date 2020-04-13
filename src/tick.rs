@@ -60,7 +60,7 @@ impl GameLoop {
                     tick.delta = delta;
                 }
 
-                world.run_workload(systems::ANIMATIONS);
+                world.run_workload(systems::TWEENS);
                 world.run_workload(systems::TICK_UPDATE);
             }
         };

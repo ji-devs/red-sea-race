@@ -22,12 +22,13 @@ wee_alloc = { version = "0.4.5", optional = true }
 wasm-logger = { version = "0.2.0", optional = true }
 derive_deref = "1.1.0"
 cfg-if = "0.1.10"
+itertools = "0.9.0"
 log = "0.4.8"
 lazy_static = "1.4.0"
 console_error_panic_hook = { version = "0.1.6", optional = true }
 shipyard = { version = "0.3.3", features = ["proc", "non_send", "non_sync"], default-features = false }
-shipyard_scenegraph = { version = "0.1.5", features = ["proc", "non_send", "non_sync", "easy_deref", "nalgebra_transforms"], default-features = false }
-# shipyard_scenegraph = { path="../../dakom/shipyard-scenegraph/crate", features = ["proc", "non_send", "non_sync", "easy_deref", "nalgebra_transforms"], default-features = false }
+# shipyard_scenegraph = { version = "0.1.5", features = ["proc", "non_send", "non_sync", "easy_deref", "nalgebra_transforms"], default-features = false }
+shipyard_scenegraph = { path="../../dakom/shipyard-scenegraph/crate", features = ["proc", "non_send", "non_sync", "easy_deref", "nalgebra_transforms"], default-features = false }
 thiserror = "1.0.14"
 nalgebra = "0.20.0"
 serde = { version = "1.0.106", features = ["derive"] }

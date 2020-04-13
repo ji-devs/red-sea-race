@@ -7,12 +7,12 @@ use crate::textures::{data::Texture, loader::{AtlasStyle, load_texture, get_text
 use super::data::*;
 
 pub async fn load(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<DragonBones, JsValue> {
-    let (atlas_texture_id, frames, atlas_size) = load_texture(webgl, &format!("{}_tex", base_path), Some(AtlasStyle::DragonBones)).await?;
+    let (atlas_texture_id, frames, (atlas_width, atlas_height)) = load_texture(webgl, &format!("{}_tex", base_path), Some(AtlasStyle::DragonBones)).await?;
 
     let skeleton:Skeleton = fetch::json(&media_url(&format!("images/{}_ske.json", base_path))).await?;
 
     let get_tex_cell = |name:&str| {
-        get_texture_cell(name, frames.as_ref().unwrap(), atlas_texture_id, atlas_size.0, atlas_size.1)
+        get_texture_cell(name, frames.as_ref().unwrap(), atlas_texture_id, atlas_width, atlas_height)
     };
 
 
@@ -26,6 +26,8 @@ pub async fn load(webgl:&mut WebGl2Renderer, base_path:&str) -> Result<DragonBon
     
     Ok(DragonBones {
         textures,
-        skeleton
+        skeleton,
+        atlas_width: atlas_width as f64,
+        atlas_height: atlas_height as f64
     })
 }

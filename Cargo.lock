@@ -30,6 +30,7 @@ dependencies = [
  "derive_deref",
  "futures",
  "gloo-events",
+ "itertools",
  "js-sys",
  "lazy_static",
  "log",
@@ -155,6 +156,12 @@ dependencies = [
  "quote 0.6.13",
  "syn 0.15.44",
 ]
+
+[[package]]
+name = "either"
+version = "1.5.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "bb1f6b1ce1c140482ea30ddd3335fc0024ac7ee112895426e0a629a6c20adfe3"
 
 [[package]]
 name = "fnv"
@@ -292,6 +299,15 @@ checksum = "479e9d9a1a3f8c489868a935b557ab5710e3e223836da2ecd52901d88935cb56"
 dependencies = [
  "ahash",
  "autocfg",
+]
+
+[[package]]
+name = "itertools"
+version = "0.9.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "284f18f85651fe11e8a991b2adb42cb078325c996ed026d994719efcfca1d54b"
+dependencies = [
+ "either",
 ]
 
 [[package]]
@@ -677,11 +693,10 @@ dependencies = [
 [[package]]
 name = "shipyard_scenegraph"
 version = "0.1.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "06c573a01b560f06dc859e8e5d4154d62ba5cd5b80612a2623a9470583939159"
 dependencies = [
  "cfg-if",
  "derive_deref",
+ "log",
  "nalgebra",
  "shipyard",
  "shipyard_hierarchy",

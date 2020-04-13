@@ -23,3 +23,6 @@ pub const BG_SPRITE_SPAWN_Y_MINMAX:[(f64, f64);3] = [(0.0, 1.0), (0.0, 10.0), (1
 
 pub const CHARACTER_SPRITE_DEPTH: f64 = -30.0;
 pub const FG_SPRITE_DEPTH: f64 = -20.0;
+
+
+pub const DRAGONBONES_BASE_SPEED: f64 = 100.0;

@@ -4,6 +4,8 @@ use crate::textures::data::{Texture, RawFrame};
 
 pub struct DragonBones {
     pub textures:HashMap<String, Texture>,
+    pub atlas_width: f64,
+    pub atlas_height: f64,
     pub skeleton:Skeleton
 }
 
