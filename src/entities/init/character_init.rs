@@ -10,8 +10,10 @@ pub fn init_hero (world:&World) {
     };
 
     world.add_unique(Hero (hero) );
+    let entity = world.borrow::<EntitiesMut>().add_entity((), ());
+    world.add_unique(HeroJumpController (entity) );
 
-    world.run::<(EntitiesMut, &mut TweenEvent, Unique<&Hero>), _, _>(|(entities, mut animator_events, hero)| {
-        entities.add_component(&mut animator_events, TweenEvent::StartByName("run", TweenEnding::Loop), hero.0);
+    world.run::<(EntitiesMut, &mut TweenEvent, Unique<&Hero>), _, _>(|(entities, mut tween_events, hero)| {
+        entities.add_component(&mut tween_events, TweenEvent::StartByName("run", TweenEnding::Loop), hero.0);
     });
 }

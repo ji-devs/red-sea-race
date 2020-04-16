@@ -1,9 +1,12 @@
 use shipyard::prelude::*;
+use shipyard_scenegraph::Translation;
 use std::collections::HashSet;
-use crate::tick::TickBegin;
+use nalgebra::Vector3;
+use wasm_bindgen::prelude::*;
+use crate::tick::{TickBegin, TickUpdate};
 use crate::components::*;
 
-#[system(ControllerStartSys)]
+#[system(ControllerEventSys)]
 pub fn run(_tick: Unique<&TickBegin>, mut controller_events:Unique<&mut ControllerEvent>, mut controller: Unique<&mut Controller>) {
     for action in controller_events.up.iter() {
         controller.insert(*action, ControllerState::Released);
@@ -26,34 +29,92 @@ pub fn run(_tick: Unique<&TickBegin>, mut controller_events:Unique<&mut Controll
     controller_events.up.clear();
 }
 
-#[system(ControllerEndSys)]
-pub fn run(_tick: Unique<&TickBegin>, mut controller:Unique<&mut Controller>) {
-    for (action, state) in controller.iter() {
-        log::info!("{:?} {:?}", action, state);
+#[system(ControllerUpdateSys)]
+pub fn run(
+    _tick: Unique<&TickUpdate>, 
+    entities:Entities, 
+    controller: Unique<&Controller>, 
+    hero:Unique<&Hero>, 
+    hero_jump_controller:Unique<&HeroJumpController>, 
+    translations:&Translation,
+    mut velocities:&mut Velocity,
+    mut tween_events:&mut TweenEvent,
+) {
+    let mut vel_x:Option<f64> = None;
+    let mut vel_y:Option<f64> = None;
+
+    let entity = hero.0;
+    let jump_entity = hero_jump_controller.0;
+
+    let translation = (&translations).get(entity).unwrap_throw();
+
+    let jump_state = controller.get(&ControllerAction::Jump);
+    let right_state = controller.get(&ControllerAction::Right);
+    let left_state = controller.get(&ControllerAction::Left);
+    let down_state = controller.get(&ControllerAction::Down);
+
+    //TODO - also change animation
+    if Some(&ControllerState::Activated) == jump_state && translation.y == 0.0 {
+        entities.add_component(
+            &mut tween_events, 
+            TweenEvent::Start(
+                TweenTimeline::Clip(Tween::Translation(Vec3Tween {
+                    info: TweenInfo {
+                        entity: Some(entity),
+                        easing: None,
+                        duration: 400.0
+                    },
+                    x: None,
+                    y: Some((translation.y, translation.y + 500.0)),
+                    z: None,
+                })),
+                TweenEnding::Switch(
+                    TweenTimeline::Clip(Tween::Translation(Vec3Tween {
+                        info: TweenInfo {
+                            entity: Some(entity),
+                            easing: None,
+                            duration: 400.0
+                        },
+                        x: None,
+                        y: Some((translation.y + 500.0, 0.0)),
+                        z: None,
+                    })),
+                    Box::new(TweenEnding::Remove)
+                )
+            ), 
+            jump_entity
+        );
+        entities.add_component(&mut tween_events, TweenEvent::StartByName("jump", TweenEnding::SwitchByName( "run", Box::new(TweenEnding::Loop))), entity);
+    } else if Some(&ControllerState::Released) == jump_state {
+       // vel_y = Some(-1.0);
     }
-    controller.retain(|action, state| {
+
+    if Some(&ControllerState::Activated) == right_state { 
+        vel_x = Some(1.0);
+    } else if Some(&ControllerState::Activated) == left_state { 
+        vel_x = Some(-1.0);
+    } else if Some(&ControllerState::Released) == right_state || Some(&ControllerState::Released) == left_state {
+        vel_x = Some(0.0);
+    }
+
+
+    if let Ok(vel) = (&mut velocities).get(entity) {
+        if let Some(y) = vel_y {
+            vel.y = y;
+        }
+        if let Some(x) = vel_x {
+            vel.x = x;
+        }
+    } else {
+        let vel = Vector3::new(vel_x.unwrap_or(0.0), vel_y.unwrap_or(0.0), 0.0);
+        entities.add_component(&mut velocities, Velocity(vel), entity);
+    }
+
+}
+
+#[system(ControllerClearSys)]
+pub fn run(_tick: Unique<&TickBegin>, mut controller:Unique<&mut Controller>) {
+    controller.retain(|_, state| {
         *state != ControllerState::Released
     });
 }
-/*
-#[system(KeyboardMapperSys)]
-pub fn run(_tick: Unique<&TickBegin>, keyboard:Unique<&Keyboard>, mut controller:Unique<&mut Controller>) {
-    let keystate
-    if Some(KeyboardState::Active) == keyboard.state.get("ArrowUp").cloned() || Some(KeyboardState::Active) == keyboard.state.get("W").cloned() {
-        log::info!("key up pressed...");
-    }
-}
-
-#[system(ControllerSys)]
-pub fn run(_tick: Unique<&TickBegin>, controller:Unique<&Controller>) {
-    match *controller {
-        Controller::Fire => {
-            log::info!("fire!");
-        },
-        Controller::Jump => {
-            log::info!("jump!");
-        },
-        _ => {},
-    }
-}
-*/

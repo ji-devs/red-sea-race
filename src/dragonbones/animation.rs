@@ -181,7 +181,7 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
 
                         let tween = Vec3Tween {
                             info: TweenInfo {
-                                entity,
+                                entity: Some(entity),
                                 easing,
                                 duration,
                             },
@@ -225,7 +225,7 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
 
                         let tween = ScalarTween {
                             info: TweenInfo {
-                                entity,
+                                entity: Some(entity),
                                 easing,
                                 duration,
                             },
@@ -271,7 +271,7 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
                             Tween::ColorAdjust(
                                 ColorTween {
                                     info: TweenInfo {
-                                        entity: *entity,
+                                        entity: Some(*entity),
                                         easing,
                                         duration,
                                     },

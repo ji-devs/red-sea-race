@@ -37,7 +37,7 @@ impl Tween {
 
 #[derive(Debug, Clone)]
 pub struct TweenInfo {
-    pub entity: shipyard::prelude::EntityId,
+    pub entity: Option<shipyard::prelude::EntityId>,
     pub duration: f64,
     pub easing: Option<f64>,
 }

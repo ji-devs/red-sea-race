@@ -22,7 +22,7 @@ lazy_static! {
         lookup.insert("KeyA", ControllerAction::Left);
         lookup.insert("KeyD", ControllerAction::Right);
         lookup.insert("KeyS", ControllerAction::Down);
-        lookup.insert("Space", ControllerAction::Fire);
+        lookup.insert("Space", ControllerAction::Jump);
         lookup.insert("ControlLeft", ControllerAction::Fire);
         lookup.insert("ControlRight", ControllerAction::Fire);
         lookup.insert("ControlEnter", ControllerAction::Fire);
