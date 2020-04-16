@@ -41,6 +41,7 @@ version = "0.3.37"
 features = [
     "console",
     "MouseEvent",
+    "KeyboardEvent",
     "Document",
     "Element",
     "HtmlAnchorElement",
