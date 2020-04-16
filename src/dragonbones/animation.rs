@@ -179,11 +179,6 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
                         let next_x = anim_translation.x.map(|x| last.x + x).unwrap_or(last.x);
                         let next_y = anim_translation.y.map(|y| last.y - y).unwrap_or(last.y);
 
-                        if bone_name == "leg1" && anim_name == "run" {
-                            log::info!("--- seq {} duration {} ---", seq_index, duration);
-                            log::info!("{},{} -> {},{}", last.x, last.y, next_x, next_y);
-                        }
-
                         let tween = Vec3Tween {
                             info: TweenInfo {
                                 entity,

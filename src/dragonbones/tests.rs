@@ -20,8 +20,7 @@ fn dragonbones() {
     let root = sg::spawn_child(&world, None, None, None, None, None);
     let bone_to_entity = create_bone_entities(&world, root, &armature, 512.0);
     let slot_to_bone = create_slot_lookup(&armature);
-    let bone_to_texture = std::collections::HashMap::new();
-    let animation_to_tween = create_animations_lookup(&world, &armature, &bone_to_entity, &slot_to_bone, &bone_to_texture, 512.0);
+    let animation_to_tween = create_animations_lookup(&world, &armature, &bone_to_entity, &slot_to_bone, 512.0);
 
     /*
         run some tests on the "run" animation
