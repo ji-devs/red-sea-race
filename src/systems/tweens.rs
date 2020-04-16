@@ -109,9 +109,9 @@ pub fn run(
                             },
                             Tween::Rotation(value) => {
                                 if let Ok(rotation) = (&mut rotations).get(entity) {
-                                    let quat = &mut rotation.as_mut_unchecked();
                                     if let Some((start_rotation, end_rotation)) = value.value {
-                                        let axis = Unit::new_normalize(Vector3::new(0.0, 0.0, 1.0));
+                                        let quat = &mut rotation.as_mut_unchecked();
+                                        let axis = Unit::new_normalize(Vector3::new(0.0, 0.0, -1.0));
                                         let rotation = start_rotation + ((end_rotation - start_rotation) * progress);
                                         quat.coords = UnitQuaternion::from_axis_angle(&axis, rotation.to_radians()).coords;
                                     }

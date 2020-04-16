@@ -179,6 +179,7 @@
 					"fadeInTime": 0.3,
 					"name": "run",
 					"bone": [
+						
 						{
 							"name": "leg2",
 							"translateFrame": [
@@ -257,7 +258,7 @@
 									"y": -20
 								},
 								{
-									"duration": 0
+									"duration": 4
 								}
 							],
 							"rotateFrame": [

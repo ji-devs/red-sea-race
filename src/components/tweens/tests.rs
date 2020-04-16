@@ -223,7 +223,7 @@ fn create_mock() -> Mock {
     let mut group_1_1_2:Vec<TweenTimeline> = Vec::new();
     let mut group_1_2_1:Vec<TweenTimeline> = Vec::new();
 
-    let entity_1 = spawn_child(&world, None, None, None, None);
+    let entity_1 = spawn_child(&world, None, None, None, None, None);
     group_1_1_1.push(TweenTimeline::Clip(Tween::Translation(Vec3Tween {
         info: TweenInfo {
             entity: entity_1,
@@ -246,7 +246,7 @@ fn create_mock() -> Mock {
 
     seq_1_1.push(TweenTimeline::Group(Box::new(group_1_1_1)));
 
-    let entity_2 = spawn_child(&world, None, None, None, None);
+    let entity_2 = spawn_child(&world, None, None, None, None, None);
     group_1_1_2.push(TweenTimeline::Clip(Tween::Translation(Vec3Tween {
         info: TweenInfo {
             entity: entity_2,
@@ -269,7 +269,7 @@ fn create_mock() -> Mock {
 
     seq_1_1.push(TweenTimeline::Group(Box::new(group_1_1_2)));
 
-    let entity_3 = spawn_child(&world, None, None, None, None);
+    let entity_3 = spawn_child(&world, None, None, None, None, None);
     group_1_2_1.push(TweenTimeline::Clip(Tween::ColorAdjust(ColorTween {
         info: TweenInfo {
             entity: entity_3,

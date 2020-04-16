@@ -56,7 +56,7 @@ pub fn create_bone_entities(world:&World, root_entity:EntityId, armature:&Armatu
             None => {
                 let (mut translation, rotation, scale) = get_bone_trs(&bone.transform, tex_height);
                 translation.z = CHARACTER_SPRITE_DEPTH;
-                let entity = spawn_child(world, Some(root_entity), Some(translation), None, Some(scale));
+                let entity = spawn_child(world, Some(root_entity), Some(translation), None, Some(scale), None);
                 bone_entity_lookup.insert(bone.name.to_string(), entity);
                 if !parents.contains(&bone.name.as_ref()) {
                     parents.push_back(&bone.name);
@@ -89,7 +89,7 @@ pub fn create_bone_entities(world:&World, root_entity:EntityId, armature:&Armatu
                 };
                 if let Some(children) = bone_children_lookup.get(&parent_name) {
                     for (bone_name, (translation, rotation, scale)) in children {
-                        let entity = spawn_child(world, Some(parent_entity), Some(*translation), None, Some(*scale));
+                        let entity = spawn_child(world, Some(parent_entity), Some(*translation), None, Some(*scale), None);
                         bone_entity_lookup.insert(bone_name.to_string(), entity);
                         if !parents.contains(&bone_name.as_ref()) {
                             parents.push_back(&bone_name);

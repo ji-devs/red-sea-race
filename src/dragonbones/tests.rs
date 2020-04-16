@@ -17,7 +17,7 @@ fn dragonbones() {
     let skeleton:Skeleton = serde_json::from_reader(file).unwrap();
     let armature = &skeleton.armatures[0];
 
-    let root = sg::spawn_child(&world, None, None, None, None);
+    let root = sg::spawn_child(&world, None, None, None, None, None);
     let bone_to_entity = create_bone_entities(&world, root, &armature, 512.0);
     let slot_to_bone = create_slot_lookup(&armature);
     let bone_to_texture = std::collections::HashMap::new();

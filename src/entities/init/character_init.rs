@@ -6,7 +6,7 @@ use crate::components::*;
 pub fn init_hero (world:&World) {
     let hero = {
         let media =  world.borrow::<Unique<&Media>>();
-        spawn(world, &media.hero)
+        spawn(world, &media.hero, 100.0, 0.0)
     };
 
     world.add_unique(Hero (hero) );

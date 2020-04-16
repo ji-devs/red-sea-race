@@ -7,17 +7,17 @@ use super::animation::create_animations;
 
 use nalgebra::{Unit, Vector3, Quaternion, UnitQuaternion};
 
-pub fn spawn(world:&World, dragonbones:&DragonBones) -> EntityId {
+pub fn spawn(world:&World, dragonbones:&DragonBones, x:f64, y:f64) -> EntityId {
     let armature = &dragonbones.skeleton.armatures[0];
 
-    let root = spawn_child(world, None, Some(Vector3::new(300.0, 300.0, 0.0)), None, None);
+    let root = spawn_child(world, None, Some(Vector3::new(x, y, 0.0)), None, None, None);
 
 
     
     let bone_to_entity = create_bone_entities(&world, root, &armature, dragonbones.atlas_height);
-    let bone_to_texture = create_skin_entities(world, &bone_to_entity, &dragonbones.textures, armature, dragonbones.atlas_height);
     let slot_to_bone = create_slot_lookup(&armature);
-    create_animations(world, root, &armature, &bone_to_entity, &slot_to_bone, &bone_to_texture, dragonbones.atlas_height);
+    create_skin_entities(world, &bone_to_entity, &dragonbones.textures, armature, dragonbones.atlas_height);
+    create_animations(world, root, &armature, &bone_to_entity, &slot_to_bone, dragonbones.atlas_height);
 
     /*
     {

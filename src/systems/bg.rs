@@ -53,6 +53,7 @@ pub fn run(
     mut translations: &mut Translation,
     mut rotations: &mut Rotation,
     mut scales: &mut Scale,
+    mut origins: &mut Origin,
     mut local_transforms: &mut LocalTransform,
     mut world_transforms: &mut WorldTransform,
     mut dirty_transforms: &mut DirtyTransform,
@@ -131,8 +132,27 @@ pub fn run(
                 _ => unreachable!()
             };
 
-            let mut sg_storages:TransformHierarchyStoragesMut = (&mut entities, &mut root, &mut parents, &mut children, &mut translations, &mut rotations, &mut scales, &mut local_transforms, &mut world_transforms, &mut dirty_transforms);
-            let entity = sg_storages.spawn_child(None, Some(pos), None, None);
+            /*
+            let mut entities = world.borrow::<EntitiesMut>();
+            let mut hierarchy_storages = world.borrow::<(Unique<&TransformRoot>, &mut Parent, &mut Child)>();
+            let mut transform_storages = world.borrow::<(&mut Translation, &mut Rotation, &mut Scale, &mut Origin, &mut LocalTransform, &mut WorldTransform, &mut DirtyTransform)>();
+            
+            let mut sg_storages:TransformHierarchyStoragesMut = (
+                &mut entities,
+                &mut hierarchy_storages.0, 
+                &mut hierarchy_storages.1, 
+                &mut hierarchy_storages.2,
+                &mut transform_storages.0, 
+                &mut transform_storages.1, 
+                &mut transform_storages.2, 
+                &mut transform_storages.3, 
+                &mut transform_storages.4, 
+                &mut transform_storages.5, 
+                &mut transform_storages.6
+            );
+            */
+            let mut sg_storages:TransformHierarchyStoragesMut = (&mut entities, &mut root, &mut parents, &mut children, &mut translations, &mut rotations, &mut scales, &mut origins, &mut local_transforms, &mut world_transforms, &mut dirty_transforms);
+            let entity = sg_storages.spawn_child(None, Some(pos), None, None, None);
             entities.add_component(
                 (&mut renderables,&mut scrolling_sprites, &mut bg_sprites, &mut velocities), 
                 (

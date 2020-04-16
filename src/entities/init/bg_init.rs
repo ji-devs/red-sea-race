@@ -32,7 +32,7 @@ pub fn init_bg_layers(world:&World) {
         //first create all the entities, so that we can jump into any index
         let plane_entities:Vec<EntityId> = (0..n_planes).into_iter().map(|_| 
             //Translation will be set below when we know the proper x offset
-            sg::spawn_child(world, None, None, None, None)
+            sg::spawn_child(world, None, None, None, None, None)
         ).collect();
 
         //then we can set their components
