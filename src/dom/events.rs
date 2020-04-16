@@ -5,8 +5,32 @@ use shipyard::prelude::*;
 use gloo_events::EventListener;
 use wasm_bindgen::JsCast;
 use wasm_bindgen::UnwrapThrowExt;
+use lazy_static::lazy_static;
+use std::collections::HashMap;
 use crate::renderer::Renderer;
 use crate::camera::Camera;
+use crate::components::{ControllerEvent, ControllerAction};
+
+lazy_static! {
+    static ref KEYBOARD_MAP: HashMap<&'static str, ControllerAction> = {
+        let mut lookup:HashMap<&'static str, ControllerAction> = HashMap::new();
+        lookup.insert("ArrowUp", ControllerAction::Jump);
+        lookup.insert("ArrowDown", ControllerAction::Down);
+        lookup.insert("ArrowLeft", ControllerAction::Left);
+        lookup.insert("ArrowRight", ControllerAction::Right);
+        lookup.insert("KeyW", ControllerAction::Jump);
+        lookup.insert("KeyA", ControllerAction::Left);
+        lookup.insert("KeyD", ControllerAction::Right);
+        lookup.insert("KeyS", ControllerAction::Down);
+        lookup.insert("Space", ControllerAction::Fire);
+        lookup.insert("ControlLeft", ControllerAction::Fire);
+        lookup.insert("ControlRight", ControllerAction::Fire);
+        lookup.insert("ControlEnter", ControllerAction::Fire);
+
+        lookup
+    };
+}
+
 
 pub fn start_dom_handlers(world:Rc<World>) {
     let window = window().unwrap_throw();
@@ -48,6 +72,36 @@ pub fn start_dom_handlers(world:Rc<World>) {
             let event = event.dyn_ref::<web_sys::MouseEvent>().unwrap_throw();
             let (touch_x, touch_y) = get_point(&camera, &event);
             log::info!("pointerup at {},{}", touch_x, touch_y);
+        }
+    }).forget();
+
+
+    //None of the actual logic for controllers is handled here (that's in systems)
+    //Here we're just mapping keyboard events to controller events
+    //The event list is cleared in systems too (events are only *added* here)
+    EventListener::new(&window, "keydown", {
+        let world = Rc::clone(&world);
+        move |event:&Event| {
+            let event = event.dyn_ref::<web_sys::KeyboardEvent>().unwrap_throw();
+            let code = event.code();
+            let mut controller_events = world.borrow::<Unique<&mut ControllerEvent>>();
+
+            if let Some(action) = KEYBOARD_MAP.get(&code.as_ref()) {
+                controller_events.down.insert(*action);
+            }
+        }
+    }).forget();
+
+    EventListener::new(&window, "keyup", {
+        let world = Rc::clone(&world);
+        move |event:&Event| {
+            let event = event.dyn_ref::<web_sys::KeyboardEvent>().unwrap_throw();
+            let code = event.code();
+            let mut controller_events = world.borrow::<Unique<&mut ControllerEvent>>();
+
+            if let Some(action) = KEYBOARD_MAP.get(&code.as_ref()) {
+                controller_events.up.insert(*action);
+            }
         }
     }).forget();
 }
