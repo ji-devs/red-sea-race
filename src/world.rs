@@ -7,6 +7,8 @@ use crate::camera::Camera;
 use crate::media::data::Media;
 use crate::tick::{TickBegin, TickUpdate, TickDraw, TickEnd};
 use crate::systems;
+use crate::components::{Controller, ControllerEvent};
+
 pub fn init_world(mut renderer:Renderer, media:Media) -> World {
     let world = World::default();
 
@@ -19,6 +21,8 @@ pub fn init_world(mut renderer:Renderer, media:Media) -> World {
     world.add_unique(TickUpdate::default());
     world.add_unique(TickDraw::default());
     world.add_unique(TickEnd::default());
+    world.add_unique(Controller::new());
+    world.add_unique(ControllerEvent::new());
     world.add_unique(media);
 
     
