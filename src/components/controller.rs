@@ -38,9 +38,9 @@ pub enum ControllerAction {
     Down
 }
 
-#[derive(Debug, Eq, PartialEq)]
+#[derive(Debug, PartialEq)]
 pub enum ControllerState {
     Activated,
-    Held,
+    Held(f64), //the amount of time its been held
     Released
 }

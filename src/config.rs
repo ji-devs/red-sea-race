@@ -26,3 +26,5 @@ pub const FG_SPRITE_DEPTH: f64 = -20.0;
 
 
 pub const DRAGONBONES_BASE_SPEED: f64 = 100.0;
+
+pub const JUMP_THRESHHOLD:f64 = 10.0;

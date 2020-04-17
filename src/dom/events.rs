@@ -78,7 +78,6 @@ pub fn start_dom_handlers(world:Rc<World>) {
 
     //None of the actual logic for controllers is handled here (that's in systems)
     //Here we're just mapping keyboard events to controller events
-    //The event list is cleared in systems too (events are only *added* here)
     EventListener::new(&window, "keydown", {
         let world = Rc::clone(&world);
         move |event:&Event| {
