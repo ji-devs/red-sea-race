@@ -16,7 +16,7 @@ pub use events::*;
 #[derive(Debug, Clone)]
 pub enum Tween{
     Translation(Vec3Tween),
-    Rotation(ScalarTween),
+    Rotation(QuatTween),
     Scale(Vec3Tween),
     ColorAdjust(ColorTween),
 }

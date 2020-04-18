@@ -2,6 +2,7 @@ use super::*;
 use std::ptr;
 use shipyard::prelude::*;
 use shipyard_scenegraph::*;
+use nalgebra::{Quaternion, UnitQuaternion};
 
 //TODO - tests for percentage from get_active_tweens()
 
@@ -235,13 +236,14 @@ fn create_mock() -> Mock {
         z: None
     })));
 
-    group_1_1_1.push(TweenTimeline::Clip(Tween::Rotation(ScalarTween {
+    group_1_1_1.push(TweenTimeline::Clip(Tween::Rotation(QuatTween {
         info: TweenInfo {
             entity: Some(entity_1),
             easing: None,
             duration: 2.0,
         },
-        value: Some((0.0, 2.0)),
+        from: UnitQuaternion::new_unchecked(Quaternion::new(0.0, 0.0, 0.0, 1.0)),
+        to: UnitQuaternion::new_unchecked(Quaternion::new(0.2, 0.0, 0.0, 1.0)),
     })));
 
     seq_1_1.push(TweenTimeline::Group(Box::new(group_1_1_1)));
@@ -258,13 +260,14 @@ fn create_mock() -> Mock {
         z: None
     })));
 
-    group_1_1_2.push(TweenTimeline::Clip(Tween::Rotation(ScalarTween {
+    group_1_1_2.push(TweenTimeline::Clip(Tween::Rotation(QuatTween {
         info: TweenInfo {
             entity: Some(entity_2),
             easing: None,
             duration: 3.0,
         },
-        value: Some((0.0, 4.0)),
+        from: UnitQuaternion::new_unchecked(Quaternion::new(0.0, 0.0, 0.0, 1.0)),
+        to: UnitQuaternion::new_unchecked(Quaternion::new(0.4, 0.0, 0.0, 1.0)),
     })));
 
     seq_1_1.push(TweenTimeline::Group(Box::new(group_1_1_2)));

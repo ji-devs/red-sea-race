@@ -13,16 +13,15 @@ pub struct Vec3Tween {
 #[derive(Debug, Clone)]
 pub struct ScalarTween {
     pub info: TweenInfo,
-    pub value: Option<(f64, f64)>,
+    pub from: f64, 
+    pub to: f64, 
 }
 
 #[derive(Debug, Clone)]
 pub struct QuatTween {
     pub info: TweenInfo,
-    pub x: Option<(f64, f64)>,
-    pub y: Option<(f64, f64)>,
-    pub z: Option<(f64, f64)>,
-    pub w: Option<(f64, f64)>,
+    pub from: Quat, 
+    pub to: Quat 
 }
 
 #[derive(Debug, Clone)]

@@ -125,12 +125,7 @@ pub fn run(
                         },
                         Tween::Rotation(value) => {
                             if let Ok(rotation) = (&mut rotations).get(entity) {
-                                if let Some((start_rotation, end_rotation)) = value.value {
-                                    let quat = &mut rotation.as_mut_unchecked();
-                                    let axis = Unit::new_normalize(Vector3::new(0.0, 0.0, -1.0));
-                                    let rotation = start_rotation + ((end_rotation - start_rotation) * progress);
-                                    quat.coords = UnitQuaternion::from_axis_angle(&axis, rotation.to_radians()).coords;
-                                }
+                                *rotation.as_mut_unchecked() = value.from.lerp(&value.to, progress);
                             }
                         },
                         _ => {}

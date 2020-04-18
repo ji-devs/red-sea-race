@@ -139,7 +139,7 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
     for anim in armature.animations.iter() {
 
         let mut first_tween_translation = HashMap::<EntityId, Vec3Tween>::new();
-        let mut first_tween_rotation = HashMap::<EntityId, ScalarTween>::new();
+        let mut first_tween_rotation = HashMap::<EntityId, QuatTween>::new();
         let mut first_tween_scale = HashMap::<EntityId, Vec3Tween>::new();
 
         let anim_name = anim.name.to_string();
@@ -223,13 +223,14 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
                         let last = last_bone_rotation.get_mut(&entity).unwrap_throw();
                         let next = anim_rotation.rotation.map(|rot| *last + rot).unwrap_or(*last);
 
-                        let tween = ScalarTween {
+                        let tween = QuatTween {
                             info: TweenInfo {
                                 entity: Some(entity),
                                 easing,
                                 duration,
                             },
-                            value: Some((*last, next)),
+                            from: rotation_to_quat(*last),
+                            to: rotation_to_quat(next),
                         };
                         if seq_index == 0 {
                             first_tween_rotation.insert(entity, tween.clone());
@@ -239,7 +240,8 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
                         //loop by making last frame a mixture of first and last
                         if seq_index == anim_rotations.len()-1 {
                             let mut loop_tween = first_tween_rotation.get(&entity).unwrap_throw().clone();
-                            loop_tween.value = Some((next, *first_rotation)); 
+                            loop_tween.from = rotation_to_quat(next);
+                            loop_tween.to= rotation_to_quat(*first_rotation);
                             loop_tween.info.duration = duration;
                             add_to_group(&mut animation_group.rotations, seq_index, Tween::Rotation(loop_tween));
                         } else {
@@ -312,4 +314,9 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
     }
    
     tweens_lookup
+}
+
+fn rotation_to_quat(rot:f64) -> UnitQuaternion<f64> {
+    let axis = Unit::new_normalize(Vector3::new(0.0, 0.0, -1.0));
+    UnitQuaternion::from_axis_angle(&axis, rot.to_radians())
 }
