@@ -6,6 +6,7 @@ use super::bones::{create_bone_entities, create_slot_lookup};
 use super::animation::{create_animations_lookup};
 use super::data::Skeleton;
 use crate::components::*;
+use crate::config::*;
 
 #[test]
 fn dragonbones() {
@@ -26,7 +27,7 @@ fn dragonbones() {
         run some tests on the "run" animation
     */
     let timeline = animation_to_tween.get("run").expect("should have run animation");
-    assert_eq!(timeline.duration(), 8.0 * 1000.0);
+    assert_eq!(timeline.duration(), 8.0 * DRAGONBONES_BASE_SPEED);
     let groups = timeline.as_group().expect("timeline should have groups");
     assert_eq!(groups.len(), 2); //translation and rotation
     for (timeline_group_index, timeline_group) in groups.iter().enumerate() {
@@ -42,7 +43,7 @@ fn dragonbones() {
                         if tween_index == 0 {
                             let tween = tween.as_clip().expect("group should have clip");
                             if let Tween::Translation(tween) = tween {
-                                assert_eq!(tween.x, None); 
+                                assert_eq!(tween.x, Some((35.5, 35.5)));  //looparound
                             } else {
                                 panic!("not technically an error (groups are unordered) but I'd expect Translation here...");
                             }
@@ -51,7 +52,7 @@ fn dragonbones() {
                             if let Tween::Translation(tween) = tween {
 
                                 //same time, different bone
-                                assert_eq!(tween.x, None); 
+                                assert_eq!(tween.x, Some((116.5, 116.5))); 
                             } else {
                                 panic!("not technically an error (groups are unordered) but I'd expect Translation here...");
                             }
@@ -60,7 +61,7 @@ fn dragonbones() {
                         if tween_index == 0 {
                             let tween = tween.as_clip().expect("group should have clip");
                             if let Tween::Translation(tween) = tween {
-                                assert_eq!(tween.x, Some((0.0, 63.0))); 
+                                assert_eq!(tween.x, Some((35.5, 35.5 + 63.0))); 
                             } else {
                                 panic!("not technically an error (groups are unordered) but I'd expect Translation here...");
                             }
@@ -69,7 +70,7 @@ fn dragonbones() {
                             if let Tween::Translation(tween) = tween {
 
                                 //same time, different bone
-                                assert_eq!(tween.x, Some((0.0, -80.0))); 
+                                assert_eq!(tween.x, Some((116.5, 116.5 -80.0))); 
                             } else {
                                 panic!("not technically an error (groups are unordered) but I'd expect Translation here...");
                             }
@@ -82,7 +83,7 @@ fn dragonbones() {
 
     //from here on in it's really just testing for panics
     //printf debugging can help too ;)
-    let _active_tweens = timeline.get_active_tweens(5.0 * 1000.0).expect("active tweens");
+    let _active_tweens = timeline.get_active_tweens(5.0 * DRAGONBONES_BASE_SPEED).expect("active tweens");
 
     //println!("{:#?}", _active_tweens);
 
@@ -90,7 +91,7 @@ fn dragonbones() {
         run some tests on the "hit" animation
     */
     let timeline = animation_to_tween.get("hit").expect("should have run animation");
-    assert_eq!(timeline.duration(), 10.0 * 1000.0);
+    assert_eq!(timeline.duration(), 10.0 * DRAGONBONES_BASE_SPEED);
     let groups = timeline.as_group().expect("timeline should have groups");
     assert_eq!(groups.len(), 3); //translation and rotation and color
     for (_timeline_group_index, timeline_group) in groups.iter().enumerate() {
