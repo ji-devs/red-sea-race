@@ -41,6 +41,7 @@ pub fn run(
     hero_jump_controller:Unique<&HeroJumpController>, 
     translations:&Translation,
     mut velocities:&mut Velocity,
+    mut gravities:&mut Gravity,
     mut tween_events:&mut TweenEvent,
 ) {
 
@@ -56,7 +57,10 @@ pub fn run(
 
 
     //TODO - maybe the tween should really be on Velocity rather than translation
-    if Some(&ControllerState::Activated) == jump_state && translation.y < JUMP_THRESHHOLD {
+    if Some(&ControllerState::Activated) == jump_state && translation.y < JUMP_START_THRESHHOLD {
+        entities.add_component(&mut velocities, Velocity(Vector3::new(0.0, JUMP_POWER, 0.0)), entity);
+        entities.add_component(&mut gravities, Gravity(GRAVITY_START), entity);
+        /*
         entities.add_component(
             &mut tween_events, 
             TweenEvent::Start(
@@ -87,6 +91,7 @@ pub fn run(
             jump_entity
         );
         entities.add_component(&mut tween_events, TweenEvent::StartByName("jump", TweenEnding::SwitchByName( "run", Box::new(TweenEnding::Loop))), entity);
+        */
     } else if Some(&ControllerState::Released) == jump_state {
         //TODO - cut jump short?
     }

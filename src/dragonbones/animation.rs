@@ -138,9 +138,9 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
     //each sequence
     for anim in armature.animations.iter() {
 
-        let mut first_tween_translation = HashMap::<EntityId, Vec3Tween>::new();
-        let mut first_tween_rotation = HashMap::<EntityId, QuatTween>::new();
-        let mut first_tween_scale = HashMap::<EntityId, Vec3Tween>::new();
+        let mut first_tween_translation = HashMap::<EntityId, TweenData<Vec3>>::new();
+        let mut first_tween_rotation = HashMap::<EntityId, TweenData<Quat>>::new();
+        let mut first_tween_scale = HashMap::<EntityId, TweenData<Vec3>>::new();
 
         let anim_name = anim.name.to_string();
         let mut last_bone_translation = HashMap::<EntityId, Vec3>::new();
@@ -179,31 +179,30 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
                         let next_x = anim_translation.x.map(|x| last.x + x).unwrap_or(last.x);
                         let next_y = anim_translation.y.map(|y| last.y - y).unwrap_or(last.y);
 
-                        let tween = Vec3Tween {
-                            info: TweenInfo {
-                                entity: Some(entity),
-                                easing,
-                                duration,
-                            },
-                            x: Some((last.x, next_x)), 
-                            y: Some((last.y, next_y)), 
-                            z: None,
-                        };
+                        let tween = Tween::new_translation(
+                            Vec3::new(last.x, last.y, first_translation.z),
+                            Vec3::new(next_x, next_y, first_translation.z),
+                            duration,
+                            Some(entity),
+                            None
+                        ); 
 
                         if seq_index == 0 {
-                            first_tween_translation.insert(entity, tween.clone());
+                            first_tween_translation.insert(entity, tween.get_translation_data().unwrap_throw().clone());
                         }
                         
                       
                         //loop by making last frame a mixture of first and last
                         if seq_index == anim_translations.len()-1 {
-                            let mut loop_tween = first_tween_translation.get(&entity).unwrap_throw().clone();
-                            loop_tween.x = Some((next_x, first_translation.x)); 
-                            loop_tween.y = Some((next_y, first_translation.y)); 
-                            loop_tween.info.duration = duration;
-                            add_to_group(&mut animation_group.translations, seq_index, Tween::Translation(loop_tween));
+                            let mut loop_data = first_tween_translation.get(&entity).unwrap_throw().clone();
+                            loop_data.from.x = next_x;
+                            loop_data.from.y = next_y;
+                            loop_data.to.x = first_translation.x;
+                            loop_data.to.y = first_translation.y;
+                            loop_data.info.duration = duration;
+                            add_to_group(&mut animation_group.translations, seq_index, Tween::Translation(loop_data));
                         } else {
-                            add_to_group(&mut animation_group.translations, seq_index, Tween::Translation(tween));
+                            add_to_group(&mut animation_group.translations, seq_index, tween);
                         }
 
                         last.x = next_x;
@@ -222,30 +221,29 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
 
                         let last = last_bone_rotation.get_mut(&entity).unwrap_throw();
                         let next = anim_rotation.rotation.map(|rot| *last + rot).unwrap_or(*last);
+                        
+                        let tween = Tween::new_rotation(
+                            rotation_to_quat(*last),
+                            rotation_to_quat(next),
+                            duration,
+                            Some(entity),
+                            None
+                        ); 
 
-                        let tween = QuatTween {
-                            info: TweenInfo {
-                                entity: Some(entity),
-                                easing,
-                                duration,
-                            },
-                            from: rotation_to_quat(*last),
-                            to: rotation_to_quat(next),
-                        };
                         if seq_index == 0 {
-                            first_tween_rotation.insert(entity, tween.clone());
+                            first_tween_rotation.insert(entity, tween.get_rotation_data().unwrap_throw().clone());
                         }
                         
 
                         //loop by making last frame a mixture of first and last
                         if seq_index == anim_rotations.len()-1 {
-                            let mut loop_tween = first_tween_rotation.get(&entity).unwrap_throw().clone();
-                            loop_tween.from = rotation_to_quat(next);
-                            loop_tween.to= rotation_to_quat(*first_rotation);
-                            loop_tween.info.duration = duration;
-                            add_to_group(&mut animation_group.rotations, seq_index, Tween::Rotation(loop_tween));
+                            let mut loop_data = first_tween_rotation.get(&entity).unwrap_throw().clone();
+                            loop_data.from = rotation_to_quat(next);
+                            loop_data.to= rotation_to_quat(*first_rotation);
+                            loop_data.info.duration = duration;
+                            add_to_group(&mut animation_group.rotations, seq_index, Tween::Rotation(loop_data));
                         } else {
-                            add_to_group(&mut animation_group.rotations, seq_index, Tween::Rotation(tween));
+                            add_to_group(&mut animation_group.rotations, seq_index, tween);
                         }
 
                         *last = next;
@@ -256,9 +254,7 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
             }
         }
 
-        //TODO - color tweens have not really been updated with proper fixes yet! 
-        //Consult translation/rotation above if things are weird
-
+        //TODO - color tweens have not really been added yet 
         if let Some(anim_slots) = anim.slots.as_ref() {
             for anim_slot in anim_slots.iter() {
                 if let Some(anim_colors) = &anim_slot.color_frames {
@@ -268,27 +264,10 @@ pub fn create_animations_lookup(world:&World, armature:&Armature, bone_to_entity
                     for (seq_index, anim_color) in anim_colors.iter().enumerate() {
                         let duration = anim_color.duration.unwrap_or(1.0) * DRAGONBONES_BASE_SPEED;
                         let easing = anim_color.easing.and_then(|easing| if easing == 0.0 { None } else { Some(easing) });
-                        let value = &anim_color.value;
-                        add_to_group(&mut animation_group.colors, seq_index, 
-                            Tween::ColorAdjust(
-                                ColorTween {
-                                    info: TweenInfo {
-                                        entity: Some(*entity),
-                                        easing,
-                                        duration,
-                                    },
-                                    //TODO - use start value from this point in time 
-                                    alpha_overlay: value.alpha_overlay.map(|c| (0.0, c)),
-                                    red_overlay: value.red_overlay.map(|c| (0.0, c)),
-                                    green_overlay: value.green_overlay.map(|c| (0.0, c)),
-                                    blue_overlay: value.blue_overlay.map(|c| (0.0, c)),
-                                    
-                                    alpha_offset: value.alpha_offset.map(|c| (0.0, c)),
-                                    red_offset: value.red_offset.map(|c| (0.0, c)),
-                                    green_offset: value.green_offset.map(|c| (0.0, c)),
-                                    blue_offset: value.blue_offset.map(|c| (0.0, c)),
-                                }
-                        ));
+                        //TODO
+                        //let last = last_bone_color.get_mut(&entity).unwrap_throw();
+                        //let next = anim_color.color.map(|color| *last + color).unwrap_or(*last);
+                        //add_to_group(&mut animation_group.colors, seq_index, Tween::ColorAdjust(...))
                     }
                 }
             }

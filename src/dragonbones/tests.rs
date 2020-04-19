@@ -43,7 +43,8 @@ fn dragonbones() {
                         if tween_index == 0 {
                             let tween = tween.as_clip().expect("group should have clip");
                             if let Tween::Translation(tween) = tween {
-                                assert_eq!(tween.x, Some((35.5, 35.5)));  //looparound
+                                assert_eq!(tween.from.x, 35.5);
+                                assert_eq!(tween.to.x, 35.5);
                             } else {
                                 panic!("not technically an error (groups are unordered) but I'd expect Translation here...");
                             }
@@ -52,7 +53,8 @@ fn dragonbones() {
                             if let Tween::Translation(tween) = tween {
 
                                 //same time, different bone
-                                assert_eq!(tween.x, Some((116.5, 116.5))); 
+                                assert_eq!(tween.from.x, 116.5);
+                                assert_eq!(tween.to.x, 116.5);
                             } else {
                                 panic!("not technically an error (groups are unordered) but I'd expect Translation here...");
                             }
@@ -61,7 +63,8 @@ fn dragonbones() {
                         if tween_index == 0 {
                             let tween = tween.as_clip().expect("group should have clip");
                             if let Tween::Translation(tween) = tween {
-                                assert_eq!(tween.x, Some((35.5, 35.5 + 63.0))); 
+                                assert_eq!(tween.from.x, 35.5);
+                                assert_eq!(tween.to.x, 35.5 + 63.0); 
                             } else {
                                 panic!("not technically an error (groups are unordered) but I'd expect Translation here...");
                             }
@@ -70,7 +73,8 @@ fn dragonbones() {
                             if let Tween::Translation(tween) = tween {
 
                                 //same time, different bone
-                                assert_eq!(tween.x, Some((116.5, 116.5 -80.0))); 
+                                assert_eq!(tween.from.x, 116.5);
+                                assert_eq!(tween.to.x, 116.5 - 80.0);
                             } else {
                                 panic!("not technically an error (groups are unordered) but I'd expect Translation here...");
                             }
@@ -88,15 +92,15 @@ fn dragonbones() {
     //println!("{:#?}", _active_tweens);
 
     /*
-        run some tests on the "hit" animation
+        run some tests on the "fall" animation
     */
-    let timeline = animation_to_tween.get("hit").expect("should have run animation");
-    assert_eq!(timeline.duration(), 10.0 * DRAGONBONES_BASE_SPEED);
+    let timeline = animation_to_tween.get("fall").expect("should have hit animation");
+    assert_eq!(timeline.duration(), 9.0 * DRAGONBONES_BASE_SPEED);
     let groups = timeline.as_group().expect("timeline should have groups");
-    assert_eq!(groups.len(), 3); //translation and rotation and color
+    assert_eq!(groups.len(), 2); //translation and rotation
     for (_timeline_group_index, timeline_group) in groups.iter().enumerate() {
         let sequence = timeline_group.as_sequence().expect("timeline should have sequence");
-        assert_eq!(sequence.len(), 1); //all our sequences are 1 item long 
+        assert_eq!(sequence.len(), 3); //all our sequences are 3 items long 
 
         for (_seq_group_index, seq_group) in sequence.iter().enumerate() {
             let seq_group = seq_group.as_group().expect("sequence should have group");

@@ -99,28 +99,12 @@ pub fn run(
                     match tween {
                         Tween::Translation(value) => {
                             if let Ok(translation) = (&mut translations).get(entity) {
-                                if let Some((start_x, end_x)) = value.x {
-                                    translation.x = start_x + ((end_x - start_x) * progress);
-                                }
-                                if let Some((start_y, end_y)) = value.y {
-                                    translation.y = start_y + ((end_y - start_y) * progress);
-                                }
-                                if let Some((start_z, end_z)) = value.z {
-                                    translation.z = start_z + ((end_z - start_z) * progress);
-                                }
+                                translation.copy_from_slice(value.from.lerp(&value.to, progress).as_slice());
                             }
                         },
                         Tween::Scale(value) => {
                             if let Ok(scale) = (&mut scales).get(entity) {
-                                if let Some((start_x, end_x)) = value.x {
-                                    scale.x = (end_x - start_x) * progress;
-                                }
-                                if let Some((start_y, end_y)) = value.y {
-                                    scale.y = (end_y - start_y) * progress;
-                                }
-                                if let Some((start_z, end_z)) = value.z {
-                                    scale.z = (end_z - start_z) * progress;
-                                }
+                                scale.copy_from_slice(value.from.lerp(&value.to, progress).as_slice());
                             }
                         },
                         Tween::Rotation(value) => {

@@ -225,86 +225,115 @@ fn create_mock() -> Mock {
     let mut group_1_2_1:Vec<TweenTimeline> = Vec::new();
 
     let entity_1 = spawn_child(&world, None, None, None, None, None);
-    group_1_1_1.push(TweenTimeline::Clip(Tween::Translation(Vec3Tween {
-        info: TweenInfo {
-            entity: Some(entity_1),
-            easing: None,
-            duration: 4.0,
-        },
-        x: Some((0.0, 1.0)),
-        y: None,
-        z: None
-    })));
+    group_1_1_1.push(TweenTimeline::Clip(
+        Tween::new_translation(
+            Vec3::new(0.0, 0.0, 0.0),
+            Vec3::new(1.0, 0.0, 0.0),
+            4.0,
+            Some(entity_1),
+            None
+        )
+    ));
 
-    group_1_1_1.push(TweenTimeline::Clip(Tween::Rotation(QuatTween {
-        info: TweenInfo {
-            entity: Some(entity_1),
-            easing: None,
-            duration: 2.0,
-        },
-        from: UnitQuaternion::new_unchecked(Quaternion::new(0.0, 0.0, 0.0, 1.0)),
-        to: UnitQuaternion::new_unchecked(Quaternion::new(0.2, 0.0, 0.0, 1.0)),
-    })));
+    group_1_1_1.push(TweenTimeline::Clip(
+        
+        Tween::new_rotation(
+            UnitQuaternion::new_unchecked(Quaternion::new(0.0, 0.0, 0.0, 1.0)),
+            UnitQuaternion::new_unchecked(Quaternion::new(0.2, 0.0, 0.0, 1.0)),
+            2.0,
+            Some(entity_1),
+            None
+        )
+    ));
 
     seq_1_1.push(TweenTimeline::Group(Box::new(group_1_1_1)));
 
     let entity_2 = spawn_child(&world, None, None, None, None, None);
-    group_1_1_2.push(TweenTimeline::Clip(Tween::Translation(Vec3Tween {
-        info: TweenInfo {
-            entity: Some(entity_2),
-            easing: None,
-            duration: 4.0,
-        },
-        x: Some((0.0, 3.0)),
-        y: None,
-        z: None
-    })));
+    group_1_1_2.push(TweenTimeline::Clip(
+        Tween::new_translation(
+            Vec3::new(0.0, 0.0, 0.0),
+            Vec3::new(3.0, 0.0, 0.0),
+            4.0,
+            Some(entity_2),
+            None
+        )
+    ));
+        
 
-    group_1_1_2.push(TweenTimeline::Clip(Tween::Rotation(QuatTween {
-        info: TweenInfo {
-            entity: Some(entity_2),
-            easing: None,
-            duration: 3.0,
-        },
-        from: UnitQuaternion::new_unchecked(Quaternion::new(0.0, 0.0, 0.0, 1.0)),
-        to: UnitQuaternion::new_unchecked(Quaternion::new(0.4, 0.0, 0.0, 1.0)),
-    })));
+    group_1_1_2.push(TweenTimeline::Clip(
+        
+        Tween::new_rotation(
+            UnitQuaternion::new_unchecked(Quaternion::new(0.0, 0.0, 0.0, 1.0)),
+            UnitQuaternion::new_unchecked(Quaternion::new(0.4, 0.0, 0.0, 1.0)),
+            3.0,
+            Some(entity_2),
+            None
+        )
+    ));
 
     seq_1_1.push(TweenTimeline::Group(Box::new(group_1_1_2)));
 
     let entity_3 = spawn_child(&world, None, None, None, None, None);
-    group_1_2_1.push(TweenTimeline::Clip(Tween::ColorAdjust(ColorTween {
-        info: TweenInfo {
-            entity: Some(entity_3),
-            easing: None,
-            duration: 2.0,
-        },
-        alpha_overlay: None,
-        red_overlay: Some((0.0, 1.0)),
-        green_overlay: None,
-        blue_overlay: None,
-        alpha_offset: None,
-        red_offset: None,
-        green_offset: None,
-        blue_offset: None,
-    })));
+    group_1_2_1.push(TweenTimeline::Clip(
+        
+        Tween::new_color_adjust(
+            ColorAdjust{
+                alpha_overlay: 0.0,
+                red_overlay: 0.0,
+                green_overlay: 0.0,
+                blue_overlay: 0.0,
+                alpha_offset: 0.0,
+                red_offset: 0.0,
+                green_offset: 0.0,
+                blue_offset: 0.0,
+            },
+            ColorAdjust{
+                alpha_overlay: 0.0,
+                red_overlay: 1.0, 
+                green_overlay: 0.0,
+                blue_overlay: 0.0,
+                alpha_offset: 0.0,
+                red_offset: 0.0,
+                green_offset: 0.0,
+                blue_offset: 0.0,
+            },
+            2.0,
+            Some(entity_3),
+            None
+        )
+    ));
     seq_1_2.push(TweenTimeline::Group(Box::new(group_1_2_1)));
 
-    seq_1_2.push(TweenTimeline::Clip(Tween::ColorAdjust(ColorTween {
-        info: TweenInfo {
-            entity: Some(entity_3),
-            easing: None,
-            duration: 7.0,
-        },
-        alpha_overlay: None,
-        red_overlay: Some((0.0, 2.0)),
-        green_overlay: None,
-        blue_overlay: None,
-        alpha_offset: None,
-        red_offset: None,
-        green_offset: None,
-        blue_offset: None,
-    })));
+    seq_1_2.push(TweenTimeline::Clip(
+        
+        Tween::new_color_adjust(
+            ColorAdjust{
+                alpha_overlay: 0.0,
+                red_overlay: 0.0,
+                green_overlay: 0.0,
+                blue_overlay: 0.0,
+                alpha_offset: 0.0,
+                red_offset: 0.0,
+                green_offset: 0.0,
+                blue_offset: 0.0,
+            },
+            ColorAdjust{
+                alpha_overlay: 0.0,
+                red_overlay: 2.0, 
+                green_overlay: 0.0,
+                blue_overlay: 0.0,
+                alpha_offset: 0.0,
+                red_offset: 0.0,
+                green_offset: 0.0,
+                blue_offset: 0.0,
+            },
+            7.0,
+            Some(entity_3),
+            None
+        )
+    ));
+        
+        
 
     group_1.push(TweenTimeline::Sequence(Box::new(seq_1_1)));
     group_1.push(TweenTimeline::Sequence(Box::new(seq_1_2)));
