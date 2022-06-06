@@ -30,7 +30,7 @@ shipyard = { version = "0.3.3", features = ["proc", "non_send", "non_sync"], def
 shipyard_scenegraph = { version = "^0.2", features = ["proc", "non_send", "non_sync", "easy_deref", "nalgebra_transforms"], default-features = false }
 # shipyard_scenegraph = { path="../../dakom/shipyard-scenegraph/crate", features = ["proc", "non_send", "non_sync", "easy_deref", "nalgebra_transforms"], default-features = false }
 thiserror = "1.0.14"
-nalgebra = "0.20.0"
+nalgebra = "0.27.1"
 serde = { version = "1.0.106", features = ["derive"] }
 serde_repr = "0.1.5"
 serde-wasm-bindgen = "0.1.3"
